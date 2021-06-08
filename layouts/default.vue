@@ -1,8 +1,25 @@
 <template>
-  <div>
-    <Nuxt />
+  <div class="row m-0">
+    <div class="col-auto p-0">
+      <NavigationSidebar class="position-sticky top-0" />
+    </div>
+    <div class="col p-0">
+      <Nuxt />
+    </div>
   </div>
 </template>
+
+<script>
+import NavigationSidebar from '~/components/NavigationSidebar'
+
+export default {
+  name: 'DefaultLayout',
+
+  components: {
+    NavigationSidebar,
+  },
+}
+</script>
 
 <style>
 html {
