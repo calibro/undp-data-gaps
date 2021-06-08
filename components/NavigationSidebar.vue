@@ -14,7 +14,7 @@
 
     <div class="d-flex flex-column">
       <nuxt-link
-        to="/"
+        to="/narratives/data-availability"
         class="
           d-flex
           align-items-center
