@@ -80,7 +80,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header__title {
   max-width: 700px;
 }
