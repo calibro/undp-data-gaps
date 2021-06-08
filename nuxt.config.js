@@ -39,6 +39,15 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
 
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+    ],
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 }
