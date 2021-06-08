@@ -51,6 +51,11 @@ export default {
       type: String,
       required: true,
     },
+
+    scrollIntoElementId: {
+      type: String,
+      required: true,
+    },
   },
 
   data() {
@@ -73,8 +78,10 @@ export default {
     },
 
     scrollDown() {
-      // TODO: Add Polyfill for Safari
-      document.getElementById('narrative-content').scrollIntoView()
+      if (this.scrollIntoElementId) {
+        // TODO: Add Polyfill for Safari
+        document.getElementById(this.scrollIntoElementId).scrollIntoView()
+      }
     },
   },
 }

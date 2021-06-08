@@ -3,25 +3,57 @@
     <narrative-header
       :chapter-number="1"
       title="Why is important to make data available in the Arab Region?"
+      scroll-into-element-id="scroll-into-target"
     >
       <template #background>
         <div style="background: black; height: 100%; width: 100%"></div>
       </template>
     </narrative-header>
-    <h1 id="narrative-content">
-      Why is important to make data available in the Arab Region?
-    </h1>
+
+    <narrative-break-text id="scroll-into-target">
+      <p>
+        Data is everywhere. It helps us understand the complex phenomena that
+        happen around us and it helps us framing problems and taking the right
+        decisions. Citizens, organizations, companies, governments are both data
+        producers and data consumers.
+      </p>
+      <p>
+        Their decisions are shaped by the information they receive. The data
+        collected about them shape the perception of their struggles and their
+        needs. By having access to data and effectively using knowledge
+        resources, individuals, firms, and communities can improve their
+        individual and collective well-being, thereby contributing to
+        sustainable development.
+      </p>
+    </narrative-break-text>
+
+    <narrative-break-text>
+      <p>
+        By monitoring data availabitlyand bridging the gaps we can focus on what
+        matters the most to the society living in the arab reagion.
+      </p>
+      <p>
+        Explore the interactive visualization to discover gaps and see how
+        countries are performing.
+      </p>
+    </narrative-break-text>
+
+    <section class="p-5 bg-dark text-light">
+      <h1>Data Viz here</h1>
+    </section>
   </div>
 </template>
 
 <script>
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
+import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 
 export default {
   name: 'DataAvailabilityPage',
 
   components: {
     NarrativeHeader,
+    NarrativeBreakText,
   },
 }
 </script>
