@@ -4,7 +4,7 @@
       d-flex
       flex-column
       justify-content-between
-      border-end
+      border-end border-dark
       navigation-sidebar
     "
   >
@@ -19,7 +19,9 @@
           d-flex
           align-items-center
           justify-content-center
-          border-top
+          border-top border-dark
+          text-decoration-none text-reset
+          display-6
           p-2
           navigation-sidebar__narration-link
         "
@@ -32,7 +34,9 @@
           d-flex
           align-items-center
           justify-content-center
-          border-top
+          border-top border-dark
+          text-decoration-none text-reset
+          display-6
           p-2
           navigation-sidebar__narration-link
         "
@@ -45,7 +49,9 @@
           d-flex
           align-items-center
           justify-content-center
-          border-top
+          border-top border-dark
+          text-decoration-none text-reset
+          display-6
           p-2
           navigation-sidebar__narration-link
         "
