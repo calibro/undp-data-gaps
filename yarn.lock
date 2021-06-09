@@ -4656,6 +4656,11 @@ inquirer@^7.3.3:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
+intersection-observer@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.12.0.tgz#6c84628f67ce8698e5f9ccf857d97718745837aa"
+  integrity sha512-2Vkz8z46Dv401zTWudDGwO7KiGHNDkMv417T5ItcNYfmvHR/1qCTVBO9vwH8zZmQ0WkA/1ARwpysR9bsnop4NQ==
+
 ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -7469,6 +7474,11 @@ schema-utils@^3.0.0:
     ajv "^6.12.5"
     ajv-keywords "^3.5.2"
 
+scrollama@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/scrollama/-/scrollama-2.2.2.tgz#7a05382702e65884a7e584a0d88f7bb6fe300860"
+  integrity sha512-ZU5uuiHRhtomdgdSwwv0ThSPnjeO5WAmBrlNEc/DowdPN/wewro4zvpOpEFr0FakhvvujxA1IskJCn9rFbEz1g==
+
 scule@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/scule/-/scule-0.2.1.tgz#0c1dc847b18e07219ae9a3832f2f83224e2079dc"
@@ -8590,6 +8600,13 @@ vue-router@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.5.1.tgz#edf3cf4907952d1e0583e079237220c5ff6eb6c9"
   integrity sha512-RRQNLT8Mzr8z7eL4p7BtKvRaTSGdCbTy2+Mm5HTJvLGYSSeG9gDzNasJPP/yOYKLy+/cLG/ftrqq5fvkFwBJEw==
+
+vue-scrollama@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/vue-scrollama/-/vue-scrollama-2.0.6.tgz#9f5cddcafd0bb59a61146149b28176660151d080"
+  integrity sha512-Xiq4NYpYxZrCbPWcNHEOYkSyE+cEzEDJWIU7rTsrhLvLMECH9DndkypS+vNsYYKTx0dAHYVuyHnui/sOS2iHkg==
+  dependencies:
+    scrollama "^2.2.2"
 
 vue-server-renderer@^2.6.12:
   version "2.6.14"
