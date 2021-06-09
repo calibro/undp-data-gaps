@@ -43,7 +43,7 @@ export default {
 
   props: {
     chapterNumber: {
-      type: Number,
+      type: String,
       required: true,
     },
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <narrative-header
-      :chapter-number="1"
+      chapter-number="1"
       title="Why is important to make data available in the Arab Region?"
       scroll-into-element-id="scroll-into-target"
     >
