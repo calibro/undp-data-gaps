@@ -1,7 +1,7 @@
 <template>
   <section class="bg-dark text-light px-5 py-6">
     <div class="d-flex justify-content-center">
-      <div class="fs-4 break-text__text">
+      <div class="break-text__text">
         <slot></slot>
       </div>
     </div>

@@ -11,13 +11,13 @@
     </narrative-header>
 
     <narrative-break-text id="scroll-into-target">
-      <p>
+      <p class="fs-4 mb-5">
         Data is everywhere. It helps us understand the complex phenomena that
         happen around us and it helps us framing problems and taking the right
         decisions. Citizens, organizations, companies, governments are both data
         producers and data consumers.
       </p>
-      <p>
+      <p class="fs-4 mb-5">
         Their decisions are shaped by the information they receive. The data
         collected about them shape the perception of their struggles and their
         needs. By having access to data and effectively using knowledge
@@ -28,11 +28,11 @@
     </narrative-break-text>
 
     <narrative-break-text>
-      <p>
+      <p class="fs-4 mb-5">
         By monitoring data availabitlyand bridging the gaps we can focus on what
         matters the most to the society living in the arab reagion.
       </p>
-      <p>
+      <p class="fs-4 mb-5">
         Explore the interactive visualization to discover gaps and see how
         countries are performing.
       </p>
