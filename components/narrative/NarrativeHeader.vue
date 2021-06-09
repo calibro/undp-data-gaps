@@ -79,8 +79,9 @@ export default {
 
     scrollDown() {
       if (this.scrollIntoElementId) {
-        // TODO: Add Polyfill for Safari
-        document.getElementById(this.scrollIntoElementId).scrollIntoView()
+        document
+          .getElementById(this.scrollIntoElementId)
+          .scrollIntoView({ behavior: 'smooth' })
       }
     },
   },
