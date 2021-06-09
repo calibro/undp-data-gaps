@@ -16,19 +16,19 @@
       <navigation-sidebar-link
         chapter-number="1"
         link="/narratives/data-availability"
-        title="Why is important to make data available in the Arab Region?"
+        title="Data availability"
       />
       <!-- TODO: Add correct data -->
       <navigation-sidebar-link
         chapter-number="2"
         link="/"
-        title="Data availability in the Arab Region"
+        title="Data transparency"
       />
       <!-- TODO: Add correct data -->
       <navigation-sidebar-link
         chapter-number="3"
         link="/"
-        title="Sustainable Development Goals"
+        title="Data richness"
       />
     </nav>
   </aside>
