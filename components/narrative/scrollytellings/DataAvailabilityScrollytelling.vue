@@ -10,7 +10,12 @@
             :style="{ backgroundColor: goal.color }"
             class="d-flex justify-content-center align-items-center goal-circle"
           >
-            <span class="fs-4 text-light">{{ goal.id }}</span>
+            <img
+              :src="
+                require(`~/assets/images/sdg-icons/sdg_icon-${goal.id}.svg`)
+              "
+              :alt="goal.title + '| UDNP'"
+            />
           </div>
         </div>
         <div
@@ -186,7 +191,7 @@ export default {
       const fields = this.$refs.goal
 
       this.$anime({
-        targets: document.querySelectorAll('.goal-circle span'),
+        targets: document.querySelectorAll('.goal-circle img'),
         opacity: 0,
         easing: 'easeOutElastic(.1, 2)',
         duration: 1000,
@@ -287,7 +292,7 @@ export default {
       })
 
       this.$anime({
-        targets: document.querySelectorAll('.goal-circle span'),
+        targets: document.querySelectorAll('.goal-circle img'),
         opacity: 1,
         easing: 'easeInOutElastic(.1, 2)',
         duration: 1000,
@@ -365,6 +370,11 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
+
+  & img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .data-availability-axis {
