@@ -80,6 +80,7 @@
 
 <script>
 import developmentGoals from '~/data/development-goals.json'
+import goalsPositions from '~/data/data-availability-scrollytelling-positions.json'
 
 export default {
   name: 'DataAvailabilityScrollytellingComponent',
@@ -87,12 +88,14 @@ export default {
   data() {
     return {
       developmentGoals: null,
+      goalsPositions: null,
       isGraphicAlreadyEntered: false,
     }
   },
 
   beforeMount() {
     this.developmentGoals = developmentGoals
+    this.goalsPositions = goalsPositions
   },
 
   methods: {
@@ -108,12 +111,10 @@ export default {
             this.animateStepB()
             break
           case 2:
-            // TODO: Add correct animation
             this.animateStepC()
             break
           case 3:
-            // TODO: Add correct animation
-            this.animateStepC()
+            this.animateStepD()
             break
           default:
             break
@@ -132,10 +133,10 @@ export default {
             this.animateStepBReversed()
             break
           case 2:
-            // TODO: Add Animation Reversed
+            this.animateStepCReversed()
             break
           case 3:
-            // TODO: Add Animation Reversed
+            this.animateStepC()
             break
           default:
             break
@@ -182,7 +183,7 @@ export default {
     },
 
     animateStepB() {
-      const fields = document.querySelectorAll('.goal-circle')
+      const fields = this.$refs.goal
 
       this.$anime({
         targets: document.querySelectorAll('.goal-circle span'),
@@ -191,7 +192,7 @@ export default {
         duration: 1000,
       })
 
-      fields.forEach((field) => {
+      fields.forEach((field, index) => {
         const tl = this.$anime.timeline()
 
         tl.add({
@@ -206,7 +207,7 @@ export default {
 
         tl.add({
           targets: field,
-          left: Math.floor(Math.random() * (90 - 10 + 1) + 10) + '%',
+          left: this.goalsPositions[index].step1 + '%',
           easing: 'easeOutElastic(.1, 2)',
           duration: 800,
         })
@@ -222,12 +223,25 @@ export default {
     },
 
     animateStepC() {
-      const fields = document.querySelectorAll('.goal-circle')
+      const fields = this.$refs.goal
 
-      fields.forEach((field) => {
+      fields.forEach((field, index) => {
         this.$anime({
           targets: field,
-          left: Math.floor(Math.random() * (90 - 10 + 1) + 10) + '%',
+          left: this.goalsPositions[index].step2 + '%',
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1500,
+        })
+      })
+    },
+
+    animateStepD() {
+      const fields = this.$refs.goal
+
+      fields.forEach((field, index) => {
+        this.$anime({
+          targets: field,
+          left: this.goalsPositions[index].step3 + '%',
           easing: 'easeOutElastic(.1, 2)',
           duration: 1500,
         })
@@ -277,6 +291,19 @@ export default {
         opacity: 1,
         easing: 'easeInOutElastic(.1, 2)',
         duration: 1000,
+      })
+    },
+
+    animateStepCReversed() {
+      const fields = this.$refs.goal
+
+      fields.forEach((field, index) => {
+        this.$anime({
+          targets: field,
+          left: this.goalsPositions[index].step1 + '%',
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1500,
+        })
       })
     },
   },
