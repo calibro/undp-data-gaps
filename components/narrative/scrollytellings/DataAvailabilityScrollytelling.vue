@@ -33,7 +33,7 @@
 
       <Scrollama
         class="text-light scrollytelling__texts"
-        :offset="0.5"
+        :offset="0.6"
         @step-enter="stepEnterHandler"
         @step-exit="stepExitHandler"
       >
