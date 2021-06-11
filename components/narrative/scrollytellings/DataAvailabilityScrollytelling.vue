@@ -179,10 +179,14 @@ export default {
       }
     },
 
+    clearAnimations() {
+      this.$anime.running.forEach((animation) => {
+        animation?.pause()
+      })
+    },
+
     animateStepA() {
-      if (this.isGraphicAlreadyEntered) {
-        return
-      }
+      this.clearAnimations()
 
       const fields = this.$refs.goal
 
@@ -205,77 +209,142 @@ export default {
           0
         )
       })
-
-      this.isGraphicAlreadyEntered = true
     },
 
     animateStepB() {
+      this.clearAnimations()
+
       const fields = this.$refs.goal
 
-      this.$anime({
-        targets: document.querySelectorAll('.goal-circle img'),
-        opacity: 0,
-        easing: 'easeOutElastic(.1, 2)',
-        duration: 1000,
-      })
+      const tl = this.$anime.timeline()
+
+      tl.add(
+        {
+          targets: document.querySelectorAll('.goal-circle img'),
+          opacity: 0,
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1000,
+        },
+        0
+      )
 
       fields.forEach((field, index) => {
-        const tl = this.$anime.timeline()
+        tl.add(
+          {
+            targets: field,
+            opacity: 1,
+            top: '2%',
+            left: this.goalsPositions[index].step1 + '%',
+            translateX: '-50%',
+            translateY: '-10%',
+            easing: 'easeOutElastic(.1, 2)',
+            duration: 1000,
+          },
+          0
+        )
+      })
 
-        tl.add({
-          targets: field,
-          top: '2%',
-          left: '50%',
-          translateX: '-50%',
-          translateY: '-10%',
-          easing: 'easeInOutElastic(.1, 2)',
-          duration: 800,
-        })
-
-        tl.add({
-          targets: field,
-          left: this.goalsPositions[index].step1 + '%',
+      tl.add(
+        {
+          targets: this.$refs.dataAvailabilityAxis,
+          opacity: 0.3,
           easing: 'easeOutElastic(.1, 2)',
-          duration: 800,
-        })
-      })
-
-      this.$anime({
-        targets: this.$refs.dataAvailabilityAxis,
-        opacity: 0.3,
-        easing: 'easeOutElastic(.1, 2)',
-        duration: 1200,
-        delay: 1000,
-      })
+          duration: 1200,
+        },
+        0
+      )
     },
 
     animateStepC() {
+      this.clearAnimations()
+
       const fields = this.$refs.goal
 
-      fields.forEach((field, index) => {
-        this.$anime({
-          targets: field,
-          left: this.goalsPositions[index].step2 + '%',
+      const tl = this.$anime.timeline()
+
+      tl.add(
+        {
+          targets: document.querySelectorAll('.goal-circle img'),
+          opacity: 0,
           easing: 'easeOutElastic(.1, 2)',
-          duration: 1500,
-        })
+          duration: 1000,
+        },
+        0
+      )
+
+      fields.forEach((field, index) => {
+        tl.add(
+          {
+            targets: field,
+            opacity: 1,
+            top: '2%',
+            left: this.goalsPositions[index].step2 + '%',
+            translateX: '-50%',
+            translateY: '-10%',
+            easing: 'easeOutElastic(.1, 2)',
+            duration: 1500,
+          },
+          0
+        )
       })
+
+      tl.add(
+        {
+          targets: this.$refs.dataAvailabilityAxis,
+          opacity: 0.3,
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1200,
+        },
+        0
+      )
     },
 
     animateStepD() {
+      this.clearAnimations()
+
       const fields = this.$refs.goal
 
-      fields.forEach((field, index) => {
-        this.$anime({
-          targets: field,
-          left: this.goalsPositions[index].step3 + '%',
+      const tl = this.$anime.timeline()
+
+      tl.add(
+        {
+          targets: document.querySelectorAll('.goal-circle img'),
+          opacity: 0,
           easing: 'easeOutElastic(.1, 2)',
-          duration: 1500,
-        })
+          duration: 1000,
+        },
+        0
+      )
+
+      fields.forEach((field, index) => {
+        tl.add(
+          {
+            targets: field,
+            opacity: 1,
+            top: '2%',
+            left: this.goalsPositions[index].step3 + '%',
+            translateX: '-50%',
+            translateY: '-10%',
+            easing: 'easeOutElastic(.1, 2)',
+            duration: 1500,
+          },
+          0
+        )
       })
+
+      tl.add(
+        {
+          targets: this.$refs.dataAvailabilityAxis,
+          opacity: 0.3,
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1200,
+        },
+        0
+      )
     },
 
     animateStepBReversed() {
+      this.clearAnimations()
 
       const fields = this.$refs.goal
 
@@ -309,38 +378,34 @@ export default {
         )
       })
 
-        this.$anime({
-          targets: field,
+      tl.add(
+        {
+          targets: document.querySelectorAll('.goal-circle img'),
           opacity: 1,
-          left: (x * 100) / width + '%',
-          top: (y * 100) / height + '%',
-          translateX: 0,
-          translateY: 0,
           easing: 'easeInOutElastic(.1, 2)',
           duration: 1000,
-        })
-
-        angle += step
-      })
-
-      this.$anime({
-        targets: document.querySelectorAll('.goal-circle img'),
-        opacity: 1,
-        easing: 'easeInOutElastic(.1, 2)',
-        duration: 1000,
-      })
+        },
+        0
+      )
     },
 
     animateStepCReversed() {
+      this.clearAnimations()
+
       const fields = this.$refs.goal
 
+      const tl = this.$anime.timeline()
+
       fields.forEach((field, index) => {
-        this.$anime({
-          targets: field,
-          left: this.goalsPositions[index].step1 + '%',
-          easing: 'easeOutElastic(.1, 2)',
-          duration: 1500,
-        })
+        tl.add(
+          {
+            targets: field,
+            left: this.goalsPositions[index].step1 + '%',
+            easing: 'easeOutElastic(.1, 2)',
+            duration: 1500,
+          },
+          0
+        )
       })
     },
   },
