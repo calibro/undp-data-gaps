@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="{ filter: `blur(${blur})` }">
     <svg
       ref="svg"
       viewBox="0 0 350 350"

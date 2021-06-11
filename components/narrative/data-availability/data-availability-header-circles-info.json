@@ -2,7 +2,7 @@
   {
     "id": 1,
     "color": "#E5243B",
-    "blur": "18px",
+    "blur": "0",
     "width": "18vw",
     "position": {
       "top": "12vh",
@@ -19,7 +19,7 @@
   {
     "id": 2,
     "color": "#4C9F38",
-    "blur": "25px",
+    "blur": "0",
     "width": "11vw",
     "position": {
       "top": "52vh",
@@ -37,7 +37,7 @@
   {
     "id": 3,
     "color": "#26BDE2",
-    "blur": "35px",
+    "blur": "3px",
     "width": "6vw",
     "position": {
       "top": "40vh",
@@ -55,7 +55,7 @@
   {
     "id": 4,
     "color": "#FCC30B",
-    "blur": "12px",
+    "blur": "1px",
     "width": "8vw",
     "position": {
       "top": null,
@@ -72,7 +72,7 @@
   {
     "id": 5,
     "color": "#E5243B",
-    "blur": "25px",
+    "blur": "5px",
     "width": "5vw",
     "position": {
       "top": null,
@@ -87,9 +87,9 @@
     ]
   },
   {
-    "id": 2,
+    "id": 6,
     "color": "#FCC30B",
-    "blur": "25px",
+    "blur": "8px",
     "width": "4vw",
     "position": {
       "top": "30vh",
