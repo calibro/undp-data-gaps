@@ -1,8 +1,5 @@
 <template>
-  <header
-    class="position-relative vh-100"
-    :class="{ 'bg-dark': isBackgroundPresent }"
-  >
+  <header class="position-relative vh-100">
     <div
       class="
         d-flex
@@ -32,7 +29,7 @@
     </div>
 
     <div class="header__background">
-      <slot name="background"></slot>
+      <slot></slot>
     </div>
   </header>
 </template>
@@ -58,25 +55,7 @@ export default {
     },
   },
 
-  data() {
-    return {
-      isBackgroundPresent: false,
-    }
-  },
-
-  mounted() {
-    this.checkBackgroundPresence()
-  },
-
-  beforeUpdate() {
-    this.checkBackgroundPresence()
-  },
-
   methods: {
-    checkBackgroundPresence() {
-      this.isBackgroundPresent = !this.$slots.background?.[0]
-    },
-
     scrollDown() {
       if (this.scrollIntoElementId) {
         document

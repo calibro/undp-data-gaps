@@ -5,9 +5,7 @@
       title="Why is important to make data available in the Arab Region?"
       scroll-into-element-id="scroll-into-target"
     >
-      <template #background>
-        <div style="background: black; height: 100%; width: 100%"></div>
-      </template>
+      <data-availability-header />
     </narrative-header>
 
     <narrative-break-text id="scroll-into-target">
@@ -49,6 +47,7 @@
 <script>
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
+import DataAvailabilityHeader from '~/components/narrative/data-availability/DataAvailabilityHeader'
 import DataAvailabilityScrollytelling from '~/components/narrative/scrollytellings/DataAvailabilityScrollytelling'
 
 export default {
@@ -58,6 +57,7 @@ export default {
     NarrativeHeader,
     NarrativeBreakText,
     DataAvailabilityScrollytelling,
+    DataAvailabilityHeader,
   },
 }
 </script>
