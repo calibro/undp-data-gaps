@@ -33,7 +33,7 @@
 
       <Scrollama
         class="text-light scrollytelling__texts"
-        :offset="0.5"
+        :offset="0.6"
         @step-enter="stepEnterHandler"
         @step-exit="stepExitHandler"
       >
@@ -94,6 +94,7 @@ export default {
     return {
       developmentGoals: null,
       goalsPositions: null,
+      goalsCirclePositions: [],
       isGraphicAlreadyEntered: false,
     }
   },
@@ -101,6 +102,35 @@ export default {
   beforeMount() {
     this.developmentGoals = developmentGoals
     this.goalsPositions = goalsPositions
+  },
+
+  mounted() {
+    const deg = 0
+    const radius = 200
+    const fields = document.querySelectorAll('.goal-circle')
+    const width = 500
+    const height = 500
+    let angle = deg || Math.PI * 3.5
+    const step = (2 * Math.PI) / fields.length
+
+    fields.forEach((field, index) => {
+      const x = Math.round(
+        width / 2 + radius * Math.cos(angle) - field.offsetWidth / 2
+      )
+      const y = Math.round(
+        height / 2 + radius * Math.sin(angle) - field.offsetHeight / 2
+      )
+
+      const position = {
+        id: this.developmentGoals[index].id,
+        x: (x * 100) / width + '%',
+        y: (y * 100) / height + '%',
+      }
+
+      this.goalsCirclePositions.push(position)
+
+      angle += step
+    })
   },
 
   methods: {
@@ -149,166 +179,233 @@ export default {
       }
     },
 
-    animateStepA() {
-      if (this.isGraphicAlreadyEntered) {
-        return
-      }
-
-      const deg = 0
-      const radius = 200
-      const fields = document.querySelectorAll('.goal-circle')
-      const width = 500
-      const height = 500
-      let angle = deg || Math.PI * 3.5
-      const step = (2 * Math.PI) / fields.length
-
-      fields.forEach((field) => {
-        const x = Math.round(
-          width / 2 + radius * Math.cos(angle) - field.offsetWidth / 2
-        )
-        const y = Math.round(
-          height / 2 + radius * Math.sin(angle) - field.offsetHeight / 2
-        )
-
-        this.$anime({
-          targets: field,
-          opacity: 1,
-          left: (x * 100) / width + '%',
-          top: (y * 100) / height + '%',
-          translateX: 0,
-          translateY: 0,
-          easing: 'easeInOutElastic(.1, 2)',
-          duration: 1200,
-        })
-
-        angle += step
+    clearAnimations() {
+      this.$anime.running.forEach((animation) => {
+        animation?.pause()
       })
+    },
 
-      this.isGraphicAlreadyEntered = true
+    animateStepA() {
+      this.clearAnimations()
+
+      const fields = this.$refs.goal
+
+      const tl = this.$anime.timeline()
+
+      fields.forEach((field, index) => {
+        const circlePosition = this.goalsCirclePositions[index]
+
+        tl.add(
+          {
+            targets: field,
+            opacity: 1,
+            left: circlePosition?.x,
+            top: circlePosition?.y,
+            translateX: 0,
+            translateY: 0,
+            easing: 'easeInOutElastic(.1, 2)',
+            duration: 800,
+          },
+          0
+        )
+      })
     },
 
     animateStepB() {
+      this.clearAnimations()
+
       const fields = this.$refs.goal
 
-      this.$anime({
-        targets: document.querySelectorAll('.goal-circle img'),
-        opacity: 0,
-        easing: 'easeOutElastic(.1, 2)',
-        duration: 1000,
-      })
+      const tl = this.$anime.timeline()
+
+      tl.add(
+        {
+          targets: document.querySelectorAll('.goal-circle img'),
+          opacity: 0,
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1000,
+        },
+        0
+      )
 
       fields.forEach((field, index) => {
-        const tl = this.$anime.timeline()
+        tl.add(
+          {
+            targets: field,
+            opacity: 1,
+            top: '2%',
+            left: this.goalsPositions[index].step1 + '%',
+            translateX: '-50%',
+            translateY: '-10%',
+            easing: 'easeOutElastic(.1, 2)',
+            duration: 1000,
+          },
+          0
+        )
+      })
 
-        tl.add({
-          targets: field,
-          top: '2%',
-          left: '50%',
-          translateX: '-50%',
-          translateY: '-10%',
-          easing: 'easeInOutElastic(.1, 2)',
-          duration: 800,
-        })
-
-        tl.add({
-          targets: field,
-          left: this.goalsPositions[index].step1 + '%',
+      tl.add(
+        {
+          targets: this.$refs.dataAvailabilityAxis,
+          opacity: 0.3,
           easing: 'easeOutElastic(.1, 2)',
-          duration: 800,
-        })
-      })
-
-      this.$anime({
-        targets: this.$refs.dataAvailabilityAxis,
-        opacity: 0.3,
-        easing: 'easeOutElastic(.1, 2)',
-        duration: 1200,
-        delay: 1000,
-      })
+          duration: 1200,
+        },
+        0
+      )
     },
 
     animateStepC() {
+      this.clearAnimations()
+
       const fields = this.$refs.goal
 
-      fields.forEach((field, index) => {
-        this.$anime({
-          targets: field,
-          left: this.goalsPositions[index].step2 + '%',
+      const tl = this.$anime.timeline()
+
+      tl.add(
+        {
+          targets: document.querySelectorAll('.goal-circle img'),
+          opacity: 0,
           easing: 'easeOutElastic(.1, 2)',
-          duration: 1500,
-        })
+          duration: 1000,
+        },
+        0
+      )
+
+      fields.forEach((field, index) => {
+        tl.add(
+          {
+            targets: field,
+            opacity: 1,
+            top: '2%',
+            left: this.goalsPositions[index].step2 + '%',
+            translateX: '-50%',
+            translateY: '-10%',
+            easing: 'easeOutElastic(.1, 2)',
+            duration: 1500,
+          },
+          0
+        )
       })
+
+      tl.add(
+        {
+          targets: this.$refs.dataAvailabilityAxis,
+          opacity: 0.3,
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1200,
+        },
+        0
+      )
     },
 
     animateStepD() {
+      this.clearAnimations()
+
       const fields = this.$refs.goal
 
-      fields.forEach((field, index) => {
-        this.$anime({
-          targets: field,
-          left: this.goalsPositions[index].step3 + '%',
+      const tl = this.$anime.timeline()
+
+      tl.add(
+        {
+          targets: document.querySelectorAll('.goal-circle img'),
+          opacity: 0,
           easing: 'easeOutElastic(.1, 2)',
-          duration: 1500,
-        })
+          duration: 1000,
+        },
+        0
+      )
+
+      fields.forEach((field, index) => {
+        tl.add(
+          {
+            targets: field,
+            opacity: 1,
+            top: '2%',
+            left: this.goalsPositions[index].step3 + '%',
+            translateX: '-50%',
+            translateY: '-10%',
+            easing: 'easeOutElastic(.1, 2)',
+            duration: 1500,
+          },
+          0
+        )
       })
+
+      tl.add(
+        {
+          targets: this.$refs.dataAvailabilityAxis,
+          opacity: 0.3,
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1200,
+        },
+        0
+      )
     },
 
     animateStepBReversed() {
-      const deg = 0
-      const radius = 200
-      const fields = document.querySelectorAll('.goal-circle')
-      const width = 500
-      const height = 500
-      let angle = deg || Math.PI * 3.5
-      const step = (2 * Math.PI) / fields.length
+      this.clearAnimations()
 
-      this.$anime({
-        targets: this.$refs.dataAvailabilityAxis,
-        opacity: 0,
-        easing: 'easeOutElastic(.1, 2)',
-        duration: 1200,
+      const fields = this.$refs.goal
+
+      const tl = this.$anime.timeline()
+
+      tl.add(
+        {
+          targets: this.$refs.dataAvailabilityAxis,
+          opacity: 0,
+          easing: 'easeOutElastic(.1, 2)',
+          duration: 1200,
+        },
+        0
+      )
+
+      fields.forEach((field, index) => {
+        const circlePosition = this.goalsCirclePositions[index]
+
+        tl.add(
+          {
+            targets: field,
+            opacity: 1,
+            left: circlePosition?.x,
+            top: circlePosition?.y,
+            translateX: 0,
+            translateY: 0,
+            easing: 'easeInOutElastic(.1, 2)',
+            duration: 1000,
+          },
+          0
+        )
       })
 
-      fields.forEach((field) => {
-        const x = Math.round(
-          width / 2 + radius * Math.cos(angle) - field.offsetWidth / 2
-        )
-        const y = Math.round(
-          height / 2 + radius * Math.sin(angle) - field.offsetHeight / 2
-        )
-
-        this.$anime({
-          targets: field,
+      tl.add(
+        {
+          targets: document.querySelectorAll('.goal-circle img'),
           opacity: 1,
-          left: (x * 100) / width + '%',
-          top: (y * 100) / height + '%',
-          translateX: 0,
-          translateY: 0,
           easing: 'easeInOutElastic(.1, 2)',
           duration: 1000,
-        })
-
-        angle += step
-      })
-
-      this.$anime({
-        targets: document.querySelectorAll('.goal-circle img'),
-        opacity: 1,
-        easing: 'easeInOutElastic(.1, 2)',
-        duration: 1000,
-      })
+        },
+        0
+      )
     },
 
     animateStepCReversed() {
+      this.clearAnimations()
+
       const fields = this.$refs.goal
 
+      const tl = this.$anime.timeline()
+
       fields.forEach((field, index) => {
-        this.$anime({
-          targets: field,
-          left: this.goalsPositions[index].step1 + '%',
-          easing: 'easeOutElastic(.1, 2)',
-          duration: 1500,
-        })
+        tl.add(
+          {
+            targets: field,
+            left: this.goalsPositions[index].step1 + '%',
+            easing: 'easeOutElastic(.1, 2)',
+            duration: 1500,
+          },
+          0
+        )
       })
     },
   },
