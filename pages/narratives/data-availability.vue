@@ -59,6 +59,8 @@ export default {
     NarrativeBreakText,
     DataAvailabilityScrollytelling,
   },
+
+  transition: 'fade',
 }
 </script>
 
