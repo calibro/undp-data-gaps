@@ -479,7 +479,7 @@ export default {
   flex-direction: column;
   position: absolute;
   width: 95%;
-  top: 54%;
+  top: 55%;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
