@@ -34,4 +34,13 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 200ms ease-out;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
 </style>

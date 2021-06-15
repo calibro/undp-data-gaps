@@ -59,6 +59,8 @@ export default {
     DataAvailabilityScrollytelling,
     DataAvailabilityHeader,
   },
+
+  transition: 'fade',
 }
 </script>
 
