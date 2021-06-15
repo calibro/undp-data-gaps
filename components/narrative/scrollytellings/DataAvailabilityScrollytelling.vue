@@ -33,7 +33,7 @@
 
       <Scrollama
         class="text-light scrollytelling__texts"
-        :offset="0.6"
+        :offset="0.5"
         @step-enter="stepEnterHandler"
         @step-exit="stepExitHandler"
       >
@@ -203,7 +203,7 @@ export default {
             top: circlePosition?.y,
             translateX: 0,
             translateY: 0,
-            easing: 'easeInOutElastic(.1, 2)',
+            easing: 'easeInOutQuint',
             duration: 800,
           },
           0
@@ -222,7 +222,7 @@ export default {
         {
           targets: document.querySelectorAll('.goal-circle img'),
           opacity: 0,
-          easing: 'easeOutElastic(.1, 2)',
+          easing: 'easeOutQuint',
           duration: 1000,
         },
         0
@@ -233,11 +233,10 @@ export default {
           {
             targets: field,
             opacity: 1,
-            top: '2%',
+            top: '40%',
             left: this.goalsPositions[index].step1 + '%',
             translateX: '-50%',
-            translateY: '-10%',
-            easing: 'easeOutElastic(.1, 2)',
+            easing: 'easeOutQuint',
             duration: 1000,
           },
           0
@@ -248,7 +247,7 @@ export default {
         {
           targets: this.$refs.dataAvailabilityAxis,
           opacity: 0.3,
-          easing: 'easeOutElastic(.1, 2)',
+          easing: 'easeOutQuint',
           duration: 1200,
         },
         0
@@ -266,7 +265,7 @@ export default {
         {
           targets: document.querySelectorAll('.goal-circle img'),
           opacity: 0,
-          easing: 'easeOutElastic(.1, 2)',
+          easing: 'easeOutQuint',
           duration: 1000,
         },
         0
@@ -277,11 +276,10 @@ export default {
           {
             targets: field,
             opacity: 1,
-            top: '2%',
+            top: '40%',
             left: this.goalsPositions[index].step2 + '%',
             translateX: '-50%',
-            translateY: '-10%',
-            easing: 'easeOutElastic(.1, 2)',
+            easing: 'easeOutQuint',
             duration: 1500,
           },
           0
@@ -292,7 +290,7 @@ export default {
         {
           targets: this.$refs.dataAvailabilityAxis,
           opacity: 0.3,
-          easing: 'easeOutElastic(.1, 2)',
+          easing: 'easeOutQuint',
           duration: 1200,
         },
         0
@@ -310,7 +308,7 @@ export default {
         {
           targets: document.querySelectorAll('.goal-circle img'),
           opacity: 0,
-          easing: 'easeOutElastic(.1, 2)',
+          easing: 'easeOutQuint',
           duration: 1000,
         },
         0
@@ -321,11 +319,10 @@ export default {
           {
             targets: field,
             opacity: 1,
-            top: '2%',
+            top: '40%',
             left: this.goalsPositions[index].step3 + '%',
             translateX: '-50%',
-            translateY: '-10%',
-            easing: 'easeOutElastic(.1, 2)',
+            easing: 'easeOutQuint',
             duration: 1500,
           },
           0
@@ -336,7 +333,7 @@ export default {
         {
           targets: this.$refs.dataAvailabilityAxis,
           opacity: 0.3,
-          easing: 'easeOutElastic(.1, 2)',
+          easing: 'easeOutQuint',
           duration: 1200,
         },
         0
@@ -354,7 +351,7 @@ export default {
         {
           targets: this.$refs.dataAvailabilityAxis,
           opacity: 0,
-          easing: 'easeOutElastic(.1, 2)',
+          easing: 'easeOutQuint',
           duration: 1200,
         },
         0
@@ -371,7 +368,7 @@ export default {
             top: circlePosition?.y,
             translateX: 0,
             translateY: 0,
-            easing: 'easeInOutElastic(.1, 2)',
+            easing: 'easeInOutQuint',
             duration: 1000,
           },
           0
@@ -382,7 +379,7 @@ export default {
         {
           targets: document.querySelectorAll('.goal-circle img'),
           opacity: 1,
-          easing: 'easeInOutElastic(.1, 2)',
+          easing: 'easeInOutQuint',
           duration: 1000,
         },
         0
@@ -401,7 +398,7 @@ export default {
           {
             targets: field,
             left: this.goalsPositions[index].step1 + '%',
-            easing: 'easeOutElastic(.1, 2)',
+            easing: 'easeOutQuint',
             duration: 1500,
           },
           0
@@ -423,7 +420,7 @@ export default {
 
 .scrollytelling__graphics {
   position: sticky;
-  top: 15vh;
+  top: calc(50vh - 280px);
   height: 500px;
   width: 500px;
   justify-self: flex-end;
@@ -432,7 +429,7 @@ export default {
 .scrollytelling__texts {
   display: grid;
   grid-auto-rows: 1fr;
-  row-gap: ($spacer * 12);
+  row-gap: ($spacer * 6);
 }
 
 .step-1,
@@ -441,7 +438,10 @@ export default {
 .step-4 {
   min-height: 500px;
   opacity: 0.3;
-  transition: all 500ms ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 300ms ease-in-out;
 }
 
 .current-step {
@@ -479,7 +479,7 @@ export default {
   flex-direction: column;
   position: absolute;
   width: 95%;
-  top: 16%;
+  top: 54%;
   left: 50%;
   transform: translateX(-50%);
   opacity: 0;
