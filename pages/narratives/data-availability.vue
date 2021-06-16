@@ -27,7 +27,12 @@
       </p>
     </narrative-break-text>
 
-    <data-availability-scrollytelling />
+    <mq-layout mq="xxl+">
+      <data-availability-scrollytelling />
+    </mq-layout>
+    <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
+      <data-availability-scrollytelling-mobile />
+    </mq-layout>
 
     <narrative-break-text>
       <p class="fs-4 mb-5">
@@ -50,6 +55,7 @@
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataAvailabilityScrollytelling from '~/components/narrative/scrollytellings/DataAvailabilityScrollytelling'
+import DataAvailabilityScrollytellingMobile from '~/components/narrative/data-availability/DataAvailabilityScrollytellingMobile'
 
 export default {
   name: 'DataAvailabilityPage',
@@ -58,6 +64,7 @@ export default {
     NarrativeHeader,
     NarrativeBreakText,
     DataAvailabilityScrollytelling,
+    DataAvailabilityScrollytellingMobile,
   },
 
   transition: 'fade',
