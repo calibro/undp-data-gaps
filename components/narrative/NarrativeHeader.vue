@@ -9,7 +9,8 @@
         flex-column
         justify-content-between
         align-items-start
-        p-5
+        px-3 px-lg-5
+        py-5 py-lg-6
         text-light
         h-100
       "
@@ -22,13 +23,15 @@
         <h1 class="display-2">{{ title }}</h1>
       </div>
 
-      <button
-        class="btn btn-link p-0 text-light text-decoration-none"
-        @click="scrollDown"
-      >
-        <!-- TODO: Add Scroll Down icon -->
-        Scroll down
-      </button>
+      <mq-layout mq="xl+">
+        <button
+          class="btn btn-link p-0 text-light text-decoration-none"
+          @click="scrollDown"
+        >
+          <!-- TODO: Add Scroll Down icon -->
+          Scroll down
+        </button>
+      </mq-layout>
     </div>
 
     <div class="header__background">
@@ -89,6 +92,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+header {
+  @include media-breakpoint-up(lg) {
+    height: 100vh;
+  }
+}
+
 .header__title {
   max-width: 700px;
 }
