@@ -6,7 +6,7 @@
         d-block
         text-decoration-none text-reset
         fs-4
-        px-5
+        px-3 px-lg-5
         py-3
         navigation-link__title
       "
