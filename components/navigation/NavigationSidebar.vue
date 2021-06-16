@@ -111,7 +111,7 @@ export default {
   }
 
   @include media-breakpoint-down(lg) {
-    height: 140%;
+    height: 145%;
     width: auto;
 
     position: absolute;
