@@ -1,21 +1,22 @@
 <template>
-  <aside
-    class="
-      d-flex
-      flex-column
-      justify-content-between
-      border-end border-dark
-      navigation-sidebar
-    "
-  >
-    <nuxt-link to="/" class="d-block p-2 navigation-sidebar__logo">
+  <aside class="border-end border-dark navigation-sidebar">
+    <nuxt-link
+      to="/"
+      class="py-0 py-lg-2 px-3 px-lg-2 navigation-sidebar__logo"
+    >
       <img src="~/assets/images/UNDP_logo.svg" alt="UNDP" />
     </nuxt-link>
 
-    <div class="p-2 pb-3 text-center navigation-sidebar__menu">
-      <span class="mb-4 text-uppercase navigation-sidebar__menu__label">{{
-        menuLabel
-      }}</span>
+    <div class="p-2 ps-3 ps-lg-2 pb-lg-3 text-center navigation-sidebar__menu">
+      <span
+        class="
+          mb-lg-4
+          ms-3 ms-lg-0
+          text-uppercase
+          navigation-sidebar__menu__label
+        "
+        >{{ menuLabel }}</span
+      >
 
       <button
         ref="menuButton"
@@ -87,11 +88,41 @@ export default {
   width: $sidebar-width;
   height: 100vh;
   z-index: 999;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  @include media-breakpoint-down(lg) {
+    width: 100vw;
+    height: $sidebar-width;
+
+    flex-direction: row;
+  }
 }
 
 .navigation-sidebar__logo {
+  display: flex;
+  width: 100%;
+
   img {
     width: 100%;
+  }
+
+  @include media-breakpoint-down(lg) {
+    height: 140%;
+    width: auto;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(-1px);
+
+    img {
+      height: 100%;
+      width: auto;
+    }
   }
 }
 
@@ -100,13 +131,19 @@ export default {
   flex-direction: column;
   align-items: center;
 
-  & .navigation-sidebar__menu__label {
-    writing-mode: vertical-lr;
-    transform: rotate(-180deg);
-  }
-
   & path {
     stroke: $dark !important;
+  }
+
+  @include media-breakpoint-down(lg) {
+    flex-direction: row-reverse;
+  }
+
+  @include media-breakpoint-up(lg) {
+    & .navigation-sidebar__menu__label {
+      writing-mode: vertical-lr;
+      transform: rotate(-180deg);
+    }
   }
 }
 

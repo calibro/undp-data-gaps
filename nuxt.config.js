@@ -42,7 +42,17 @@ export default {
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['nuxt-mq'],
+
+  mq: {
+    breakpoints: {
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200,
+      xxl: 1400,
+    },
+  },
 
   module: {
     rules: [

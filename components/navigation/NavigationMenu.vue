@@ -111,8 +111,9 @@ export default {
 .navigation-menu {
   width: calc(100% - #{$sidebar-width});
   z-index: 999;
-}
 
-.navigation-menu--hidden {
+  @include media-breakpoint-down(lg) {
+    width: 100%;
+  }
 }
 </style>
