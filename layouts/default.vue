@@ -1,10 +1,10 @@
 <template>
-  <div class="row m-0">
-    <div class="col-auto p-0">
+  <div class="viewport">
+    <div class="viewport__navigation">
       <navigation-sidebar class="position-sticky top-0" />
     </div>
 
-    <div class="col p-0 position-relative">
+    <div class="position-relative bg-dark viewport__content">
       <navigation-menu />
       <Nuxt />
     </div>
@@ -24,6 +24,17 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.viewport {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+
+  @include media-breakpoint-down(lg) {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 
 <style>
 html {
