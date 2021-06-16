@@ -5,9 +5,7 @@
       title="Why is important to make data available in the Arab Region?"
       scroll-into-element-id="scroll-into-target"
     >
-      <template #background>
-        <div style="background: black; height: 100%; width: 100%"></div>
-      </template>
+      <div style="background: black; height: 100%; width: 100%"></div>
     </narrative-header>
 
     <narrative-break-text id="scroll-into-target">
