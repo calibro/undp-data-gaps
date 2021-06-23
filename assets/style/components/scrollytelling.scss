@@ -1,0 +1,32 @@
+.scrollytelling {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: ($spacer * 6);
+}
+
+.scrollytelling__graphics {
+  position: sticky;
+  top: calc(50vh - 280px);
+  height: 500px;
+  width: 500px;
+  justify-self: flex-end;
+}
+
+.scrollytelling__texts {
+  display: grid;
+  grid-auto-rows: 1fr;
+  row-gap: ($spacer * 6);
+}
+
+.step {
+  min-height: 500px;
+  opacity: 0.3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 300ms ease-in-out;
+}
+
+.current-step {
+  opacity: 1;
+}
