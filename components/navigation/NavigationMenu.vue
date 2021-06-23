@@ -13,11 +13,11 @@
       link="/narratives/data-disaggregation"
       title="02.Why is it important to have disaggregated data?"
     />
-    <!-- TODO: Add correct data -->
     <navigation-link
-      link="/"
+      link="/narratives/data-up-to-date"
       title="03.Why is it important to have up-to-date statistic?"
     />
+    <!-- TODO: Add correct data -->
     <navigation-link link="/" title="About" />
   </nav>
 </template>
