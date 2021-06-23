@@ -18,6 +18,8 @@
       </p>
     </narrative-break-text>
 
+    <data-disaggregation-scrollytelling />
+
     <narrative-break-text>
       <p class="fs-4 mb-5">
         Improving data disaggregation is fundamental for the full implementation
@@ -27,12 +29,17 @@
         where the gaps are.
       </p>
     </narrative-break-text>
+
+    <section class="p-5 bg-dark text-light vh-100">
+      <h1>Data Viz here</h1>
+    </section>
   </div>
 </template>
 
 <script>
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
+import DataDisaggregationScrollytelling from '~/components/narrative/data-disaggregation/DataDisaggregationScrollytelling'
 
 export default {
   name: 'DataDisaggregationPage',
@@ -40,6 +47,7 @@ export default {
   components: {
     NarrativeHeader,
     NarrativeBreakText,
+    DataDisaggregationScrollytelling,
   },
 
   transition: 'fade',
