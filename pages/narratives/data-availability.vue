@@ -52,7 +52,7 @@
 <script>
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
-import DataAvailabilityScrollytelling from '~/components/narrative/scrollytellings/DataAvailabilityScrollytelling'
+import DataAvailabilityScrollytelling from '~/components/narrative/data-availability/DataAvailabilityScrollytelling'
 import DataAvailabilityScrollytellingMobile from '~/components/narrative/data-availability/DataAvailabilityScrollytellingMobile'
 
 export default {
