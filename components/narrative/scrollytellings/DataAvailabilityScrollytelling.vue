@@ -37,7 +37,7 @@
         @step-enter="stepEnterHandler"
         @step-exit="stepExitHandler"
       >
-        <div class="step-1">
+        <div class="step">
           <p class="fs-4 mb-5">
             The 2030 Agenda for Sustainable Development, adopted by all United
             Nations Member States in 2015, provides a shared blueprint for peace
@@ -54,7 +54,7 @@
           </p>
         </div>
 
-        <div class="step-2">
+        <div class="step">
           <p class="fs-4 mb-5">
             Unluckly some countries in the Arab World don’t provide data for all
             the indicators for many reasons.
@@ -65,14 +65,14 @@
           </p>
         </div>
 
-        <div class="step-3">
+        <div class="step">
           <p class="fs-4 mb-0">
             Some countries don’t collect enough data about the enviroment and
             the sustainable development of their cities and communities.
           </p>
         </div>
 
-        <div class="step-4">
+        <div class="step">
           <p class="fs-4 mb-0">
             Other countries fail in representing social inequalities or
             indicators about their fight against poverty and discrimination.
@@ -408,48 +408,6 @@ export default {
   },
 }
 </script>
-
-<!-- STRUCTURE STYLE -->
-
-<style lang="scss" scoped>
-.scrollytelling {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: ($spacer * 6);
-}
-
-.scrollytelling__graphics {
-  position: sticky;
-  top: calc(50vh - 280px);
-  height: 500px;
-  width: 500px;
-  justify-self: flex-end;
-}
-
-.scrollytelling__texts {
-  display: grid;
-  grid-auto-rows: 1fr;
-  row-gap: ($spacer * 6);
-}
-
-.step-1,
-.step-2,
-.step-3,
-.step-4 {
-  min-height: 500px;
-  opacity: 0.3;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  transition: all 300ms ease-in-out;
-}
-
-.current-step {
-  opacity: 1;
-}
-</style>
-
-<!-- GRAPHICS STYLE -->
 
 <style lang="scss" scoped>
 .goals-container {
