@@ -77,6 +77,8 @@ export default {
           return 'chapter 1'
         case '/narratives/data-disaggregation':
           return 'chapter 2'
+        case '/narratives/data-up-to-date':
+          return 'chapter 3'
         default:
           return null
       }
