@@ -9,9 +9,8 @@
       link="/narratives/data-availability"
       title="01.Why is important to make data available in the Arab Region?"
     />
-    <!-- TODO: Add correct data -->
     <navigation-link
-      link="/"
+      link="/narratives/data-disaggregation"
       title="02.Why is it important to have disaggregated data?"
     />
     <!-- TODO: Add correct data -->
