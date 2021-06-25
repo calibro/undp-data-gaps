@@ -1,10 +1,11 @@
 import Vue from 'vue'
 
 import { csvParse } from 'd3-dsv'
-
-import { select } from 'd3-selection'
-
+import { select, selectAll } from 'd3-selection'
 import { scaleBand } from 'd3-scale'
+import { axisLeft } from 'd3-axis'
+import { transition } from 'd3-transition'
+import { easeQuadOut } from 'd3-ease'
 
 const d3 = {
   // DSV
@@ -12,9 +13,19 @@ const d3 = {
 
   // SELECTION
   select,
+  selectAll,
 
   // SCALE
   scaleBand,
+
+  // AXIS
+  axisLeft,
+
+  // TRANSITION
+  transition,
+
+  // EASE
+  easeQuadOut,
 }
 
 Object.defineProperty(Vue.prototype, '$d3', { value: d3 })
