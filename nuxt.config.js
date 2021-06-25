@@ -14,6 +14,13 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script: [
+      // CONNECTION WITH STANDALONE VUE DEVTOOLS
+      {
+        src:
+          process.env.NODE_ENV !== 'production' ? 'http://localhost:8098' : '',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
