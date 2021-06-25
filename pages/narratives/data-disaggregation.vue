@@ -31,7 +31,7 @@
     </narrative-break-text>
 
     <section class="p-5 bg-dark text-light vh-100">
-      <h1>Data Viz here</h1>
+      <data-disaggregation-viz />
     </section>
   </div>
 </template>
@@ -40,6 +40,7 @@
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataDisaggregationScrollytelling from '~/components/narrative/data-disaggregation/DataDisaggregationScrollytelling'
+import DataDisaggregationViz from '~/components/narrative/data-disaggregation/DataDisaggregationViz'
 
 export default {
   name: 'DataDisaggregationPage',
@@ -48,6 +49,7 @@ export default {
     NarrativeHeader,
     NarrativeBreakText,
     DataDisaggregationScrollytelling,
+    DataDisaggregationViz,
   },
 
   transition: 'fade',
