@@ -33,15 +33,20 @@
     <section class="p-5 bg-dark text-light vh-100 data-viz">
       <div class="border-bottom border-secondary pb-4 data-viz__header">
         <h2>Disaggregated data availability in the Arab Region</h2>
-        <label>
-          Disaggregation by
-          <select v-model="disaggregation" name="disaggregation">
+        <div class="disaggregation-select-container">
+          <label for="disaggregation-select">Disaggregation by</label>
+          <select
+            id="disaggregation-select"
+            v-model="disaggregation"
+            class="form-select"
+            name="disaggregation"
+          >
             <option value="Sex">Sex</option>
             <option value="Education">Education</option>
             <option value="Age">Age</option>
             <option value="Disabilities">Disabilities</option>
           </select>
-        </label>
+        </div>
       </div>
       <data-disaggregation-viz :disaggregation="disaggregation" />
     </section>
@@ -83,5 +88,12 @@ export default {
 .data-viz__header {
   display: flex;
   justify-content: space-between;
+}
+
+.disaggregation-select-container {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  gap: 15px;
 }
 </style>

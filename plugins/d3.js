@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import { csvParse } from 'd3-dsv'
 import { select, selectAll } from 'd3-selection'
-import { scaleBand } from 'd3-scale'
+import { scaleBand, scaleQuantize } from 'd3-scale'
 import { axisLeft } from 'd3-axis'
 import { transition } from 'd3-transition'
 import { easeQuadOut } from 'd3-ease'
@@ -17,6 +17,7 @@ const d3 = {
 
   // SCALE
   scaleBand,
+  scaleQuantize,
 
   // AXIS
   axisLeft,

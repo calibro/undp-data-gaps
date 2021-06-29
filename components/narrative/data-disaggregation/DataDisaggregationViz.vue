@@ -19,7 +19,7 @@ export default {
     return {
       developmentGoals: null,
       vizData: null,
-      goalsData: null,
+      // goalsData: null,
       maxIndicatorCodes: 0,
     }
   },
@@ -33,7 +33,9 @@ export default {
   async mounted() {
     this.developmentGoals = developmentGoals
 
-    const responseVizData = await fetch('/data/data_gaps-data-viz_2.csv')
+    const responseVizData = await fetch(
+      '/data/data_gaps-data-viz_2-ordered.csv'
+    )
     const responseVizDataRawText = await responseVizData.text()
 
     const responseGoalsData = await fetch(
@@ -95,6 +97,7 @@ export default {
 
       const xValue = (d) => d.indicator_code
       const yValue = (d) => d.country
+      // const goalsValue = (d) => d.goal_code
 
       const xScale = this.$d3
         .scaleBand()
@@ -105,6 +108,8 @@ export default {
         )
         .range([0, containerWidth])
         .paddingInner(0.3)
+        .paddingOuter(0.15)
+        .align(0.5)
 
       const yScale = this.$d3
         .scaleBand()
@@ -113,6 +118,18 @@ export default {
         .paddingInner(0.3)
         .paddingOuter(0.15)
         .align(0.5)
+
+      // const goalsScale = this.$d3
+      //   .scaleQuantize()
+      //   .domain(
+      //     vizData
+      //       .filter((d) => d.disaggregation === this.disaggregation)
+      //       .map(goalsValue)
+      //   )
+      //   .range([0, containerWidth])
+      //   .paddingInner(0.3)
+      //   .paddingOuter(0.15)
+      //   .align(0.5)
 
       /* ----------- TABLE ROWS (Alternating colors) ----------- */
 
@@ -153,7 +170,6 @@ export default {
           'height',
           `calc(100% - ${safeAreaMargins.top}px - ${safeAreaMargins.bottom}px)`
         )
-        .style('bottom', 0)
 
       yAxisGroup
         .selectAll('span')
@@ -162,7 +178,36 @@ export default {
         .append('div')
         .style('height', `calc(100% / ${yScale.domain().length})`)
         .append('span')
-        .text((d) => d)
+        .text((d) => {
+          return d
+        })
+
+      const xAxisSafeArea = container
+        .append('div')
+        .classed('x-axis-safearea', true)
+        .style(
+          'width',
+          `calc(100% - ${safeAreaMargins.right}px - ${safeAreaMargins.left}px)`
+        )
+
+      const xAxisGroup = xAxisSafeArea
+        .append('div')
+        .classed('x-axis-container', true)
+        .style(
+          'width',
+          () => (xScale.domain().length * 100) / this.maxIndicatorCodes + '%'
+        )
+
+      xAxisGroup
+        .selectAll('span')
+        .data(xScale.domain())
+        .enter()
+        .append('div')
+        .style('width', `calc(100% / ${xScale.domain().length})`)
+        .append('span')
+        .text((d) => {
+          return d
+        })
 
       /* ----------- RECTS ----------- */
 
@@ -200,6 +245,11 @@ export default {
         .style('top', (d) => yScale(yValue(d)) + '%')
         .style('width', xScale.bandwidth() + '%')
         .style('height', yScale.bandwidth() + '%')
+        .attr(
+          'title',
+          (d) =>
+            `Goal: ${d.goal_code}, Code: ${d.indicator_code}, Country: ${d.country}`
+        )
         .attr('class', (d) => {
           if (d.availability === '0.5') {
             return 'data-disaggregation-viz-rect data-disaggregation-viz-rect--masked'
@@ -272,6 +322,7 @@ export default {
 .y-axis-container {
   position: absolute;
   left: 0;
+  bottom: 0;
   width: 180px;
   height: 100%;
 
@@ -285,6 +336,35 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       direction: rtl;
+    }
+  }
+}
+
+.x-axis-safearea {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+}
+
+.x-axis-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+
+  & div {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transform: rotate(90deg);
+
+    & span {
+      // white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      writing-mode: sideways-lr;
     }
   }
 }
