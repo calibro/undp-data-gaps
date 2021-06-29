@@ -10,6 +10,7 @@
         py-5 py-lg-6
         text-light
         h-100
+        header__content
       "
     >
       <div class="header__title">
@@ -72,9 +73,16 @@ export default {
 
 <style lang="scss" scoped>
 header {
+  overflow: hidden;
+
   @include media-breakpoint-up(lg) {
     height: 100vh;
   }
+}
+
+.header__content {
+  position: relative;
+  z-index: 10;
 }
 
 .header__title {
@@ -87,6 +95,6 @@ header {
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: -999;
+  z-index: 0;
 }
 </style>

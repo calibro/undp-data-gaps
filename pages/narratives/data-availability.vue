@@ -5,7 +5,12 @@
       title="Why is important to make data available in the Arab Region?"
       scroll-into-element-id="scroll-into-target"
     >
-      <div style="background: black; height: 100%; width: 100%"></div>
+      <div
+        class="narrative-header__image"
+        style="
+          background-image: url(~assets/images/narrative/data-availability/header-test.webp);
+        "
+      ></div>
     </narrative-header>
 
     <narrative-break-text id="scroll-into-target">
@@ -69,4 +74,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.narrative-header__image {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+</style>
