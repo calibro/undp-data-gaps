@@ -43,8 +43,20 @@
       </p>
     </narrative-break-text>
 
-    <section class="p-5 bg-dark text-light vh-100">
-      <h1>Data Viz here</h1>
+    <section class="p-5 bg-dark text-light vh-100 d-flex">
+      <div>
+        <label for="disaggregation-select">Filter by</label>
+        <select
+          id="disaggregation-select"
+          v-model="selectedSdg"
+          class="form-select"
+          name="disaggregation"
+        >
+          <option value="all">All</option>
+          <option v-for="num in 17" :key="num" :value="num">{{ num }}</option>
+        </select>
+      </div>
+      <data-availability-viz :selected-sdg="selectedSdg" />
     </section>
   </div>
 </template>
@@ -54,6 +66,7 @@ import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataAvailabilityScrollytelling from '~/components/narrative/data-availability/DataAvailabilityScrollytelling'
 import DataAvailabilityScrollytellingMobile from '~/components/narrative/data-availability/DataAvailabilityScrollytellingMobile'
+import DataAvailabilityViz from '~/components/narrative/data-availability/DataAvailabilityViz'
 
 export default {
   name: 'DataAvailabilityPage',
@@ -63,9 +76,16 @@ export default {
     NarrativeBreakText,
     DataAvailabilityScrollytelling,
     DataAvailabilityScrollytellingMobile,
+    DataAvailabilityViz,
   },
 
   transition: 'fade',
+
+  data() {
+    return {
+      selectedSdg: 'all',
+    }
+  },
 }
 </script>
 

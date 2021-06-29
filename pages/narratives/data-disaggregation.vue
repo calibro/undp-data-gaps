@@ -30,8 +30,25 @@
       </p>
     </narrative-break-text>
 
-    <section class="p-5 bg-dark text-light vh-100">
-      <h1>Data Viz here</h1>
+    <section class="p-5 bg-dark text-light vh-100 data-viz">
+      <div class="border-bottom border-secondary pb-4 data-viz__header">
+        <h2>Disaggregated data availability in the Arab Region</h2>
+        <div class="disaggregation-select-container">
+          <label for="disaggregation-select">Disaggregation by</label>
+          <select
+            id="disaggregation-select"
+            v-model="disaggregation"
+            class="form-select"
+            name="disaggregation"
+          >
+            <option value="Sex">Sex</option>
+            <option value="Education">Education</option>
+            <option value="Age">Age</option>
+            <option value="Disabilities">Disabilities</option>
+          </select>
+        </div>
+      </div>
+      <data-disaggregation-viz :disaggregation="disaggregation" />
     </section>
   </div>
 </template>
@@ -40,6 +57,7 @@
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataDisaggregationScrollytelling from '~/components/narrative/data-disaggregation/DataDisaggregationScrollytelling'
+import DataDisaggregationViz from '~/components/narrative/data-disaggregation/DataDisaggregationViz'
 
 export default {
   name: 'DataDisaggregationPage',
@@ -48,10 +66,34 @@ export default {
     NarrativeHeader,
     NarrativeBreakText,
     DataDisaggregationScrollytelling,
+    DataDisaggregationViz,
   },
 
   transition: 'fade',
+
+  data() {
+    return {
+      disaggregation: 'Sex',
+    }
+  },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.data-viz {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+}
+
+.data-viz__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.disaggregation-select-container {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  gap: 15px;
+}
+</style>
