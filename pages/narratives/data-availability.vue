@@ -43,8 +43,20 @@
       </p>
     </narrative-break-text>
 
-    <section class="p-5 bg-dark text-light vh-100">
-      <data-availability-viz />
+    <section class="p-5 bg-dark text-light vh-100 d-flex">
+      <div>
+        <label for="disaggregation-select">Filter by</label>
+        <select
+          id="disaggregation-select"
+          v-model="selectedSdg"
+          class="form-select"
+          name="disaggregation"
+        >
+          <option value="all">All</option>
+          <option v-for="num in 17" :key="num" :value="num">{{ num }}</option>
+        </select>
+      </div>
+      <data-availability-viz :selected-sdg="selectedSdg" />
     </section>
   </div>
 </template>
@@ -68,6 +80,12 @@ export default {
   },
 
   transition: 'fade',
+
+  data() {
+    return {
+      selectedSdg: 'all',
+    }
+  },
 }
 </script>
 
