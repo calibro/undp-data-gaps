@@ -44,7 +44,7 @@
     </narrative-break-text>
 
     <section class="p-5 bg-dark text-light vh-100">
-      <h1>Data Viz here</h1>
+      <data-availability-viz />
     </section>
   </div>
 </template>
@@ -54,6 +54,7 @@ import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataAvailabilityScrollytelling from '~/components/narrative/data-availability/DataAvailabilityScrollytelling'
 import DataAvailabilityScrollytellingMobile from '~/components/narrative/data-availability/DataAvailabilityScrollytellingMobile'
+import DataAvailabilityViz from '~/components/narrative/data-availability/DataAvailabilityViz'
 
 export default {
   name: 'DataAvailabilityPage',
@@ -63,6 +64,7 @@ export default {
     NarrativeBreakText,
     DataAvailabilityScrollytelling,
     DataAvailabilityScrollytellingMobile,
+    DataAvailabilityViz,
   },
 
   transition: 'fade',
