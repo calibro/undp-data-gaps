@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <div id="data-availability-viz" class="viz-container"></div>
-  </div>
+  <div id="data-availability-viz"></div>
 </template>
 
 <script>
@@ -15,10 +13,15 @@ export default {
       type: String,
       required: true,
     },
+    containerWidth: {
+      type: Number,
+      required: true,
+    },
   },
 
   data() {
     return {
+      vizReady: false,
       developmentGoals: null,
       vizData: null,
       goalsData: null,
@@ -27,7 +30,13 @@ export default {
 
   watch: {
     selectedSdg(oldValue, newValue) {
-      this.updateViz(oldValue, newValue)
+      this.updateViz()
+    },
+
+    containerWidth() {
+      if (this.vizReady) {
+        this.updateViz()
+      }
     },
   },
 
@@ -65,12 +74,14 @@ export default {
       d.sdg_code = +d.sdg_code
     })
 
+    this.vizReady = true
+
     this.drawViz(this.vizData, this.goalsData)
   },
 
   methods: {
     drawViz(vizData, goalsData) {
-      const svgWidth = 600 // width / 1.5
+      const svgWidth = this.containerWidth
       const svg = this.$d3
         .select('#data-availability-viz')
         .append('svg')
@@ -276,7 +287,7 @@ export default {
       }
     },
 
-    updateViz(oldValue, newValue) {
+    updateViz() {
       const container = this.$d3.select('#data-availability-viz')
       container.selectChildren('*').remove()
 
