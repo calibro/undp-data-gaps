@@ -29,6 +29,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/bus.js',
+    { src: '~/plugins/d3.js', mode: 'client' },
     { src: '~/plugins/anime.js', mode: 'client' },
     { src: '~/plugins/vue-scrollama.js', mode: 'client' },
     { src: '~/plugins/smoothscroll-polyfill.js', mode: 'client' },
