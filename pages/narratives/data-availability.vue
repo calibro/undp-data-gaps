@@ -72,7 +72,46 @@
             />
           </div>
         </div>
-        <div class="data-viz__controls"></div>
+        <aside class="data-viz__controls">
+          <div
+            v-for="goal in $goals"
+            :key="goal.id"
+            class="
+              p-3
+              border-bottom border-secondary
+              d-flex
+              align-items-center
+              justify-content-between
+              data-viz__controls__filter
+            "
+            :class="{
+              'data-viz__controls__filter--active':
+                selectedSdg === String(goal.id) || selectedSdg === 'all',
+            }"
+            @click="changeSelectedSdg(goal.id)"
+          >
+            <div
+              class="
+                d-flex
+                align-items-center
+                data-viz__controls__filter__label
+              "
+            >
+              <div
+                class="me-3 data-viz__controls__filter__circle"
+                :style="{ background: goal.color }"
+              ></div>
+              <span>{{ goal.id }}. {{ goal.title }}</span>
+            </div>
+            <img
+              class="h-100 w-auto"
+              :src="
+                require(`~/assets/images/sdg-icons/sdg_icon-${goal.id}.svg`)
+              "
+              :alt="goal.title + '| UDNP'"
+            />
+          </div>
+        </aside>
       </div>
     </section>
   </div>
@@ -147,6 +186,14 @@ export default {
 
       this.getMinimumContainerDimension()
     },
+
+    changeSelectedSdg(goalID) {
+      if (this.selectedSdg === String(goalID)) {
+        this.selectedSdg = 'all'
+      } else {
+        this.selectedSdg = String(goalID)
+      }
+    },
   },
 }
 </script>
@@ -189,12 +236,41 @@ export default {
     opacity: 0.5;
     will-change: transform;
   }
-}
 
-.disaggregation-select-container {
-  display: grid;
-  grid-template-columns: max-content max-content;
-  align-items: center;
-  gap: 15px;
+  & .data-viz__controls {
+    overflow-y: scroll;
+
+    & .data-viz__controls__filter {
+      height: 70px;
+      cursor: pointer;
+
+      & * {
+        opacity: 0.6;
+        transition: opacity 400ms ease-in-out;
+      }
+
+      & .data-viz__controls__filter__label {
+        overflow: hidden;
+
+        & .data-viz__controls__filter__circle {
+          height: 14px;
+          width: 14px;
+          border-radius: 50%;
+        }
+
+        & span {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    & .data-viz__controls__filter--active {
+      & * {
+        opacity: 1;
+      }
+    }
+  }
 }
 </style>
