@@ -30,6 +30,7 @@ export default {
   plugins: [
     '~/plugins/bus.js',
     { src: '~/plugins/d3.js', mode: 'client' },
+    { src: '~/plugins/goals.js', mode: 'client' },
     { src: '~/plugins/anime.js', mode: 'client' },
     { src: '~/plugins/vue-scrollama.js', mode: 'client' },
     { src: '~/plugins/smoothscroll-polyfill.js', mode: 'client' },
