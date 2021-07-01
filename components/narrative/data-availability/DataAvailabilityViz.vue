@@ -1,5 +1,7 @@
 <template>
-  <div id="data-availability-viz"></div>
+  <div id="data-availability-viz" ref="mainDiv">
+    <svg></svg>
+  </div>
 </template>
 
 <script>
@@ -82,9 +84,10 @@ export default {
   methods: {
     drawViz(vizData, goalsData) {
       const svgWidth = this.containerWidth
+
       const svg = this.$d3
-        .select('#data-availability-viz')
-        .append('svg')
+        .select(this.$refs.mainDiv)
+        .select('svg')
         .attr('height', svgWidth)
         .attr('width', svgWidth)
 
@@ -98,9 +101,6 @@ export default {
       const chartWidth = svgWidth - margin.right - margin.left
       const chartHeight = svgWidth - margin.top - margin.bottom
 
-      const chartContainer = svg
-        .append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`)
       const countryDomain = vizData.map((d) => d[0])
 
       const radialScale = this.$d3
@@ -122,7 +122,7 @@ export default {
 
       const sdgColorScale = this.$d3
         .scaleOrdinal()
-        .domain(this.$d3.range(17).map((d) => d.toString()))
+        .domain(this.$d3.range(17).map((d) => (d + 1).toString()))
         .range([
           '#E5243B',
           '#DDA63A',
@@ -143,9 +143,40 @@ export default {
           '#19486A',
         ])
 
+      let xAxisG = svg
+        .select('#xAxis')
+        .attr('transform', `translate(${svgWidth / 2},${svgWidth / 2})`)
+
+      if (xAxisG.empty()) {
+        xAxisG = svg
+          .append('g')
+          .attr('transform', `translate(${svgWidth / 2},${svgWidth / 2})`)
+          .attr('id', 'xAxis')
+      }
+
+      let yAxisG = svg
+        .select('#yAxis')
+        .attr('transform', `translate(${svgWidth / 2},${svgWidth / 2})`)
+
+      if (yAxisG.empty()) {
+        yAxisG = svg
+          .append('g')
+          .attr('transform', `translate(${svgWidth / 2},${svgWidth / 2})`)
+          .attr('id', 'yAxis')
+      }
+
+      let chartContainer = svg.select('#chartContainer')
+
+      if (chartContainer.empty()) {
+        chartContainer = svg
+          .append('g')
+          .attr('id', 'chartContainer')
+          .attr('transform', `translate(${margin.left},${margin.top})`)
+      }
+
       const countries = chartContainer
         .selectAll('g')
-        .data(vizData)
+        .data(vizData, (d) => d[0])
         .join('g')
         .attr('id', (d) => {
           return d[0]
@@ -156,10 +187,14 @@ export default {
           }) rotate(${radialScale(d[0])})`
         })
 
-      countries
-        .selectAll('circle.sdg')
-        .data((d) => d[1])
-        .join('circle')
+      let testCircles = countries.selectAll('circle.sdg').data(
+        (d) => d[1],
+        (d) => 'd_' + d[0]
+      )
+
+      const testCirclesEnter = testCircles
+        .enter()
+        .append('circle')
         .attr('class', 'sdg')
         .attr('cx', 0)
         .attr('cy', (d) => {
@@ -167,114 +202,217 @@ export default {
         })
         .attr('r', (d) => circleRadiusScale(d[1].percentage))
         .attr('fill', (d) => sdgColorScale(d[0]))
-        .attr('opacity', 0.75)
-        .filter(
-          (d) =>
-            this.selectedSdg !== 'all' && d[0] !== this.selectedSdg.toString()
-        )
         .attr('opacity', 0)
 
-      if (this.selectedSdg === 'all') {
-        countries
-          .selectAll('circle.mean')
-          .data((d) => [d[1]])
-          .join('circle')
-          .attr('class', 'mean')
-          .attr('cx', 0)
-          .attr('cy', (d) => {
-            return yScale(this.$d3.median(d, (m) => m[1].percentage))
-          })
-          .attr('r', 2)
-      }
+      testCircles = testCircles.merge(testCirclesEnter)
 
-      if (this.selectedSdg !== 'all') {
-        chartContainer
-          .append('circle')
-          .attr('cx', chartWidth / 2)
-          .attr('cy', chartWidth / 2)
-          .attr('r', yScale(this.countryMean(this.selectedSdg, this.vizData)))
-          .attr('fill', 'none')
-          .attr('stroke', sdgColorScale(this.selectedSdg.toString()))
-          .attr('stroke-dasharray', '6,6')
-          .attr('stroke-width', 2)
-      }
+      testCircles
+        .transition()
+        .attr('opacity', (d) => {
+          return this.selectedSdg !== 'all' &&
+            d[0] !== this.selectedSdg.toString()
+            ? 0
+            : 0.75
+        })
+        .attr('cy', (d) => {
+          return yScale(d[1].percentage)
+        })
 
-      const yAxis = (g) =>
-        g.attr('text-anchor', 'middle').call((g) =>
-          g
-            .selectAll('g')
-            .data(yScale.ticks())
-            .join('g')
-            .attr('fill', 'none')
-            .call((g) =>
-              g.append('circle').attr('stroke', '#ccc').attr('r', yScale)
-            )
-            .call((g) =>
-              g
-                .append('text')
-                .attr('y', (d) => -yScale(d))
-                .attr('x', 0)
-                .attr('dominant-baseline', 'middle')
-                .text((d) => d + '%')
-                .attr('font-size', '10px')
-                .attr('font-family', 'Arial')
-                .attr('fill', 'black')
-                .attr('text-align', 'middle')
-            )
+      countries
+        .selectAll('circle.mean')
+        .data((d) => [d[1]])
+        .join(
+          (enter) =>
+            enter
+              .append('circle')
+              .attr('class', 'mean')
+              .attr('r', 2)
+              .attr('cy', (d) => {
+                return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              }),
+          (update) =>
+            update
+              .transition()
+              .attr('r', (d) => {
+                return this.selectedSdg === 'all' ? 2 : 0
+              })
+              .attr('cy', (d) => {
+                return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              })
+              .selection()
         )
+        .attr('cx', 0)
+        .attr('fill', 'white')
 
-      // yAxisG
-      svg
-        .append('g')
-        .attr('transform', `translate(${svgWidth / 2},${svgWidth / 2})`)
-        .attr('id', 'yAxis')
-        .call(yAxis)
+      const sgdMean =
+        this.selectedSdg !== 'all'
+          ? [this.countryMean(this.selectedSdg, this.vizData)]
+          : []
 
-      const xAxis = (g) =>
-        g.call((g) =>
-          g
-            .selectAll('g')
-            .data(radialScale.domain())
-            .join('g')
-            .attr(
-              'transform',
-              (d) => `
-     rotate(${radialScale(d) + 90})`
-            )
-            .call((g) =>
-              g
-                .append('line')
-                .attr('x2', chartWidth / 2)
-                .attr('x1', innerRadius)
-                .attr('stroke', '#ccc')
-            )
-            .call((g) =>
-              g
-                .append('text')
-                .attr('dominant-baseline', 'middle')
-                .attr('text-anchor', 'middle')
+      chartContainer
+        .selectAll('circle.sdgMean')
+        .data(sgdMean)
+        .join(
+          (enter) =>
+            enter
+              .append('circle')
+              .attr('class', 'sdgMean')
+              .attr('r', (d) => yScale(d))
+              .attr('stroke', sdgColorScale(this.selectedSdg.toString())),
+          (update) =>
+            update
+              .transition()
+              .attr('r', (d) => yScale(d))
+              .attr('stroke', sdgColorScale(this.selectedSdg.toString()))
+              .selection(),
+          (exit) => exit.remove()
+        )
+        .attr('cx', chartWidth / 2)
+        .attr('cy', chartWidth / 2)
+        .attr('fill', 'none')
+        .attr('stroke-dasharray', '6,6')
+        .attr('stroke-width', 1)
+
+      const arc = this.$d3
+        .arc()
+        .startAngle((radialScale.bandwidth() * Math.PI) / 180)
+        .endAngle(Math.PI * 2 - (radialScale.bandwidth() * Math.PI) / 180)
+
+      const yAxis = (g) => {
+        const tickGroup = g
+          .selectAll('g')
+          .data(yScale.ticks(5))
+          .join(
+            (enter) => {
+              return enter
+                .append('g')
+                .call((tg) =>
+                  tg
+                    .append('path')
+                    .attr('d', (d) => {
+                      return arc({
+                        innerRadius: yScale(d) - 1,
+                        outerRadius: yScale(d),
+                      })
+                    })
+                    .attr('stroke', 'none')
+                    .attr('fill', '#2b2a2a')
+                )
+                .call((tg) =>
+                  tg
+                    .append('text')
+                    .attr('y', (d) => -yScale(d))
+                    .attr('x', 0)
+                    .attr('dominant-baseline', 'middle')
+                    .attr('font-size', '10px')
+                    .attr('font-family', 'Arial')
+                    .attr('fill', 'white')
+                    .attr('opacity', 0.3)
+                    .attr('text-anchor', 'middle')
+                    .text((d) => d + '%')
+                    .call((text) => {
+                      return text
+                        .clone(true)
+                        .each(function () {
+                          this.parentNode.insertBefore(
+                            this,
+                            this.previousSibling
+                          )
+                        })
+                        .attr('fill', 'none')
+                        .attr('stroke', '#0b1418')
+                        .attr('stroke-width', 6)
+                        .attr('stroke-linejoin', 'round')
+                        .attr('opacity', 1)
+                    })
+                )
+            },
+            (update) => {
+              return update
+                .call((tg) =>
+                  tg.selectAll('path').attr('d', (d) => {
+                    return arc({
+                      innerRadius: yScale(d) - 1,
+                      outerRadius: yScale(d),
+                    })
+                  })
+                )
+                .call((tg) => tg.selectAll('text').attr('y', (d) => -yScale(d)))
+            }
+          )
+
+        return tickGroup
+      }
+
+      yAxisG.call(yAxis)
+
+      const xAxis = (g) => {
+        const tickGoup = g
+          .selectAll('g')
+          .data(radialScale.domain())
+          .join(
+            (enter) =>
+              enter
+                .append('g')
                 .attr(
                   'transform',
-                  (d) =>
-                    `translate(${chartWidth / 2},0) rotate(${
-                      radialScale(d) + 180 >= 270 || radialScale(d) + 180 < 90
-                        ? 90
-                        : -90
-                    })`
+                  (d) => `
+       rotate(${radialScale(d) + 90})`
                 )
-                .text((d) => d)
-                .attr('font-size', '10px')
-                .attr('font-family', 'Arial')
-                .attr('fill', 'black')
-            )
-        )
+                .call((tg) =>
+                  tg
+                    .call((g) =>
+                      g
+                        .append('line')
+                        .attr('x2', chartWidth / 2)
+                        .attr('x1', innerRadius)
+                        .attr('stroke', '#2b2a2a')
+                    )
+                    .call((g) =>
+                      g
+                        .append('text')
+                        .attr('text-anchor', 'middle')
+                        .attr(
+                          'transform',
+                          (d) =>
+                            `translate(${chartWidth / 2 + 15},0) rotate(${
+                              radialScale(d) + 180 >= 270 ||
+                              radialScale(d) + 180 < 90
+                                ? 90
+                                : -90
+                            })`
+                        )
+                        .attr('font-size', '10px')
+                        .attr('font-family', 'Arial')
+                        .attr('fill', 'white')
+                        .text((d) => d.toUpperCase())
+                    )
+                ),
+            (update) =>
+              update.call((tg) =>
+                tg
+                  .call((g) => g.select('line').attr('x2', chartWidth / 2))
+                  .call((g) =>
+                    g
+                      .select('text')
 
-      // xAxisG
-      svg
-        .append('g')
-        .attr('transform', `translate(${svgWidth / 2},${svgWidth / 2})`)
-        .attr('id', 'xAxis')
-        .call(xAxis)
+                      .attr(
+                        'transform',
+                        (d) =>
+                          `translate(${chartWidth / 2 + 15},0) rotate(${
+                            radialScale(d) + 180 >= 270 ||
+                            radialScale(d) + 180 < 90
+                              ? 90
+                              : -90
+                          })`
+                      )
+                  )
+              )
+          )
+        return tickGoup
+      }
+
+      xAxisG.call(xAxis)
     },
 
     countryMean(sdg, countryGroup) {
@@ -288,9 +426,6 @@ export default {
     },
 
     updateViz() {
-      const container = this.$d3.select('#data-availability-viz')
-      container.selectChildren('*').remove()
-
       this.drawViz(this.vizData, this.goalsData)
     },
   },

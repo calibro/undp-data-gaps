@@ -160,14 +160,8 @@ export default {
       const container = this.$refs.dataAvailabilityVizContainer
       const width = container.offsetWidth
       const height = container.offsetHeight
-
-      if (width <= height) {
-        this.minimumContainerDimension = width
-        return width
-      } else {
-        this.minimumContainerDimension = height
-        return height
-      }
+      this.minimumContainerDimension = Math.min(width, height)
+      return Math.min(width, height)
     },
 
     saveVizFromResize() {

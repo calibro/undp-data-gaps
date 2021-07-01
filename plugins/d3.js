@@ -7,6 +7,7 @@ import { axisLeft } from 'd3-axis'
 import { transition } from 'd3-transition'
 import { easeQuadOut } from 'd3-ease'
 import { rollups, median, descending, range } from 'd3-array'
+import { arc } from 'd3-shape'
 
 const d3 = {
   // DSV
@@ -36,6 +37,9 @@ const d3 = {
   median,
   descending,
   range,
+
+  // SHAPE
+  arc,
 }
 
 Object.defineProperty(Vue.prototype, '$d3', { value: d3 })
