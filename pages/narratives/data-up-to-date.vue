@@ -26,8 +26,25 @@
       </p>
     </narrative-break-text>
 
-    <section class="p-5 bg-dark text-light vh-100">
-      <h1>Data Viz here</h1>
+    <section class="p-5 bg-dark text-light vh-100 data-viz">
+      <div class="border-bottom border-secondary pb-4 data-viz__header">
+        <h2>Number of data points per year</h2>
+        <!-- <div class="disaggregation-select-container">
+          <label for="disaggregation-select">SDG</label>
+          <select
+            id="disaggregation-select"
+            v-model="disaggregation"
+            class="form-select"
+            name="disaggregation"
+          >
+            <option value="Sex">Sex</option>
+            <option value="Education">Education</option>
+            <option value="Age">Age</option>
+            <option value="Disabilities">Disabilities</option>
+          </select>
+        </div> -->
+      </div>
+      <data-up-to-date-viz />
     </section>
   </div>
 </template>
@@ -36,6 +53,7 @@
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataUpToDateScrollytelling from '~/components/narrative/data-up-to-date/DataUpToDateScrollytelling'
+import DataUpToDateViz from '~/components/narrative/data-up-to-date/DataUpToDateViz'
 
 export default {
   name: 'DataUpToDatePage',
@@ -44,6 +62,15 @@ export default {
     NarrativeHeader,
     NarrativeBreakText,
     DataUpToDateScrollytelling,
+    DataUpToDateViz,
+  },
+
+  transition: 'fade',
+
+  data() {
+    return {
+      disaggregation: 'Sex',
+    }
   },
 }
 </script>
@@ -56,5 +83,22 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.data-viz {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+}
+
+.data-viz__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.disaggregation-select-container {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  gap: 15px;
 }
 </style>
