@@ -187,12 +187,12 @@ export default {
           }) rotate(${radialScale(d[0])})`
         })
 
-      let testCircles = countries.selectAll('circle.sdg').data(
+      let circles = countries.selectAll('circle.sdg').data(
         (d) => d[1],
         (d) => 'd_' + d[0]
       )
 
-      const testCirclesEnter = testCircles
+      const circlesEnter = circles
         .enter()
         .append('circle')
         .attr('class', 'sdg')
@@ -204,9 +204,9 @@ export default {
         .attr('fill', (d) => sdgColorScale(d[0]))
         .attr('opacity', 0)
 
-      testCircles = testCircles.merge(testCirclesEnter)
+      circles = circles.merge(circlesEnter)
 
-      testCircles
+      circles
         .transition()
         .attr('opacity', (d) => {
           return this.selectedSdg !== 'all' &&
@@ -219,30 +219,39 @@ export default {
         })
 
       countries
-        .selectAll('circle.mean')
+        .selectAll('line.mean')
         .data((d) => [d[1]])
         .join(
           (enter) =>
             enter
-              .append('circle')
+              .append('line')
               .attr('class', 'mean')
-              .attr('r', 2)
-              .attr('cy', (d) => {
+              .attr('opacity', (d) => {
+                return this.selectedSdg === 'all' ? 1 : 0
+              })
+              .attr('x1', -18)
+              .attr('y1', (d) => {
+                return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              })
+              .attr('x2', 18)
+              .attr('y2', (d) => {
                 return yScale(this.$d3.median(d, (m) => m[1].percentage))
               }),
           (update) =>
             update
               .transition()
-              .attr('r', (d) => {
-                return this.selectedSdg === 'all' ? 2 : 0
-              })
-              .attr('cy', (d) => {
+              .attr('y1', (d) => {
                 return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              })
+              .attr('y2', (d) => {
+                return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              })
+              .attr('opacity', (d) => {
+                return this.selectedSdg === 'all' ? 1 : 0
               })
               .selection()
         )
-        .attr('cx', 0)
-        .attr('fill', 'white')
+        .attr('stroke', 'white')
 
       const sgdMean =
         this.selectedSdg !== 'all'
