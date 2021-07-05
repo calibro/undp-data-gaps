@@ -6,8 +6,7 @@
         flex-column
         justify-content-between
         align-items-start
-        px-3 px-lg-5
-        py-5 py-lg-6
+        p-3 p-lg-5
         text-light
         h-100
         header__content
@@ -18,7 +17,7 @@
           CHAPTER {{ chapterNumber }}
         </span>
 
-        <h1 class="display-2">{{ title }}</h1>
+        <h1 class="display-2 fw-normal">{{ title }}</h1>
       </div>
 
       <mq-layout mq="xl+">
