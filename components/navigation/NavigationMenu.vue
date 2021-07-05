@@ -17,8 +17,7 @@
       link="/narratives/data-up-to-date"
       title="03.Why is it important to have up-to-date statistic?"
     />
-    <!-- TODO: Add correct data -->
-    <navigation-link link="/" title="About" />
+    <navigation-link link="/about" title="About" />
   </nav>
 </template>
 
