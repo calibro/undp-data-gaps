@@ -79,6 +79,8 @@ export default {
           return 'chapter 2'
         case '/narratives/data-up-to-date':
           return 'chapter 3'
+        case '/about':
+          return 'about'
         default:
           return null
       }
