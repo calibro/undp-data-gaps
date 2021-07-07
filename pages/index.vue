@@ -3,6 +3,7 @@
     <header class="position-relative bg-dark">
       <div
         class="
+          position-relative
           d-flex
           flex-column
           justify-content-between
@@ -11,10 +12,9 @@
           text-light
           h-100
           w-100
-          header__content
         "
       >
-        <div class="w-100 border-bottom border-secondary h-100">
+        <div class="w-100 border-bottom border-secondary h-100 header__content">
           <span class="d-block border-bottom border-secondary w-100 mb-4 pb-3">
             UNDP AND ARAB DEVELOPMENT PORTAL
           </span>
@@ -22,20 +22,11 @@
           <h1 class="display-0 fw-normal m-0 header__title">
             Data Availability and Data Gaps in the Arab Region
           </h1>
+
+          <div class="header__background">
+            <home-header-animation />
+          </div>
         </div>
-
-        <!-- <mq-layout mq="xl+">
-          <button
-            class="btn btn-link p-0 text-light text-decoration-none"
-            @click="scrollDown"
-          >
-            Scroll down
-          </button>
-        </mq-layout> -->
-      </div>
-
-      <div class="header__background">
-        <slot></slot>
       </div>
     </header>
 
@@ -133,8 +124,16 @@
 </template>
 
 <script>
+import HomeHeaderAnimation from '~/components/homeHeaderAnimation'
+// import HomeHeaderAnimation2 from '~/components/homeHeaderAnimation2'
+
 export default {
   name: 'IndexPage',
+
+  components: {
+    HomeHeaderAnimation,
+    // HomeHeaderAnimation2,
+  },
 
   transition: 'fade',
 
@@ -157,9 +156,10 @@ header {
   }
 }
 
-.header__content {
+.header__content * {
   position: relative;
   z-index: 10;
+  /* mix-blend-mode: difference; */
 }
 
 .header__title {
