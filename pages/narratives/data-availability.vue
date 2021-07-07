@@ -26,7 +26,7 @@
     </narrative-break-text>
 
     <mq-layout mq="xxl+">
-      <data-availability-scrollytelling />
+      <data-availability-scrollytelling v-if="defer(2)" />
     </mq-layout>
     <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
       <data-availability-scrollytelling-mobile />
@@ -67,6 +67,7 @@
             ref="dataAvailabilityVizContainer"
           >
             <data-availability-viz
+              v-if="defer(3)"
               :selected-sdg="selectedSdg"
               :container-width="minimumContainerDimension"
             />
@@ -118,6 +119,8 @@
 </template>
 
 <script>
+import Defer from '~/mixins/defer.mixin.js'
+
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataAvailabilityScrollytelling from '~/components/narrative/data-availability/DataAvailabilityScrollytelling'
@@ -134,6 +137,8 @@ export default {
     DataAvailabilityScrollytellingMobile,
     DataAvailabilityViz,
   },
+
+  mixins: [Defer()],
 
   transition: 'fade',
 
