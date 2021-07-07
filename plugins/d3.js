@@ -14,6 +14,7 @@ import { transition } from 'd3-transition'
 import { easeQuadOut } from 'd3-ease'
 import {
   rollups,
+  groups,
   median,
   descending,
   range,
@@ -51,6 +52,7 @@ const d3 = {
 
   // ARRAY
   rollups,
+  groups,
   median,
   descending,
   range,
