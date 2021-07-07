@@ -37,23 +37,7 @@ export default {
     }
   },
 
-  watch: {
-    $route() {
-      if (this.$nuxt.$route.path === '/' && !this.isMenuVisible) {
-        this.toggleMenu()
-        this.$bus.$emit('toggle-menu-icon')
-      }
-    },
-  },
-
   mounted() {
-    if (this.$nuxt.$route.path === '/') {
-      window.addEventListener('load', () => {
-        this.toggleMenu()
-        this.$bus.$emit('toggle-menu-icon')
-      })
-    }
-
     this.$bus.$on('toggle-menu', this.toggleMenu)
   },
 
