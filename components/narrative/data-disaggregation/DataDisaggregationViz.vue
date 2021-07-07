@@ -3,8 +3,6 @@
 </template>
 
 <script>
-import developmentGoals from '~/data/development-goals.json'
-
 export default {
   name: 'DataDisaggregationVizComponent',
 
@@ -15,15 +13,6 @@ export default {
     },
   },
 
-  data() {
-    return {
-      developmentGoals: null,
-      vizData: null,
-      // goalsData: null,
-      maxIndicatorCodes: 0,
-    }
-  },
-
   watch: {
     disaggregation(oldValue, newValue) {
       this.updateViz(oldValue, newValue)
@@ -31,7 +20,7 @@ export default {
   },
 
   async mounted() {
-    this.developmentGoals = developmentGoals
+    this.$options.maxIndicatorCodes = 0
 
     const responseVizData = await fetch(
       '/data/data_gaps-data-viz_2-ordered.csv'
@@ -43,10 +32,10 @@ export default {
     )
     const responseGoalsDataRawText = await responseGoalsData.text()
 
-    this.vizData = this.$d3.csvParse(responseVizDataRawText)
+    this.$options.vizData = this.$d3.csvParse(responseVizDataRawText)
 
     const parsedDisaggregations = []
-    this.vizData.forEach((d) => {
+    this.$options.vizData.forEach((d) => {
       d.goal_code = +d.goal_code
 
       // Looping through dataset to find the maximum number of Indicator Codes.
@@ -54,29 +43,29 @@ export default {
       if (!parsedDisaggregations.includes(d.disaggregation)) {
         const codesSet = new Set()
 
-        this.vizData
+        this.$options.vizData
           .filter((entry) => entry.disaggregation === d.disaggregation)
           .forEach((entry) => {
             codesSet.add(entry.indicator_code)
           })
 
-        if (codesSet.size > this.maxIndicatorCodes) {
-          this.maxIndicatorCodes = codesSet.size
+        if (codesSet.size > this.$options.maxIndicatorCodes) {
+          this.$options.maxIndicatorCodes = codesSet.size
         }
 
         parsedDisaggregations.push(d.disaggregation)
       }
     })
-    this.vizData.sort(function (a, b) {
+    this.$options.vizData.sort(function (a, b) {
       return a.goal_code - b.goal_code
     })
 
-    this.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
-    this.goalsData.forEach((d) => {
+    this.$options.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
+    this.$options.goalsData.forEach((d) => {
       d.sdg_code = +d.sdg_code
     })
 
-    this.drawViz(this.vizData, this.goalsData)
+    this.drawViz(this.$options.vizData, this.$options.goalsData)
   },
 
   methods: {
@@ -195,7 +184,9 @@ export default {
         .classed('x-axis-container', true)
         .style(
           'width',
-          () => (xScale.domain().length * 100) / this.maxIndicatorCodes + '%'
+          () =>
+            (xScale.domain().length * 100) / this.$options.maxIndicatorCodes +
+            '%'
         )
 
       xAxisGroup
@@ -231,7 +222,7 @@ export default {
         .style('position', 'absolute')
         .style(
           'width',
-          (xScale.domain().length * 100) / this.maxIndicatorCodes + '%'
+          (xScale.domain().length * 100) / this.$options.maxIndicatorCodes + '%'
         )
         .style('height', '100%')
 
@@ -261,8 +252,7 @@ export default {
           if (d.availability === '0') {
             return 'none'
           } else {
-            return this.developmentGoals.find((goal) => goal.id === d.goal_code)
-              .color
+            return this.$goals.find((goal) => goal.id === d.goal_code).color
           }
         })
         .style('opacity', 0)
@@ -289,7 +279,7 @@ export default {
         const container = this.$d3.select('#data-disaggregation-viz')
         container.selectChildren('*').remove()
 
-        this.drawViz(this.vizData, this.goalsData)
+        this.drawViz(this.$options.vizData, this.$options.goalsData)
       }, 800)
     },
   },
