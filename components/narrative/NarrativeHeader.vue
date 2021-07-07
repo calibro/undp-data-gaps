@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <header class="position-relative bg-dark">
     <div
       class="
@@ -14,16 +14,16 @@
     >
       <div class="header__title">
         <span class="d-block border-bottom border-light mb-4 pb-3">
-          CHAPTER {{ chapterNumber }}
+          CHAPTER {{ props.chapterNumber }}
         </span>
 
-        <h1 class="display-2 fw-normal">{{ title }}</h1>
+        <h1 class="display-2 fw-normal">{{ props.title }}</h1>
       </div>
 
       <mq-layout mq="xl+">
         <button
           class="btn btn-link p-0 text-light text-decoration-none"
-          @click="scrollDown"
+          @click="$options.scrollDown(props.scrollIntoElementId)"
         >
           <!-- TODO: Add Scroll Down icon -->
           Scroll down
@@ -58,14 +58,12 @@ export default {
     },
   },
 
-  methods: {
-    scrollDown() {
-      if (this.scrollIntoElementId) {
-        document
-          .getElementById(this.scrollIntoElementId)
-          .scrollIntoView({ behavior: 'smooth' })
-      }
-    },
+  scrollDown(scrollIntoElementId) {
+    if (scrollIntoElementId) {
+      document
+        .getElementById(scrollIntoElementId)
+        .scrollIntoView({ behavior: 'smooth' })
+    }
   },
 }
 </script>
