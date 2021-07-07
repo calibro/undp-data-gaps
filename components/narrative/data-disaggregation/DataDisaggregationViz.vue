@@ -198,16 +198,37 @@ export default {
           () => (xScale.domain().length * 100) / this.maxIndicatorCodes + '%'
         )
 
+      const axisGroupData = this.$d3.rollups(
+        this.vizData.filter((d) => d.disaggregation === this.disaggregation),
+        (v) => v.length,
+        (d) => d.goal_code,
+        (d) => d.indicator_code
+      )
+
       xAxisGroup
-        .selectAll('span')
-        .data(xScale.domain())
+        .selectAll('div')
+        .data(axisGroupData)
         .enter()
         .append('div')
-        .style('width', `calc(100% / ${xScale.domain().length})`)
-        .append('span')
-        .text((d) => {
-          return d
+        .style('position', 'absolute')
+        .style('left', (d) => {
+          return xScale(d[1][0][0]) + '%'
         })
+        .style('border-bottom', '1px solid #ccc')
+        .style(
+          'width',
+          (d) =>
+            xScale.step() * d[1].length -
+            (xScale.step() - xScale.bandwidth()) +
+            '%'
+        )
+        .style('height', '100%')
+        .style('display', 'flex')
+        .style('justify-content', 'center')
+        .style('align-items', 'flex-end')
+        .append('h6')
+        .attr('class', 'text-white-50 mb-1')
+        .text((d) => d[0])
 
       /* ----------- RECTS ----------- */
 
@@ -352,20 +373,20 @@ export default {
   left: 0;
   top: 0;
   height: 100%;
-  display: flex;
+  // display: flex;
 
-  & div {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    transform: rotate(90deg);
+  // & div {
+  //   display: flex;
+  //   align-items: flex-end;
+  //   justify-content: center;
+  //   transform: rotate(90deg);
 
-    & span {
-      // white-space: nowrap;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
-      writing-mode: sideways-lr;
-    }
-  }
+  //   & span {
+  //     // white-space: nowrap;
+  //     // overflow: hidden;
+  //     // text-overflow: ellipsis;
+  //     writing-mode: sideways-lr;
+  //   }
+  // }
 }
 </style>
