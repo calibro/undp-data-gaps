@@ -9,8 +9,10 @@
 
 <script>
 export default {
-  props: ['height', 'width', 'data', 'margins'],
   name: 'DataUpToDateVizIndicatorsAxis',
+
+  props: ['height', 'width', 'data', 'margins'],
+
   mounted() {
     const chartWidth = this.width - this.margins.left - this.margins.right
     // const chartHeight = this.height - this.margins.top - this.margins.bottom

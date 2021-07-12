@@ -1,5 +1,5 @@
 <template>
-  <svg :height="height" :width="width" ref="mainSVG">
+  <svg ref="mainSVG" :height="height" :width="width">
     <g
       class="gContainer"
       :transform="`translate(${margins.left},${margins.top})`"
@@ -9,8 +9,10 @@
 
 <script>
 export default {
-  props: ['height', 'width', 'data', 'margins'],
   name: 'DataUpToDateVizIndicators',
+
+  props: ['height', 'width', 'data', 'margins'],
+
   mounted() {
     const chartWidth = this.width - this.margins.left - this.margins.right
     const chartHeight = this.height - this.margins.top - this.margins.bottom
