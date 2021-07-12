@@ -34,15 +34,17 @@
             </div>
           </div>
         </summary>
-        <div v-for="indicator in country[1]" :key="indicator[0]" class="row">
-          <div class="col-2 text-end">{{ indicator[0] }}</div>
-          <div class="col-10">
-            <data-up-to-date-indicators
-              :width="indicatorsSumWidth"
-              height="12"
-              :data="indicator[1][0]"
-              :margins="margins"
-            />
+        <div class="py-3">
+          <div v-for="indicator in country[1]" :key="indicator[0]" class="row">
+            <div class="col-2 text-end">{{ indicator[0] }}</div>
+            <div class="col-10">
+              <data-up-to-date-indicators
+                :width="indicatorsSumWidth"
+                height="12"
+                :data="indicator[1][0]"
+                :margins="margins"
+              />
+            </div>
           </div>
         </div>
       </details>
