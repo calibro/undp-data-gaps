@@ -2,7 +2,6 @@
   <nav
     ref="navigationMenu"
     class="position-fixed bottom-0 navigation-menu"
-    style="transform: translateY(100%)"
     @click="navigateMenu"
   >
     <navigation-link
@@ -52,31 +51,15 @@ export default {
       })
     },
 
-    changeVisibility() {
-      this.isMenuVisible = !this.isMenuVisible
-    },
-
     toggleMenu() {
-      this.clearAnimations()
+      this.isMenuVisible = !this.isMenuVisible
 
       if (this.isMenuVisible) {
-        this.$anime({
-          targets: this.$refs.navigationMenu,
-          translateY: '100%',
-          easing: 'easeOutQuint',
-          duration: 500,
-        })
-
-        this.changeVisibility()
+        this.$refs.navigationMenu.classList.remove('navigation-menu--hidden')
+        this.$refs.navigationMenu.classList.add('navigation-menu--visible')
       } else {
-        this.$anime({
-          targets: this.$refs.navigationMenu,
-          translateY: 0,
-          easing: 'easeOutQuint',
-          duration: 500,
-        })
-
-        this.changeVisibility()
+        this.$refs.navigationMenu.classList.remove('navigation-menu--visible')
+        this.$refs.navigationMenu.classList.add('navigation-menu--hidden')
       }
     },
 
@@ -93,9 +76,43 @@ export default {
 .navigation-menu {
   width: calc(100% - #{$sidebar-width});
   z-index: 999;
+  transform: translateY(100%);
+  will-change: transform;
 
   @include media-breakpoint-down(lg) {
     width: 100%;
   }
+}
+
+@keyframes showMenu {
+  0% {
+    display: block;
+  }
+  1% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.navigation-menu--visible {
+  animation: showMenu 500ms ease-in-out forwards;
+}
+
+@keyframes hideMenu {
+  0% {
+    transform: translateY(0);
+  }
+  99% {
+    transform: translateY(100%);
+  }
+  100% {
+    display: none;
+  }
+}
+
+.navigation-menu--hidden {
+  animation: hideMenu 500ms ease-in-out forwards;
 }
 </style>
