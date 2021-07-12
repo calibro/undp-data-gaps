@@ -30,9 +30,17 @@
       </p>
     </narrative-break-text>
 
-    <section class="p-5 bg-dark text-light vh-100 data-viz">
-      <div class="border-bottom border-secondary pb-4 data-viz__header">
-        <h2>Disaggregated data availability in the Arab Region</h2>
+    <section class="bg-dark text-light vh-100 data-viz">
+      <div
+        class="
+          border-top border-bottom border-secondary
+          px-5
+          py-4
+          d-flex
+          justify-content-between
+        "
+      >
+        <h2 class="m-0">Disaggregated data availability in the Arab Region</h2>
         <div class="disaggregation-select-container">
           <label for="disaggregation-select">Disaggregation by</label>
           <select
@@ -48,10 +56,28 @@
           </select>
         </div>
       </div>
-      <data-disaggregation-viz
-        v-if="defer(3)"
-        :disaggregation="disaggregation"
-      />
+
+      <div class="px-5 py-4 pb-0">
+        <data-disaggregation-viz
+          v-if="defer(3)"
+          :disaggregation="disaggregation"
+        />
+      </div>
+
+      <div class="px-5 py-4 d-flex" style="margin-left: 204px">
+        <div class="d-flex align-items-center me-5">
+          <div class="me-3 viz-caption viz-caption--full"></div>
+          <h5 class="m-0">Not available</h5>
+        </div>
+        <div class="d-flex align-items-center me-5">
+          <div class="me-3 viz-caption viz-caption--masked"></div>
+          <h5 class="m-0">Available without disaggregation</h5>
+        </div>
+        <div class="d-flex align-items-center">
+          <div class="me-3 viz-caption"></div>
+          <h5 class="m-0">Available with disaggregation</h5>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -101,15 +127,27 @@ export default {
   grid-template-rows: min-content 1fr;
 }
 
-.data-viz__header {
-  display: flex;
-  justify-content: space-between;
-}
-
 .disaggregation-select-container {
   display: grid;
   grid-template-columns: max-content max-content;
   align-items: center;
   gap: 15px;
+}
+
+.viz-caption {
+  height: 30px;
+  width: 12px;
+  border: solid 1px rgb(64, 64, 64);
+}
+
+.viz-caption--full {
+  background: white;
+}
+
+.viz-caption--masked {
+  background: white;
+  background-image: url(~/assets/images/narrative/data-disaggregation/cuts-mask.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>
