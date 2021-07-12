@@ -26,23 +26,31 @@
       </p>
     </narrative-break-text>
 
-    <section class="p-5 bg-dark text-light vh-100 data-viz">
-      <div class="border-bottom border-secondary pb-4 data-viz__header">
-        <h2>Number of data points per year</h2>
-        <!-- <div class="disaggregation-select-container">
-          <label for="disaggregation-select">SDG</label>
+    <section class="bg-dark text-light vh-100 data-viz">
+      <div
+        class="
+          border-top border-bottom border-secondary
+          px-5
+          py-4
+          d-flex
+          justify-content-between
+        "
+      >
+        <h2 class="m-0">Number of data points per year</h2>
+        <div class="select-container">
+          <label for="select-element">SDG</label>
           <select
-            id="disaggregation-select"
-            v-model="disaggregation"
+            id="select-element"
+            v-model="sdg"
             class="form-select"
-            name="disaggregation"
+            name="sdg"
           >
             <option value="Sex">Sex</option>
             <option value="Education">Education</option>
             <option value="Age">Age</option>
             <option value="Disabilities">Disabilities</option>
           </select>
-        </div> -->
+        </div>
       </div>
       <data-up-to-date-viz />
     </section>
@@ -69,7 +77,7 @@ export default {
 
   data() {
     return {
-      disaggregation: 'Sex',
+      sdg: 'Sex',
     }
   },
 }
@@ -90,12 +98,7 @@ export default {
   grid-template-rows: min-content 1fr;
 }
 
-.data-viz__header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.disaggregation-select-container {
+.select-container {
   display: grid;
   grid-template-columns: max-content max-content;
   align-items: center;

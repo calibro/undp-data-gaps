@@ -41,10 +41,10 @@
         "
       >
         <h2 class="m-0">Disaggregated data availability in the Arab Region</h2>
-        <div class="disaggregation-select-container">
-          <label for="disaggregation-select">Disaggregation by</label>
+        <div class="select-container">
+          <label for="select-element">Disaggregation by</label>
           <select
-            id="disaggregation-select"
+            id="select-element"
             v-model="disaggregation"
             class="form-select"
             name="disaggregation"
@@ -127,7 +127,7 @@ export default {
   grid-template-rows: min-content 1fr;
 }
 
-.disaggregation-select-container {
+.select-container {
   display: grid;
   grid-template-columns: max-content max-content;
   align-items: center;
