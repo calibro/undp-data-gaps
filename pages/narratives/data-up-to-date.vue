@@ -17,7 +17,7 @@
       </p>
     </narrative-break-text>
 
-    <data-up-to-date-scrollytelling />
+    <data-up-to-date-scrollytelling v-if="defer(2)" />
 
     <narrative-break-text>
       <p class="fs-4 mb-5">
@@ -52,12 +52,14 @@
           </select>
         </div>
       </div>
-      <data-up-to-date-viz />
+      <data-up-to-date-viz v-if="defer(3)" />
     </section>
   </div>
 </template>
 
 <script>
+import Defer from '~/mixins/defer.mixin.js'
+
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataUpToDateScrollytelling from '~/components/narrative/data-up-to-date/DataUpToDateScrollytelling'
@@ -72,6 +74,8 @@ export default {
     DataUpToDateScrollytelling,
     DataUpToDateViz,
   },
+
+  mixins: [Defer()],
 
   transition: 'fade',
 
