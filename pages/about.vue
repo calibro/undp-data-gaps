@@ -24,7 +24,7 @@
       </div>
     </header>
 
-    <narrative-break-text justify-content="start">
+    <narrative-break-text justify-content="justify-content-start">
       <h5 class="text-uppercase">Small title</h5>
       <p class="fs-4 mb-5">
         Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Donec id

@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import developmentGoals from '~/data/development-goals.json'
-
 export default {
   name: 'DataAvailabilityVizComponent',
 
@@ -24,9 +22,6 @@ export default {
   data() {
     return {
       vizReady: false,
-      developmentGoals: null,
-      vizData: null,
-      goalsData: null,
     }
   },
 
@@ -43,8 +38,6 @@ export default {
   },
 
   async mounted() {
-    this.developmentGoals = developmentGoals
-
     const responseVizData = await fetch('/data/data_gaps-data-viz_1.csv')
     const responseVizDataRawText = await responseVizData.text()
 
@@ -53,10 +46,10 @@ export default {
     )
     const responseGoalsDataRawText = await responseGoalsData.text()
 
-    this.vizData = this.$d3.csvParse(responseVizDataRawText)
-    this.vizData = this.$d3
+    this.$options.vizData = this.$d3.csvParse(responseVizDataRawText)
+    this.$options.vizData = this.$d3
       .rollups(
-        this.vizData,
+        this.$options.vizData,
         (v) => {
           const countTrue = v.filter((d) => d.availabile === 'TRUE').length
           return { percentage: (countTrue * 100) / v.length, data: v }
@@ -71,14 +64,14 @@ export default {
         )
       })
 
-    this.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
-    this.goalsData.forEach((d) => {
+    this.$options.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
+    this.$options.goalsData.forEach((d) => {
       d.sdg_code = +d.sdg_code
     })
 
     this.vizReady = true
 
-    this.drawViz(this.vizData, this.goalsData)
+    this.drawViz(this.$options.vizData, this.$options.goalsData)
   },
 
   methods: {
@@ -255,7 +248,7 @@ export default {
 
       const sgdMean =
         this.selectedSdg !== 'all'
-          ? [this.countryMean(this.selectedSdg, this.vizData)]
+          ? [this.countryMean(this.selectedSdg, this.$options.vizData)]
           : []
 
       chartContainer
@@ -435,7 +428,7 @@ export default {
     },
 
     updateViz() {
-      this.drawViz(this.vizData, this.goalsData)
+      this.drawViz(this.$options.vizData, this.$options.goalsData)
     },
   },
 }

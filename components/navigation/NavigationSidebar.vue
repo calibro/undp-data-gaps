@@ -22,6 +22,7 @@
         ref="menuButton"
         type="button"
         class="btn p-0 border-0 hamburger hamburger--squeeze"
+        title="Navigation Menu"
         @click="openMenu"
       >
         <span class="hamburger-box">

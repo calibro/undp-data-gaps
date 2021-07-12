@@ -18,7 +18,7 @@
       </p>
     </narrative-break-text>
 
-    <data-disaggregation-scrollytelling />
+    <data-disaggregation-scrollytelling v-if="defer(2)" />
 
     <narrative-break-text>
       <p class="fs-4 mb-5">
@@ -48,12 +48,17 @@
           </select>
         </div>
       </div>
-      <data-disaggregation-viz :disaggregation="disaggregation" />
+      <data-disaggregation-viz
+        v-if="defer(3)"
+        :disaggregation="disaggregation"
+      />
     </section>
   </div>
 </template>
 
 <script>
+import Defer from '~/mixins/defer.mixin.js'
+
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataDisaggregationScrollytelling from '~/components/narrative/data-disaggregation/DataDisaggregationScrollytelling'
@@ -68,6 +73,8 @@ export default {
     DataDisaggregationScrollytelling,
     DataDisaggregationViz,
   },
+
+  mixins: [Defer()],
 
   transition: 'fade',
 

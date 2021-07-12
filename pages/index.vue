@@ -24,7 +24,7 @@
           </h1>
 
           <div class="header__background">
-            <home-header-animation />
+            <home-header-animation v-if="defer(2)" />
           </div>
         </div>
       </div>
@@ -124,6 +124,7 @@
 </template>
 
 <script>
+import Defer from '~/mixins/defer.mixin.js'
 import HomeHeaderAnimation from '~/components/homeHeaderAnimation'
 // import HomeHeaderAnimation2 from '~/components/homeHeaderAnimation2'
 
@@ -134,6 +135,8 @@ export default {
     HomeHeaderAnimation,
     // HomeHeaderAnimation2,
   },
+
+  mixins: [Defer()],
 
   transition: 'fade',
 
