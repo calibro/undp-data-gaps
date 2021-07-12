@@ -22,6 +22,7 @@
         ref="menuButton"
         type="button"
         class="btn p-0 border-0 hamburger hamburger--squeeze"
+        title="Navigation Menu"
         @click="openMenu"
       >
         <span class="hamburger-box">
@@ -77,6 +78,10 @@ export default {
           return 'chapter 1'
         case '/narratives/data-disaggregation':
           return 'chapter 2'
+        case '/narratives/data-up-to-date':
+          return 'chapter 3'
+        case '/about':
+          return 'about'
         default:
           return null
       }

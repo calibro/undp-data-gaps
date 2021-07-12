@@ -13,7 +13,20 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://api.fontshare.com/css?f[]=switzer@1,2&display=swap',
+      },
+    ],
+    script: [
+      // CONNECTION WITH STANDALONE VUE DEVTOOLS
+      {
+        src:
+          process.env.NODE_ENV !== 'production' ? 'http://localhost:8098' : '',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -22,6 +35,9 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/bus.js',
+    { src: '~/plugins/d3.js', mode: 'client' },
+    { src: '~/plugins/goals.js', mode: 'client' },
+    { src: '~/plugins/worker.js', mode: 'client' },
     { src: '~/plugins/anime.js', mode: 'client' },
     { src: '~/plugins/vue-scrollama.js', mode: 'client' },
     { src: '~/plugins/smoothscroll-polyfill.js', mode: 'client' },
@@ -64,7 +80,17 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config, ctx) {
+      if (ctx.isClient) {
+        config.module.rules.push({
+          test: /\.worker\.js$/,
+          loader: 'worker-loader',
+          exclude: /(node_modules)/,
+        })
+      }
+    },
+  },
 
   server: {
     host: '0.0.0.0',

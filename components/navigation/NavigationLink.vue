@@ -1,7 +1,7 @@
-<template>
+<template functional>
   <div class="position-relative bg-white border-top border-dark">
     <nuxt-link
-      :to="link"
+      :to="props.link"
       class="
         d-block
         text-decoration-none text-reset
@@ -11,7 +11,7 @@
         navigation-link__title
       "
     >
-      {{ title }}
+      {{ props.title }}
     </nuxt-link>
   </div>
 </template>

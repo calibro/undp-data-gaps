@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <header class="position-relative bg-dark">
     <div
       class="
@@ -6,24 +6,24 @@
         flex-column
         justify-content-between
         align-items-start
-        px-3 px-lg-5
-        py-5 py-lg-6
+        p-3 p-lg-5
         text-light
         h-100
+        header__content
       "
     >
       <div class="header__title">
         <span class="d-block border-bottom border-light mb-4 pb-3">
-          CHAPTER {{ chapterNumber }}
+          CHAPTER {{ props.chapterNumber }}
         </span>
 
-        <h1 class="display-2">{{ title }}</h1>
+        <h1 class="display-2 fw-normal">{{ props.title }}</h1>
       </div>
 
       <mq-layout mq="xl+">
         <button
           class="btn btn-link p-0 text-light text-decoration-none"
-          @click="scrollDown"
+          @click="$options.scrollDown(props.scrollIntoElementId)"
         >
           <!-- TODO: Add Scroll Down icon -->
           Scroll down
@@ -58,23 +58,28 @@ export default {
     },
   },
 
-  methods: {
-    scrollDown() {
-      if (this.scrollIntoElementId) {
-        document
-          .getElementById(this.scrollIntoElementId)
-          .scrollIntoView({ behavior: 'smooth' })
-      }
-    },
+  scrollDown(scrollIntoElementId) {
+    if (scrollIntoElementId) {
+      document
+        .getElementById(scrollIntoElementId)
+        .scrollIntoView({ behavior: 'smooth' })
+    }
   },
 }
 </script>
 
 <style lang="scss" scoped>
 header {
+  overflow: hidden;
+
   @include media-breakpoint-up(lg) {
     height: 100vh;
   }
+}
+
+.header__content {
+  position: relative;
+  z-index: 10;
 }
 
 .header__title {
@@ -87,6 +92,6 @@ header {
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: -999;
+  z-index: 0;
 }
 </style>

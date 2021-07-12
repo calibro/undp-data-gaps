@@ -1,8 +1,8 @@
 <template>
   <div>
     <narrative-header
-      chapter-number="2"
-      title="Why is it important to have disaggregated data?"
+      chapter-number="3"
+      title="Why is it important to have up-to-date statistic?"
       scroll-into-element-id="scroll-into-target"
     >
       <div class="narrative-header__image"></div>
@@ -10,31 +10,27 @@
 
     <narrative-break-text id="scroll-into-target">
       <p class="fs-4 mb-5">
-        A central promise of the sustainable development goals (SDGs) is to
-        leave no one behind, but the current indicators to measure progress
-        sometimes don’t keep that promise. To leave no one behind means reaching
-        the poorest of the poor, women, children, the elderly, indigenous
-        people, migrants, people with disabilities, and other vulnerable groups.
+        Solving comple social, economical and enviromental issues require a deep
+        understanding of multiple factors. Data without context is not
+        information and doesn’t provide a clear picture of what’s happening
+        around us.
       </p>
     </narrative-break-text>
 
-    <data-disaggregation-scrollytelling v-if="defer(2)" />
+    <data-up-to-date-scrollytelling />
 
     <narrative-break-text>
       <p class="fs-4 mb-5">
-        Improving data disaggregation is fundamental for the full implementation
-        of the SDG indicator framework to fulfil the ambition of the 2030 Agenda
-        for Sustainable of leaving no one behind. Explore the data to understand
-        which countries and which indicators provide disaggregated data and
-        where the gaps are.
+        Explore the visualization to understand which countries and which
+        indicators are more updated and their temporal granularity.
       </p>
     </narrative-break-text>
 
     <section class="p-5 bg-dark text-light vh-100 data-viz">
       <div class="border-bottom border-secondary pb-4 data-viz__header">
-        <h2>Disaggregated data availability in the Arab Region</h2>
-        <div class="disaggregation-select-container">
-          <label for="disaggregation-select">Disaggregation by</label>
+        <h2>Number of data points per year</h2>
+        <!-- <div class="disaggregation-select-container">
+          <label for="disaggregation-select">SDG</label>
           <select
             id="disaggregation-select"
             v-model="disaggregation"
@@ -46,35 +42,28 @@
             <option value="Age">Age</option>
             <option value="Disabilities">Disabilities</option>
           </select>
-        </div>
+        </div> -->
       </div>
-      <data-disaggregation-viz
-        v-if="defer(3)"
-        :disaggregation="disaggregation"
-      />
+      <data-up-to-date-viz />
     </section>
   </div>
 </template>
 
 <script>
-import Defer from '~/mixins/defer.mixin.js'
-
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
-import DataDisaggregationScrollytelling from '~/components/narrative/data-disaggregation/DataDisaggregationScrollytelling'
-import DataDisaggregationViz from '~/components/narrative/data-disaggregation/DataDisaggregationViz'
+import DataUpToDateScrollytelling from '~/components/narrative/data-up-to-date/DataUpToDateScrollytelling'
+import DataUpToDateViz from '~/components/narrative/data-up-to-date/DataUpToDateViz'
 
 export default {
-  name: 'DataDisaggregationPage',
+  name: 'DataUpToDatePage',
 
   components: {
     NarrativeHeader,
     NarrativeBreakText,
-    DataDisaggregationScrollytelling,
-    DataDisaggregationViz,
+    DataUpToDateScrollytelling,
+    DataUpToDateViz,
   },
-
-  mixins: [Defer()],
 
   transition: 'fade',
 
@@ -90,7 +79,7 @@ export default {
 .narrative-header__image {
   height: 100%;
   width: 100%;
-  background-image: url('~assets/images/narrative/data-disaggregation/data-disaggregation-header.png');
+  background-image: url('~assets/images/narrative/data-up-to-date/data-up-to-date-header.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: top right;

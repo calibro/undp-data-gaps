@@ -2,7 +2,6 @@
   <nav
     ref="navigationMenu"
     class="position-fixed bottom-0 navigation-menu"
-    style="transform: translateY(100%)"
     @click="navigateMenu"
   >
     <navigation-link
@@ -13,12 +12,11 @@
       link="/narratives/data-disaggregation"
       title="02.Why is it important to have disaggregated data?"
     />
-    <!-- TODO: Add correct data -->
     <navigation-link
-      link="/"
+      link="/narratives/data-up-to-date"
       title="03.Why is it important to have up-to-date statistic?"
     />
-    <navigation-link link="/" title="About" />
+    <navigation-link link="/about" title="About" />
   </nav>
 </template>
 
@@ -38,23 +36,7 @@ export default {
     }
   },
 
-  watch: {
-    $route() {
-      if (this.$nuxt.$route.path === '/' && !this.isMenuVisible) {
-        this.toggleMenu()
-        this.$bus.$emit('toggle-menu-icon')
-      }
-    },
-  },
-
   mounted() {
-    if (this.$nuxt.$route.path === '/') {
-      window.addEventListener('load', () => {
-        this.toggleMenu()
-        this.$bus.$emit('toggle-menu-icon')
-      })
-    }
-
     this.$bus.$on('toggle-menu', this.toggleMenu)
   },
 
@@ -69,31 +51,15 @@ export default {
       })
     },
 
-    changeVisibility() {
-      this.isMenuVisible = !this.isMenuVisible
-    },
-
     toggleMenu() {
-      this.clearAnimations()
+      this.isMenuVisible = !this.isMenuVisible
 
       if (this.isMenuVisible) {
-        this.$anime({
-          targets: this.$refs.navigationMenu,
-          translateY: '100%',
-          easing: 'easeOutQuint',
-          duration: 500,
-        })
-
-        this.changeVisibility()
+        this.$refs.navigationMenu.classList.remove('navigation-menu--hidden')
+        this.$refs.navigationMenu.classList.add('navigation-menu--visible')
       } else {
-        this.$anime({
-          targets: this.$refs.navigationMenu,
-          translateY: 0,
-          easing: 'easeOutQuint',
-          duration: 500,
-        })
-
-        this.changeVisibility()
+        this.$refs.navigationMenu.classList.remove('navigation-menu--visible')
+        this.$refs.navigationMenu.classList.add('navigation-menu--hidden')
       }
     },
 
@@ -110,9 +76,43 @@ export default {
 .navigation-menu {
   width: calc(100% - #{$sidebar-width});
   z-index: 999;
+  transform: translateY(100%);
+  will-change: transform;
 
   @include media-breakpoint-down(lg) {
     width: 100%;
   }
+}
+
+@keyframes showMenu {
+  0% {
+    display: block;
+  }
+  1% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.navigation-menu--visible {
+  animation: showMenu 700ms cubic-bezier(0.23, 1, 0.32, 1) forwards; /* easeOutQuint */
+}
+
+@keyframes hideMenu {
+  0% {
+    transform: translateY(0);
+  }
+  99% {
+    transform: translateY(100%);
+  }
+  100% {
+    display: none;
+  }
+}
+
+.navigation-menu--hidden {
+  animation: hideMenu 700ms cubic-bezier(0.23, 1, 0.32, 1) forwards; /* easeOutQuint */
 }
 </style>
