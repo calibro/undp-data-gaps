@@ -79,10 +79,10 @@ export default {
 .narrative-header__image {
   height: 100%;
   width: 100%;
-  background-image: url('~assets/images/narrative/data-availability/header-test.webp');
-  background-size: cover;
+  background-image: url('~assets/images/narrative/data-up-to-date/data-up-to-date-header.png');
+  background-size: contain;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: top right;
 }
 
 .data-viz {
