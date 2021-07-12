@@ -104,16 +104,10 @@ export default {
 
       const xValue = (d) => d.indicator_code
       const yValue = (d) => d.country
-      // const goalsValue = (d) => d.goal_code
 
       const xScale = this.$d3
         .scaleBand()
         .domain(xValues)
-        // .domain(
-        //   vizData
-        //     .filter((d) => d.disaggregation === this.disaggregation)
-        //     .map(xValue)
-        // )
         .range([0, containerWidth])
         .paddingInner(0.3)
         .paddingOuter(0.15)
@@ -127,18 +121,6 @@ export default {
         .paddingInner(0.3)
         .paddingOuter(0.15)
         .align(0.5)
-
-      // const goalsScale = this.$d3
-      //   .scaleQuantize()
-      //   .domain(
-      //     vizData
-      //       .filter((d) => d.disaggregation === this.disaggregation)
-      //       .map(goalsValue)
-      //   )
-      //   .range([0, containerWidth])
-      //   .paddingInner(0.3)
-      //   .paddingOuter(0.15)
-      //   .align(0.5)
 
       /* ----------- TABLE ROWS (Alternating colors) ----------- */
 
@@ -210,7 +192,7 @@ export default {
         )
 
       const axisGroupData = this.$d3.rollups(
-        this.vizData.filter((d) => d.disaggregation === this.disaggregation),
+        rectsValues,
         (v) => v.length,
         (d) => d.goal_code,
         (d) => d.indicator_code
