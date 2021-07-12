@@ -65,11 +65,29 @@ export default {
       d.sdg_code = +d.sdg_code
     })
 
-    this.drawViz(this.$options.vizData, this.$options.goalsData)
+    this.prepareForDrawing()
   },
 
   methods: {
-    drawViz(vizData, goalsData) {
+    async prepareForDrawing() {
+      const xValues = await this.$worker.computeXValues(
+        this.$options.vizData,
+        this.disaggregation,
+        'indicator_code'
+      )
+      const yValues = await this.$worker.computeYValues(
+        this.$options.vizData,
+        'country'
+      )
+      const rectsValues = await this.$worker.computeRectsValues(
+        this.$options.vizData,
+        this.disaggregation
+      )
+
+      this.drawViz(xValues, yValues, rectsValues, this.$options.goalsData)
+    },
+
+    drawViz(xValues, yValues, rectsValues, goalsData) {
       const container = this.$d3.select('#data-disaggregation-viz')
 
       const containerWidth = 100
@@ -90,11 +108,12 @@ export default {
 
       const xScale = this.$d3
         .scaleBand()
-        .domain(
-          vizData
-            .filter((d) => d.disaggregation === this.disaggregation)
-            .map(xValue)
-        )
+        .domain(xValues)
+        // .domain(
+        //   vizData
+        //     .filter((d) => d.disaggregation === this.disaggregation)
+        //     .map(xValue)
+        // )
         .range([0, containerWidth])
         .paddingInner(0.3)
         .paddingOuter(0.15)
@@ -102,7 +121,8 @@ export default {
 
       const yScale = this.$d3
         .scaleBand()
-        .domain(vizData.map(yValue).sort())
+        // .domain(vizData.map(yValue).sort())
+        .domain(yValues)
         .range([0, containerHeight])
         .paddingInner(0.3)
         .paddingOuter(0.15)
@@ -249,7 +269,7 @@ export default {
 
       rectsGroup
         .selectAll('div')
-        .data(vizData.filter((d) => d.disaggregation === this.disaggregation))
+        .data(rectsValues)
         .enter()
         .append('div')
         .style('position', 'absolute')
@@ -300,7 +320,7 @@ export default {
         const container = this.$d3.select('#data-disaggregation-viz')
         container.selectChildren('*').remove()
 
-        this.drawViz(this.$options.vizData, this.$options.goalsData)
+        this.prepareForDrawing()
       }, 800)
     },
   },
