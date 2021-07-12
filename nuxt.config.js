@@ -37,6 +37,7 @@ export default {
     '~/plugins/bus.js',
     { src: '~/plugins/d3.js', mode: 'client' },
     { src: '~/plugins/goals.js', mode: 'client' },
+    { src: '~/plugins/worker.js', mode: 'client' },
     { src: '~/plugins/anime.js', mode: 'client' },
     { src: '~/plugins/vue-scrollama.js', mode: 'client' },
     { src: '~/plugins/smoothscroll-polyfill.js', mode: 'client' },
@@ -79,7 +80,17 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config, ctx) {
+      if (ctx.isClient) {
+        config.module.rules.push({
+          test: /\.worker\.js$/,
+          loader: 'worker-loader',
+          exclude: /(node_modules)/,
+        })
+      }
+    },
+  },
 
   server: {
     host: '0.0.0.0',
