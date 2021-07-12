@@ -1,11 +1,11 @@
 <template>
   <div id="data-up-to-date-viz" class="viz-container">
-    <div class="countryRow">
+    <div class="countryRow" :style="{ minHeight: countryRowHeight }">
       <div class="row">
         <div class="offset-2 col-10">
           <data-up-to-date-indicators-axis
             v-if="timeScaleDomain"
-            width="600"
+            :width="indicatorsSumWidth"
             height="20"
             :data="timeScaleDomain"
             :margins="margins"
@@ -13,30 +13,39 @@
         </div>
       </div>
     </div>
-    <div v-for="country in vizData" :key="country[0]" class="countryRow">
-      <div class="row">
-        <div class="col-2 text-end">{{ country[0] }}</div>
-        <div class="col-10">
-          <data-up-to-date-indicators-sum
-            width="600"
-            height="12"
-            :max="countriesMax"
-            :data="country[1]"
-            :margins="margins"
-          />
+    <div
+      v-for="country in vizData"
+      :key="country[0]"
+      class="countryRow"
+      :style="{ minHeight: countryRowHeight }"
+    >
+      <details>
+        <summary>
+          <div class="row">
+            <div class="col-2 text-end">{{ country[0] }}</div>
+            <div class="col-10">
+              <data-up-to-date-indicators-sum
+                :width="indicatorsSumWidth"
+                height="12"
+                :max="countriesMax"
+                :data="country[1]"
+                :margins="margins"
+              />
+            </div>
+          </div>
+        </summary>
+        <div v-for="indicator in country[1]" :key="indicator[0]" class="row">
+          <div class="col-2 text-end">{{ indicator[0] }}</div>
+          <div class="col-10">
+            <data-up-to-date-indicators
+              :width="indicatorsSumWidth"
+              height="12"
+              :data="indicator[1][0]"
+              :margins="margins"
+            />
+          </div>
         </div>
-      </div>
-      <div v-for="indicator in country[1]" :key="indicator[0]" class="row">
-        <div class="col-2 text-end">{{ indicator[0] }}</div>
-        <div class="col-10">
-          <data-up-to-date-indicators
-            width="600"
-            height="12"
-            :data="indicator[1][0]"
-            :margins="margins"
-          />
-        </div>
-      </div>
+      </details>
     </div>
   </div>
 </template>
@@ -49,11 +58,13 @@ import DataUpToDateIndicatorsAxis from '~/components/narrative/data-up-to-date/D
 
 export default {
   name: 'DataUpToDateVizComponent',
+
   components: {
     DataUpToDateIndicators,
     DataUpToDateIndicatorsSum,
     DataUpToDateIndicatorsAxis,
   },
+
   data() {
     return {
       developmentGoals: null,
@@ -66,10 +77,18 @@ export default {
         left: 10,
         right: 10,
       },
+      indicatorsSumWidth: null,
+      countryRowHeight: null,
     }
   },
 
   async mounted() {
+    const firstContainer = document.querySelector('.countryRow .col-10')
+    this.indicatorsSumWidth = firstContainer?.clientWidth
+
+    const container = document.querySelector('#data-up-to-date-viz')
+    this.countryRowHeight = container?.clientHeight / 23 + 'px'
+
     this.developmentGoals = developmentGoals
 
     const responseVizData = await fetch('/data/data_gaps-data-viz_3.csv')
@@ -134,17 +153,40 @@ export default {
 
 <style lang="scss" scoped>
 .viz-container {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   position: relative;
+  /* overflow-y: auto; */
+  /* display: flex;
+  flex-direction: column; */
+
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  /* grid-auto-rows: minmax(calc(100% / 23), max-content); */
 }
 
 .countryRow {
   width: 100%;
-  flex-grow: 1;
-  flex-shrink: 1;
+  /* height: max-content; */
+  /* flex-grow: 1;
+  flex-shrink: 1; */
+
+  /* & .row {
+    min-height: calc(100% / 23);
+  } */
+
+  & details {
+    & summary {
+      list-style: none;
+    }
+
+    & summary::marker {
+      display: none;
+    }
+
+    & summary::-webkit-details-marker {
+      display: none;
+    }
+  }
 }
 </style>

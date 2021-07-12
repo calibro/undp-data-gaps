@@ -52,7 +52,9 @@
           </select>
         </div>
       </div>
-      <data-up-to-date-viz v-if="defer(3)" />
+      <div class="m-4" style="overflow-y: scroll">
+        <data-up-to-date-viz v-if="defer(3)" />
+      </div>
     </section>
   </div>
 </template>
