@@ -97,7 +97,7 @@ export default {
 }
 
 .navigation-menu--visible {
-  animation: showMenu 500ms ease-in-out forwards;
+  animation: showMenu 700ms cubic-bezier(0.23, 1, 0.32, 1) forwards; /* easeOutQuint */
 }
 
 @keyframes hideMenu {
@@ -113,6 +113,6 @@ export default {
 }
 
 .navigation-menu--hidden {
-  animation: hideMenu 500ms ease-in-out forwards;
+  animation: hideMenu 700ms cubic-bezier(0.23, 1, 0.32, 1) forwards; /* easeOutQuint */
 }
 </style>
