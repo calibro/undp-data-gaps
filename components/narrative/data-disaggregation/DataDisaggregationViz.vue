@@ -261,11 +261,6 @@ export default {
         .style('top', (d) => yScale(yValue(d)) + '%')
         .style('width', xScale.bandwidth() + '%')
         .style('height', yScale.bandwidth() + '%')
-        // .attr(
-        //   'title',
-        //   (d) =>
-        //     `Goal: ${d.goal_code}, Code: ${d.indicator_code}, Country: ${d.country}`
-        // )
         .attr('class', (d) => {
           if (d.availability === '0.5') {
             return 'data-disaggregation-viz-rect data-disaggregation-viz-rect--masked'
