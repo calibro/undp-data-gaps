@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import tippy from 'tippy.js'
+
 export default {
   name: 'DataAvailabilityVizComponent',
 
@@ -65,9 +67,6 @@ export default {
       })
 
     this.$options.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
-    this.$options.goalsData.forEach((d) => {
-      d.sdg_code = +d.sdg_code
-    })
 
     this.vizReady = true
 
@@ -188,7 +187,7 @@ export default {
       const circlesEnter = circles
         .enter()
         .append('circle')
-        .attr('class', 'sdg')
+        .attr('class', 'sdg data-availability-circle')
         .attr('cx', 0)
         .attr('cy', (d) => {
           return yScale(d[1].percentage)
@@ -196,6 +195,8 @@ export default {
         .attr('r', (d) => circleRadiusScale(d[1].percentage))
         .attr('fill', (d) => sdgColorScale(d[0]))
         .attr('opacity', 0)
+        .attr('data-goal-code', (d) => d[0])
+        .attr('data-percentage', (d) => Math.round(d[1].percentage))
 
       circles = circles.merge(circlesEnter)
 
@@ -206,6 +207,12 @@ export default {
             d[0] !== this.selectedSdg.toString()
             ? 0
             : 0.75
+        })
+        .attr('display', (d) => {
+          return this.selectedSdg !== 'all' &&
+            d[0] !== this.selectedSdg.toString()
+            ? 'none'
+            : 'initial'
         })
         .attr('cy', (d) => {
           return yScale(d[1].percentage)
@@ -415,6 +422,28 @@ export default {
       }
 
       xAxisG.call(xAxis)
+
+      /* ----------- TOOLTIPS ----------- */
+
+      tippy('.data-availability-circle', {
+        content(reference) {
+          const sdgLabel = goalsData.find(
+            (el) => el.sdg_code === reference.dataset.goalCode
+          ).sdg_label
+
+          return `
+            <div class="d-flex flex-column">
+              <span style="color: ${reference.getAttribute('fill')}">SDG ${
+            reference.dataset.goalCode
+          } - ${sdgLabel}</span>
+              <span><strong>${reference.dataset.percentage}%</strong></span>
+            </div>
+          `
+        },
+        allowHTML: true,
+        placement: 'auto',
+        delay: [300, null],
+      })
     },
 
     countryMean(sdg, countryGroup) {
@@ -434,4 +463,18 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.data-availability-circle {
+  transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
+}
+
+#chartContainer:hover .data-availability-circle {
+  opacity: 0.15;
+}
+
+#chartContainer:hover .data-availability-circle:hover {
+  opacity: 1;
+  stroke: white;
+  stroke-width: 2px;
+}
+</style>
