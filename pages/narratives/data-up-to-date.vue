@@ -26,7 +26,7 @@
       </p>
     </narrative-break-text>
 
-    <section class="bg-dark text-light vh-100 data-viz">
+    <section class="bg-dark text-light data-viz">
       <div
         class="
           border-top border-bottom border-secondary
@@ -52,7 +52,7 @@
           </select>
         </div>
       </div>
-      <div class="m-4" style="overflow-y: scroll">
+      <div class="m-4">
         <data-up-to-date-viz v-if="defer(3)" />
       </div>
     </section>
@@ -102,6 +102,7 @@ export default {
 .data-viz {
   display: grid;
   grid-template-rows: min-content 1fr;
+  min-height: 100vh;
 }
 
 .select-container {
