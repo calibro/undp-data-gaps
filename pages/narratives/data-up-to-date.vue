@@ -146,8 +146,6 @@ export default {
 }
 
 .data-up-to-date-viz-container--wait-for-resize {
-  filter: blur(10px);
-  opacity: 0.5;
-  will-change: transform;
+  opacity: 0;
 }
 </style>
