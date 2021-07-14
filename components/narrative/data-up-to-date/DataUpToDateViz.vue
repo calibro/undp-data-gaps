@@ -1,8 +1,8 @@
 <template>
   <div id="data-up-to-date-viz" class="viz-container">
     <div class="countryRow" :style="{ minHeight: countryRowHeight }">
-      <div class="row">
-        <div class="offset-2 col-10">
+      <div class="data-up-to-date-viz__row">
+        <div id="data-up-to-date-viz__axis" style="grid-column: 2">
           <data-up-to-date-indicators-axis
             v-if="timeScaleDomain"
             :width="indicatorsSumWidth"
@@ -21,9 +21,9 @@
     >
       <details>
         <summary>
-          <div class="row">
-            <div class="col-2 text-end">{{ country[0] }}</div>
-            <div class="col-10">
+          <div class="data-up-to-date-viz__row">
+            <div class="text-end">{{ country[0] }}</div>
+            <div class="">
               <data-up-to-date-indicators-sum
                 :country="country[0]"
                 :width="indicatorsSumWidth"
@@ -36,9 +36,13 @@
           </div>
         </summary>
         <div class="py-3">
-          <div v-for="indicator in country[1]" :key="indicator[0]" class="row">
-            <div class="col-2 text-end">{{ indicator[0] }}</div>
-            <div class="col-10">
+          <div
+            v-for="indicator in country[1]"
+            :key="indicator[0]"
+            class="data-up-to-date-viz__row"
+          >
+            <div class="text-end">{{ indicator[0] }}</div>
+            <div class="">
               <data-up-to-date-indicators
                 :width="indicatorsSumWidth"
                 height="12"
@@ -78,7 +82,7 @@ export default {
         top: 0,
         bottom: 0,
         left: 10,
-        right: 40,
+        right: 10,
       },
       indicatorsSumWidth: null,
       countryRowHeight: null,
@@ -86,7 +90,7 @@ export default {
   },
 
   async mounted() {
-    const firstContainer = document.querySelector('.countryRow .col-10')
+    const firstContainer = document.querySelector('#data-up-to-date-viz__axis')
     this.indicatorsSumWidth = firstContainer?.clientWidth
 
     const container = document.querySelector('#data-up-to-date-viz')
@@ -191,5 +195,11 @@ export default {
       display: none;
     }
   }
+}
+
+.data-up-to-date-viz__row {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  gap: 1.5rem;
 }
 </style>
