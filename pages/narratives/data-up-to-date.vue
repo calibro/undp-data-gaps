@@ -55,7 +55,7 @@
           </select>
         </div>
       </div>
-      <div class="my-4 mx-5">
+      <div class="my-4 mx-5" ref="dataUpToDateVizContainer">
         <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
       </div>
     </section>
@@ -89,6 +89,36 @@ export default {
       selectedSdg: '1',
     }
   },
+
+  mounted() {
+    window.addEventListener('resize', this.saveVizFromResize)
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.saveVizFromResize)
+  },
+
+  methods: {
+    saveVizFromResize() {
+      this.$refs.dataUpToDateVizContainer.classList.add(
+        'data-up-to-date-viz-container--wait-for-resize'
+      )
+      this.$bus.$emit('prepare-data-up-to-date-for-resize')
+
+      clearTimeout(this.resizeTimeout)
+      this.resizeTimeout = setTimeout(this.resumeFromResize, 1000)
+    },
+
+    resumeFromResize() {
+      this.$bus.$emit('redraw-data-up-to-date-after-resize')
+
+      this.$refs.dataUpToDateVizContainer.classList.remove(
+        'data-up-to-date-viz-container--wait-for-resize'
+      )
+
+      this.getMinimumContainerDimension()
+    },
+  },
 }
 </script>
 
@@ -113,5 +143,11 @@ export default {
   grid-template-columns: max-content max-content;
   align-items: center;
   gap: 15px;
+}
+
+.data-up-to-date-viz-container--wait-for-resize {
+  filter: blur(10px);
+  opacity: 0.5;
+  will-change: transform;
 }
 </style>

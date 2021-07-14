@@ -42,7 +42,7 @@
             class="data-up-to-date-viz__row"
           >
             <div class="text-end">{{ indicator[0] }}</div>
-            <div class="">
+            <div>
               <data-up-to-date-indicators
                 :width="indicatorsSumWidth"
                 height="12"
@@ -102,11 +102,7 @@ export default {
   },
 
   async mounted() {
-    const firstContainer = document.querySelector('#data-up-to-date-viz__axis')
-    this.indicatorsSumWidth = firstContainer?.clientWidth
-
-    const container = document.querySelector('#data-up-to-date-viz')
-    this.countryRowHeight = container?.clientHeight / 23 + 'px'
+    this.getMinimumContainerDimension()
 
     const responseVizData = await fetch('/data/data_gaps-data-viz_3.csv')
     const responseVizDataRawText = await responseVizData.text()
@@ -130,9 +126,34 @@ export default {
     )
 
     this.drawViz()
+
+    this.$bus.$on('prepare-data-up-to-date-for-resize', this.prepareForResize)
+    this.$bus.$on(
+      'redraw-data-up-to-date-after-resize',
+      this.getMinimumContainerDimension
+    )
+  },
+
+  beforeDestroy() {
+    this.$bus.$off('prepare-data-up-to-date-for-resize', this.prepareForResize)
+    this.$bus.$off(
+      'redraw-data-up-to-date-after-resize',
+      this.getMinimumContainerDimension
+    )
   },
 
   methods: {
+    getMinimumContainerDimension() {
+      const firstContainer = document.querySelector(
+        '#data-up-to-date-viz__axis'
+      )
+      this.indicatorsSumWidth = firstContainer?.clientWidth
+      console.log(this.indicatorsSumWidth)
+
+      const container = document.querySelector('#data-up-to-date-viz')
+      this.countryRowHeight = container?.clientHeight / 23 + 'px'
+    },
+
     drawViz() {
       this.selectedSdgData = this.$options.vizData.find(
         (el) => el[0] === this.selectedSdg
@@ -156,6 +177,11 @@ export default {
       this.timeScaleDomain = this.selectedSdgData[0][1][0][1][0].map(
         (d) => new Date(+d.year, 0, 1)
       )
+    },
+
+    prepareForResize() {
+      this.indicatorsSumWidth = 0
+      this.countryRowHeight = 0
     },
   },
 }
