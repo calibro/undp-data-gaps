@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import developmentGoals from '~/data/development-goals.json'
 import DataUpToDateIndicators from '~/components/narrative/data-up-to-date/DataUpToDateIndicators'
 import DataUpToDateIndicatorsSum from '~/components/narrative/data-up-to-date/DataUpToDateIndicatorsSum'
 import DataUpToDateIndicatorsAxis from '~/components/narrative/data-up-to-date/DataUpToDateIndicatorsAxis'
@@ -81,8 +80,6 @@ export default {
 
   data() {
     return {
-      developmentGoals: null,
-      // vizData: null,
       countriesMax: null,
       selectedSdgData: null,
       timeScaleDomain: null,
@@ -111,15 +108,8 @@ export default {
     const container = document.querySelector('#data-up-to-date-viz')
     this.countryRowHeight = container?.clientHeight / 23 + 'px'
 
-    this.developmentGoals = developmentGoals
-
     const responseVizData = await fetch('/data/data_gaps-data-viz_3.csv')
     const responseVizDataRawText = await responseVizData.text()
-
-    const responseGoalsData = await fetch(
-      '/data/data_gaps-data-SDG_indicators.csv'
-    )
-    const responseGoalsDataRawText = await responseGoalsData.text()
 
     this.$options.vizData = this.$d3.csvParse(responseVizDataRawText)
 
@@ -138,11 +128,6 @@ export default {
       (d) => d['Country name'],
       (d) => d.indicator_code
     )
-
-    this.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
-    this.goalsData.forEach((d) => {
-      d.sdg_code = +d.sdg_code
-    })
 
     this.drawViz()
   },
@@ -172,8 +157,6 @@ export default {
         (d) => new Date(+d.year, 0, 1)
       )
     },
-
-    updateViz(oldValue, newValue) {},
   },
 }
 </script>
@@ -183,24 +166,13 @@ export default {
   min-height: 100%;
   width: 100%;
   position: relative;
-  /* overflow-y: auto; */
-  /* display: flex;
-  flex-direction: column; */
 
   display: flex;
   flex-direction: column;
-  /* grid-auto-rows: minmax(calc(100% / 23), max-content); */
 }
 
 .countryRow {
   width: 100%;
-  /* height: max-content; */
-  /* flex-grow: 1;
-  flex-shrink: 1; */
-
-  /* & .row {
-    min-height: calc(100% / 23);
-  } */
 
   & details {
     & summary {
