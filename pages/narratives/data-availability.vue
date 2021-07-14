@@ -26,7 +26,9 @@
     </narrative-break-text>
 
     <mq-layout mq="xxl+">
-      <data-availability-scrollytelling v-if="defer(2)" />
+      <client-only>
+        <data-availability-scrollytelling v-if="defer(2)" />
+      </client-only>
     </mq-layout>
     <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
       <data-availability-scrollytelling-mobile />
@@ -115,6 +117,8 @@
           </div>
         </aside>
       </div>
+
+      <data-availability-viz-details />
     </section>
   </div>
 </template>
@@ -127,6 +131,7 @@ import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataAvailabilityScrollytelling from '~/components/narrative/data-availability/DataAvailabilityScrollytelling'
 import DataAvailabilityScrollytellingMobile from '~/components/narrative/data-availability/DataAvailabilityScrollytellingMobile'
 import DataAvailabilityViz from '~/components/narrative/data-availability/DataAvailabilityViz'
+import DataAvailabilityVizDetails from '~/components/narrative/data-availability/DataAvailabilityVizDetails'
 
 export default {
   name: 'DataAvailabilityPage',
@@ -137,6 +142,7 @@ export default {
     DataAvailabilityScrollytelling,
     DataAvailabilityScrollytellingMobile,
     DataAvailabilityViz,
+    DataAvailabilityVizDetails,
   },
 
   mixins: [Defer()],
