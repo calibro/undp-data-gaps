@@ -50,12 +50,12 @@
               :key="goal.id"
               :value="goal.id.toString()"
             >
-              {{ goal.id }}
+              {{ goal.id }}. {{ goal.title }}
             </option>
           </select>
         </div>
       </div>
-      <div class="m-4">
+      <div class="my-4 mx-5">
         <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
       </div>
     </section>
