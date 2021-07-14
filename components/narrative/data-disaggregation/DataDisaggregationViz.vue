@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import tippy from 'tippy.js'
+
 export default {
   name: 'DataDisaggregationVizComponent',
 
@@ -259,11 +261,6 @@ export default {
         .style('top', (d) => yScale(yValue(d)) + '%')
         .style('width', xScale.bandwidth() + '%')
         .style('height', yScale.bandwidth() + '%')
-        .attr(
-          'title',
-          (d) =>
-            `Goal: ${d.goal_code}, Code: ${d.indicator_code}, Country: ${d.country}`
-        )
         .attr('class', (d) => {
           if (d.availability === '0.5') {
             return 'data-disaggregation-viz-rect data-disaggregation-viz-rect--masked'
@@ -279,6 +276,50 @@ export default {
           }
         })
         .style('opacity', 0)
+        .attr('data-disaggregation', this.disaggregation)
+        .attr(
+          'data-color',
+          (d) => this.$goals.find((goal) => goal.id === d.goal_code).color
+        )
+        .each(function (d) {
+          /* ----------- TOOLTIPS ----------- */
+          tippy(this, {
+            content(reference) {
+              let availabilityStatus
+              let disaggregationStatus
+
+              switch (d.availability) {
+                case '0':
+                  availabilityStatus = 'No'
+                  disaggregationStatus = 'No'
+                  break
+                case '0.5':
+                  availabilityStatus = 'Yes'
+                  disaggregationStatus = 'No'
+                  break
+                case '1':
+                  availabilityStatus = 'Yes'
+                  disaggregationStatus = 'Yes'
+                  break
+              }
+
+              const indicatorLabel = goalsData.find(
+                (el) => el.indicator_code === d.indicator_code
+              )?.indicator_label
+
+              return `
+                <div class="d-flex flex-column">
+                  <span style="color: ${reference.dataset.color}">${d.indicator_code} - ${indicatorLabel}</span>
+                  <span><strong>Availability: ${availabilityStatus}</strong></span>
+                  <span><strong>${reference.dataset.disaggregation} disaggregation: ${disaggregationStatus}</strong></span>
+                </div>
+              `
+            },
+            allowHTML: true,
+            placement: 'auto',
+            delay: [300, null],
+          })
+        })
 
       const t = this.$d3.transition().duration(800).ease(this.$d3.easeQuadOut)
 

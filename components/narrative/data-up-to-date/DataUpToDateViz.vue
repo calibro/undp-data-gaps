@@ -25,6 +25,7 @@
             <div class="col-2 text-end">{{ country[0] }}</div>
             <div class="col-10">
               <data-up-to-date-indicators-sum
+                :country="country[0]"
                 :width="indicatorsSumWidth"
                 height="12"
                 :max="countriesMax"
@@ -77,7 +78,7 @@ export default {
         top: 0,
         bottom: 0,
         left: 10,
-        right: 10,
+        right: 40,
       },
       indicatorsSumWidth: null,
       countryRowHeight: null,

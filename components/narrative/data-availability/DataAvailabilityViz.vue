@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import tippy from 'tippy.js'
+
 export default {
   name: 'DataAvailabilityVizComponent',
 
@@ -65,13 +67,22 @@ export default {
       })
 
     this.$options.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
-    this.$options.goalsData.forEach((d) => {
-      d.sdg_code = +d.sdg_code
-    })
 
     this.vizReady = true
 
     this.drawViz(this.$options.vizData, this.$options.goalsData)
+
+    this.$bus.$on(
+      'close-data-availability-viz-details',
+      this.removeDetailsActiveStatus
+    )
+  },
+
+  beforeDestroy() {
+    this.$bus.$off(
+      'close-data-availability-viz-details',
+      this.removeDetailsActiveStatus
+    )
   },
 
   methods: {
@@ -188,7 +199,7 @@ export default {
       const circlesEnter = circles
         .enter()
         .append('circle')
-        .attr('class', 'sdg')
+        .attr('class', 'sdg data-availability-circle')
         .attr('cx', 0)
         .attr('cy', (d) => {
           return yScale(d[1].percentage)
@@ -196,6 +207,58 @@ export default {
         .attr('r', (d) => circleRadiusScale(d[1].percentage))
         .attr('fill', (d) => sdgColorScale(d[0]))
         .attr('opacity', 0)
+        .each(function (d) {
+          /* ----------- TOOLTIPS ----------- */
+          tippy(this, {
+            content(reference) {
+              const goalCode = d[0]
+              const color = reference.getAttribute('fill')
+              const percentage = Math.round(d[1].percentage)
+              const sdgLabel = goalsData.find(
+                (el) => el.sdg_code === goalCode
+              ).sdg_label
+
+              return `
+                <div class="d-flex flex-column">
+                  <span style="color: ${color}">SDG ${goalCode} - ${sdgLabel}</span>
+                  <span><strong>${percentage}%</strong></span>
+                </div>
+              `
+            },
+            allowHTML: true,
+            placement: 'auto',
+            delay: [300, null],
+          })
+        })
+        .on('click', (e, d) => {
+          if (
+            e.target.classList.contains(
+              'data-availability-viz-details__selected-element'
+            )
+          ) {
+            this.$bus.$emit('close-data-availability-viz-details')
+            return
+          }
+
+          this.showCircleDetails(
+            Math.round(d[1].percentage),
+            goalsData.find((el) => el.sdg_code === d[0]).sdg_label,
+            d[1].data
+          )
+
+          document
+            .querySelector('.data-availability-viz-details__selected-element')
+            ?.classList.remove(
+              'data-availability-viz-details__selected-element'
+            )
+
+          this.$refs.mainDiv.classList.add(
+            'data-availability-viz-details--active'
+          )
+          e.target.classList.add(
+            'data-availability-viz-details__selected-element'
+          )
+        })
 
       circles = circles.merge(circlesEnter)
 
@@ -206,6 +269,12 @@ export default {
             d[0] !== this.selectedSdg.toString()
             ? 0
             : 0.75
+        })
+        .attr('display', (d) => {
+          return this.selectedSdg !== 'all' &&
+            d[0] !== this.selectedSdg.toString()
+            ? 'none'
+            : 'initial'
         })
         .attr('cy', (d) => {
           return yScale(d[1].percentage)
@@ -430,8 +499,52 @@ export default {
     updateViz() {
       this.drawViz(this.$options.vizData, this.$options.goalsData)
     },
+
+    showCircleDetails(percentage, label, data) {
+      this.$bus.$emit('present-data-availability-viz-details', {
+        percentage,
+        label,
+        data,
+        goalsData: this.$options.goalsData,
+      })
+    },
+
+    removeDetailsActiveStatus() {
+      document
+        .querySelector('.data-availability-viz-details__selected-element')
+        ?.classList.remove('data-availability-viz-details__selected-element')
+
+      this.$refs.mainDiv.classList.remove(
+        'data-availability-viz-details--active'
+      )
+    },
   },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.data-availability-circle {
+  transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
+  cursor: pointer;
+}
+
+#chartContainer:hover .data-availability-circle {
+  opacity: 0.15;
+}
+
+#chartContainer:hover .data-availability-circle:hover {
+  opacity: 1;
+  stroke: white;
+  stroke-width: 2px;
+}
+
+.data-availability-viz-details--active .data-availability-circle {
+  opacity: 0.15;
+}
+.data-availability-viz-details--active
+  .data-availability-viz-details__selected-element {
+  opacity: 1;
+  stroke: white;
+  stroke-width: 2px;
+}
+</style>

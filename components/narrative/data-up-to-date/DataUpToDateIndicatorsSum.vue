@@ -8,10 +8,12 @@
 </template>
 
 <script>
+import tippy from 'tippy.js'
+
 export default {
   name: 'DataUpToDateVizIndicatorsSum',
 
-  props: ['height', 'width', 'data', 'max', 'margins'],
+  props: ['height', 'width', 'data', 'max', 'margins', 'country'],
 
   mounted() {
     const chartWidth = this.width - this.margins.left - this.margins.right
@@ -53,12 +55,33 @@ export default {
       .selectAll('.dot')
       .data(group)
       .join('circle')
-      .attr('class', 'dot')
+      .attr('class', 'dot data-up-to-date-viz-sum__dot')
       .attr('cy', chartHeight / 2)
       .attr('cx', (d) => xScale(d.date))
       .attr('fill', 'red')
       .attr('stroke', '#0b1418')
       .attr('r', (d) => radiusScale(d.value))
+      .attr('data-country', this.country)
+      .attr('data-max', this.max)
+      .each(function (d) {
+        /* ----------- TOOLTIPS ----------- */
+        tippy(this, {
+          content(reference) {
+            const year = new Date(d.date).getFullYear()
+
+            return `
+            <div class="d-flex flex-column">
+              <span style="color: red">SDG</span>
+              <span>${year} - ${reference.dataset.country}</span>
+              <span><strong>Indicators available: ${d.value}/${reference.dataset.max}</strong></span>
+            </div>
+          `
+          },
+          allowHTML: true,
+          placement: 'auto',
+          delay: [300, null],
+        })
+      })
   },
 }
 </script>

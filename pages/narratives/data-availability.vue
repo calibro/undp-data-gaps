@@ -26,7 +26,9 @@
     </narrative-break-text>
 
     <mq-layout mq="xxl+">
-      <data-availability-scrollytelling v-if="defer(2)" />
+      <client-only>
+        <data-availability-scrollytelling v-if="defer(2)" />
+      </client-only>
     </mq-layout>
     <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
       <data-availability-scrollytelling-mobile />
@@ -87,7 +89,8 @@
             "
             :class="{
               'data-viz__controls__filter--active':
-                selectedSdg === String(goal.id) || selectedSdg === 'all',
+                selectedSdg === String(goal.id),
+              'data-viz__controls__filter--active-all': selectedSdg === 'all',
             }"
             @click="changeSelectedSdg(goal.id)"
           >
@@ -114,6 +117,8 @@
           </div>
         </aside>
       </div>
+
+      <data-availability-viz-details />
     </section>
   </div>
 </template>
@@ -126,6 +131,7 @@ import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataAvailabilityScrollytelling from '~/components/narrative/data-availability/DataAvailabilityScrollytelling'
 import DataAvailabilityScrollytellingMobile from '~/components/narrative/data-availability/DataAvailabilityScrollytellingMobile'
 import DataAvailabilityViz from '~/components/narrative/data-availability/DataAvailabilityViz'
+import DataAvailabilityVizDetails from '~/components/narrative/data-availability/DataAvailabilityVizDetails'
 
 export default {
   name: 'DataAvailabilityPage',
@@ -136,6 +142,7 @@ export default {
     DataAvailabilityScrollytelling,
     DataAvailabilityScrollytellingMobile,
     DataAvailabilityViz,
+    DataAvailabilityVizDetails,
   },
 
   mixins: [Defer()],
@@ -245,16 +252,17 @@ export default {
 
       & * {
         opacity: 0.6;
-        transition: opacity 400ms ease-in-out;
+        transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
       }
 
       & .data-viz__controls__filter__label {
         overflow: hidden;
 
         & .data-viz__controls__filter__circle {
-          height: 14px;
-          width: 14px;
+          height: 18px;
+          width: 18px;
           border-radius: 50%;
+          box-sizing: border-box;
         }
 
         & span {
@@ -265,7 +273,27 @@ export default {
       }
     }
 
+    & .data-viz__controls__filter:hover {
+      & * {
+        opacity: 1;
+      }
+
+      & .data-viz__controls__filter__circle {
+        border: solid 2px white;
+      }
+    }
+
     & .data-viz__controls__filter--active {
+      & * {
+        opacity: 1;
+      }
+
+      & .data-viz__controls__filter__circle {
+        border: solid 2px white;
+      }
+    }
+
+    & .data-viz__controls__filter--active-all {
       & * {
         opacity: 1;
       }
