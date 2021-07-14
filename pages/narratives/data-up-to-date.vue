@@ -41,19 +41,22 @@
           <label for="select-element">SDG</label>
           <select
             id="select-element"
-            v-model="sdg"
+            v-model="selectedSdg"
             class="form-select"
             name="sdg"
           >
-            <option value="Sex">Sex</option>
-            <option value="Education">Education</option>
-            <option value="Age">Age</option>
-            <option value="Disabilities">Disabilities</option>
+            <option
+              v-for="goal in $goals"
+              :key="goal.id"
+              :value="goal.id.toString()"
+            >
+              {{ goal.id }}
+            </option>
           </select>
         </div>
       </div>
       <div class="m-4">
-        <data-up-to-date-viz v-if="defer(3)" />
+        <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
       </div>
     </section>
   </div>
@@ -83,7 +86,7 @@ export default {
 
   data() {
     return {
-      sdg: 'Sex',
+      selectedSdg: '1',
     }
   },
 }

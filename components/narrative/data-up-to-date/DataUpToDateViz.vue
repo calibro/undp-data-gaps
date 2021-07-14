@@ -14,7 +14,7 @@
       </div>
     </div>
     <div
-      v-for="country in vizData"
+      v-for="country in selectedSdgData"
       :key="country[0]"
       class="countryRow"
       :style="{ minHeight: countryRowHeight }"
@@ -72,11 +72,19 @@ export default {
     DataUpToDateIndicatorsAxis,
   },
 
+  props: {
+    selectedSdg: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
       developmentGoals: null,
-      vizData: null,
+      // vizData: null,
       countriesMax: null,
+      selectedSdgData: null,
       timeScaleDomain: null,
       margins: {
         top: 0,
@@ -87,6 +95,13 @@ export default {
       indicatorsSumWidth: null,
       countryRowHeight: null,
     }
+  },
+
+  watch: {
+    selectedSdg(_, newValue) {
+      console.log(newValue)
+      this.drawViz()
+    },
   },
 
   async mounted() {
@@ -106,10 +121,10 @@ export default {
     )
     const responseGoalsDataRawText = await responseGoalsData.text()
 
-    this.vizData = this.$d3.csvParse(responseVizDataRawText)
+    this.$options.vizData = this.$d3.csvParse(responseVizDataRawText)
 
-    this.vizData = this.$d3.rollups(
-      this.vizData,
+    this.$options.vizData = this.$d3.rollups(
+      this.$options.vizData,
       (v) => {
         return v.map((d) => {
           delete d['Country name']
@@ -119,27 +134,9 @@ export default {
           })
         })
       },
+      (d) => d.sdg,
       (d) => d['Country name'],
       (d) => d.indicator_code
-    )
-
-    this.countriesMax = this.$d3.max(this.vizData, (d) => {
-      const all = this.$d3.merge(
-        d[1].map((d) => {
-          return d[1][0]
-        })
-      )
-      const group = this.$d3.rollups(
-        all,
-        (v) => this.$d3.sum(v, (d) => d.value),
-        (d) => d.year
-      )
-
-      return this.$d3.max(group, (d) => d[1])
-    })
-
-    this.timeScaleDomain = this.vizData[0][1][0][1][0].map(
-      (d) => new Date(+d.year, 0, 1)
     )
 
     this.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
@@ -147,11 +144,34 @@ export default {
       d.sdg_code = +d.sdg_code
     })
 
-    this.drawViz(this.vizData, this.goalsData)
+    this.drawViz()
   },
 
   methods: {
-    drawViz(vizData, goalsData) {},
+    drawViz() {
+      this.selectedSdgData = this.$options.vizData.find(
+        (el) => el[0] === this.selectedSdg
+      )[1]
+
+      this.countriesMax = this.$d3.max(this.selectedSdgData, (d) => {
+        const all = this.$d3.merge(
+          d[1].map((d) => {
+            return d[1][0]
+          })
+        )
+        const group = this.$d3.rollups(
+          all,
+          (v) => this.$d3.sum(v, (d) => d.value),
+          (d) => d.year
+        )
+
+        return this.$d3.max(group, (d) => d[1])
+      })
+
+      this.timeScaleDomain = this.selectedSdgData[0][1][0][1][0].map(
+        (d) => new Date(+d.year, 0, 1)
+      )
+    },
 
     updateViz(oldValue, newValue) {},
   },
