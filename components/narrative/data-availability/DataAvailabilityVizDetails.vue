@@ -115,10 +115,12 @@ export default {
 
   mounted() {
     this.$bus.$on('present-data-availability-viz-details', this.presentDetails)
+    this.$bus.$on('close-data-availability-viz-details', this.closeDetails)
   },
 
   beforeDestroy() {
     this.$bus.$off('present-data-availability-viz-details', this.presentDetails)
+    this.$bus.$off('close-data-availability-viz-details', this.closeDetails)
   },
 
   methods: {

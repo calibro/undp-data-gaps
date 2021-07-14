@@ -231,6 +231,15 @@ export default {
           })
         })
         .on('click', (e, d) => {
+          if (
+            e.target.classList.contains(
+              'data-availability-viz-details__selected-element'
+            )
+          ) {
+            this.$bus.$emit('close-data-availability-viz-details')
+            return
+          }
+
           this.showCircleDetails(
             Math.round(d[1].percentage),
             goalsData.find((el) => el.sdg_code === d[0]).sdg_label,
