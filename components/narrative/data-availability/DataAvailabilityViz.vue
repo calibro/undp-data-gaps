@@ -229,6 +229,9 @@ export default {
             .select(e.target)
             .classed('data-availability-viz-details__selected-element', true)
         })
+        .on('mouseover', function () {
+          console.log(this)
+        })
 
       circles = circles.merge(circlesEnter)
 

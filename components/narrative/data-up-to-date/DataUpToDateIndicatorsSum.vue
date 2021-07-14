@@ -11,7 +11,7 @@
 export default {
   name: 'DataUpToDateVizIndicatorsSum',
 
-  props: ['height', 'width', 'data', 'max', 'margins'],
+  props: ['height', 'width', 'data', 'max', 'margins', 'country'],
 
   mounted() {
     const chartWidth = this.width - this.margins.left - this.margins.right
@@ -59,6 +59,9 @@ export default {
       .attr('fill', 'red')
       .attr('stroke', '#0b1418')
       .attr('r', (d) => radiusScale(d.value))
+      .on('mouseover', (d, e) => {
+        console.log(e.value, this.max, this.country)
+      })
   },
 }
 </script>
