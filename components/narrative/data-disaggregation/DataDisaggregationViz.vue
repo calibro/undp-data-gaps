@@ -276,12 +276,50 @@ export default {
           }
         })
         .style('opacity', 0)
-        .attr('data-goal-code', (d) => d.indicator_code)
-        .attr('data-availability', (d) => d.availability)
+        .attr('data-disaggregation', this.disaggregation)
         .attr(
           'data-color',
           (d) => this.$goals.find((goal) => goal.id === d.goal_code).color
         )
+        .each(function (d) {
+          /* ----------- TOOLTIPS ----------- */
+          tippy(this, {
+            content(reference) {
+              let availabilityStatus
+              let disaggregationStatus
+
+              switch (d.availability) {
+                case '0':
+                  availabilityStatus = 'No'
+                  disaggregationStatus = 'No'
+                  break
+                case '0.5':
+                  availabilityStatus = 'Yes'
+                  disaggregationStatus = 'No'
+                  break
+                case '1':
+                  availabilityStatus = 'Yes'
+                  disaggregationStatus = 'Yes'
+                  break
+              }
+
+              const indicatorLabel = goalsData.find(
+                (el) => el.indicator_code === d.indicator_code
+              )?.indicator_label
+
+              return `
+                <div class="d-flex flex-column">
+                  <span style="color: ${reference.dataset.color}">${d.indicator_code} - ${indicatorLabel}</span>
+                  <span><strong>Availability: ${availabilityStatus}</strong></span>
+                  <span><strong>${reference.dataset.disaggregation} disaggregation: ${disaggregationStatus}</strong></span>
+                </div>
+              `
+            },
+            allowHTML: true,
+            placement: 'auto',
+            delay: [300, null],
+          })
+        })
 
       const t = this.$d3.transition().duration(800).ease(this.$d3.easeQuadOut)
 
@@ -290,46 +328,6 @@ export default {
         .transition(t)
         .delay(() => Math.floor(Math.random() * (500 - 0 + 1) + 0))
         .style('opacity', 1)
-
-      /* ----------- TOOLTIPS ----------- */
-
-      const disaggregation = this.disaggregation
-      tippy('.data-disaggregation-viz-rect', {
-        content(reference) {
-          let availabilityStatus
-          let disaggregationStatus
-
-          switch (reference.dataset.availability) {
-            case '0':
-              availabilityStatus = 'No'
-              disaggregationStatus = 'No'
-              break
-            case '0.5':
-              availabilityStatus = 'Yes'
-              disaggregationStatus = 'No'
-              break
-            case '1':
-              availabilityStatus = 'Yes'
-              disaggregationStatus = 'Yes'
-              break
-          }
-
-          const indicatorLabel = goalsData.find(
-            (el) => el.indicator_code === reference.dataset.goalCode
-          ).indicator_label
-
-          return `
-            <div class="d-flex flex-column">
-              <span style="color: ${reference.dataset.color}">${reference.dataset.goalCode} ${indicatorLabel}</span>
-              <span><strong>Availability: ${availabilityStatus}</strong></span>
-              <span><strong>${disaggregation} disaggregation: ${disaggregationStatus}</strong></span>
-            </div>
-          `
-        },
-        allowHTML: true,
-        placement: 'auto',
-        delay: [300, null],
-      })
     },
 
     updateViz(oldValue, newValue) {

@@ -207,8 +207,29 @@ export default {
         .attr('r', (d) => circleRadiusScale(d[1].percentage))
         .attr('fill', (d) => sdgColorScale(d[0]))
         .attr('opacity', 0)
-        .attr('data-goal-code', (d) => d[0])
-        .attr('data-percentage', (d) => Math.round(d[1].percentage))
+        .each(function (d) {
+          /* ----------- TOOLTIPS ----------- */
+          tippy(this, {
+            content(reference) {
+              const goalCode = d[0]
+              const color = reference.getAttribute('fill')
+              const percentage = Math.round(d[1].percentage)
+              const sdgLabel = goalsData.find(
+                (el) => el.sdg_code === goalCode
+              ).sdg_label
+
+              return `
+                <div class="d-flex flex-column">
+                  <span style="color: ${color}">SDG ${goalCode} - ${sdgLabel}</span>
+                  <span><strong>${percentage}%</strong></span>
+                </div>
+              `
+            },
+            allowHTML: true,
+            placement: 'auto',
+            delay: [300, null],
+          })
+        })
         .on('click', (e, d) => {
           this.showCircleDetails(
             Math.round(d[1].percentage),
@@ -225,12 +246,9 @@ export default {
           this.$refs.mainDiv.classList.add(
             'data-availability-viz-details--active'
           )
-          this.$d3
-            .select(e.target)
-            .classed('data-availability-viz-details__selected-element', true)
-        })
-        .on('mouseover', function () {
-          console.log(this)
+          e.target.classList.add(
+            'data-availability-viz-details__selected-element'
+          )
         })
 
       circles = circles.merge(circlesEnter)
@@ -457,28 +475,6 @@ export default {
       }
 
       xAxisG.call(xAxis)
-
-      /* ----------- TOOLTIPS ----------- */
-
-      tippy('.data-availability-circle', {
-        content(reference) {
-          const sdgLabel = goalsData.find(
-            (el) => el.sdg_code === reference.dataset.goalCode
-          ).sdg_label
-
-          return `
-            <div class="d-flex flex-column">
-              <span style="color: ${reference.getAttribute('fill')}">SDG ${
-            reference.dataset.goalCode
-          } - ${sdgLabel}</span>
-              <span><strong>${reference.dataset.percentage}%</strong></span>
-            </div>
-          `
-        },
-        allowHTML: true,
-        placement: 'auto',
-        delay: [300, null],
-      })
     },
 
     countryMean(sdg, countryGroup) {
