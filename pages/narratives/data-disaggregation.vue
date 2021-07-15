@@ -18,7 +18,14 @@
       </p>
     </narrative-break-text>
 
-    <data-disaggregation-scrollytelling v-if="defer(2)" />
+    <mq-layout mq="xxl+">
+      <client-only>
+        <data-disaggregation-scrollytelling v-if="defer(2)" />
+      </client-only>
+    </mq-layout>
+    <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
+      <data-disaggregation-scrollytelling-mobile />
+    </mq-layout>
 
     <narrative-break-text>
       <p class="fs-4 mb-5">
@@ -30,55 +37,59 @@
       </p>
     </narrative-break-text>
 
-    <section class="bg-dark text-light vh-100 data-viz">
-      <div
-        class="
-          border-top border-bottom border-secondary
-          px-5
-          py-4
-          d-flex
-          justify-content-between
-        "
-      >
-        <h2 class="m-0">Disaggregated data availability in the Arab Region</h2>
-        <div class="select-container">
-          <label for="select-element">Disaggregation by</label>
-          <select
-            id="select-element"
-            v-model="disaggregation"
-            class="form-select"
-            name="disaggregation"
-          >
-            <option value="Sex">Sex</option>
-            <option value="Education">Education</option>
-            <option value="Age">Age</option>
-            <option value="Disabilities">Disabilities</option>
-          </select>
+    <mq-layout mq="xxl+">
+      <section class="bg-dark text-light vh-100 data-viz">
+        <div
+          class="
+            border-top border-bottom border-secondary
+            px-5
+            py-4
+            d-flex
+            justify-content-between
+          "
+        >
+          <h2 class="m-0">
+            Disaggregated data availability in the Arab Region
+          </h2>
+          <div class="select-container">
+            <label for="select-element">Disaggregation by</label>
+            <select
+              id="select-element"
+              v-model="disaggregation"
+              class="form-select"
+              name="disaggregation"
+            >
+              <option value="Sex">Sex</option>
+              <option value="Education">Education</option>
+              <option value="Age">Age</option>
+              <option value="Disabilities">Disabilities</option>
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div class="px-5 py-4 pb-0">
-        <data-disaggregation-viz
-          v-if="defer(3)"
-          :disaggregation="disaggregation"
-        />
-      </div>
+        <div class="px-5 py-4 pb-0">
+          <data-disaggregation-viz
+            v-if="defer(3)"
+            :disaggregation="disaggregation"
+          />
+        </div>
 
-      <div class="px-5 py-4 d-flex" style="margin-left: 204px">
-        <div class="d-flex align-items-center me-5">
-          <div class="me-3 viz-caption viz-caption--full"></div>
-          <h5 class="m-0">Not available</h5>
+        <div class="px-5 py-4 d-flex" style="margin-left: 204px">
+          <div class="d-flex align-items-center me-5">
+            <div class="me-3 viz-caption viz-caption--full"></div>
+            <h5 class="m-0">Not available</h5>
+          </div>
+          <div class="d-flex align-items-center me-5">
+            <div class="me-3 viz-caption viz-caption--masked"></div>
+            <h5 class="m-0">Available without disaggregation</h5>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="me-3 viz-caption"></div>
+            <h5 class="m-0">Available with disaggregation</h5>
+          </div>
         </div>
-        <div class="d-flex align-items-center me-5">
-          <div class="me-3 viz-caption viz-caption--masked"></div>
-          <h5 class="m-0">Available without disaggregation</h5>
-        </div>
-        <div class="d-flex align-items-center">
-          <div class="me-3 viz-caption"></div>
-          <h5 class="m-0">Available with disaggregation</h5>
-        </div>
-      </div>
-    </section>
+      </section>
+    </mq-layout>
   </div>
 </template>
 
@@ -88,6 +99,7 @@ import Defer from '~/mixins/defer.mixin.js'
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataDisaggregationScrollytelling from '~/components/narrative/data-disaggregation/DataDisaggregationScrollytelling'
+import DataDisaggregationScrollytellingMobile from '~/components/narrative/data-disaggregation/DataDisaggregationScrollytellingMobile'
 import DataDisaggregationViz from '~/components/narrative/data-disaggregation/DataDisaggregationViz'
 
 export default {
@@ -97,6 +109,7 @@ export default {
     NarrativeHeader,
     NarrativeBreakText,
     DataDisaggregationScrollytelling,
+    DataDisaggregationScrollytellingMobile,
     DataDisaggregationViz,
   },
 
