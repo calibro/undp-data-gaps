@@ -129,7 +129,7 @@
 
         <div class="step">
           <p class="fs-4 mb-0">
-            Unluckly sometime data is not updated regularly creating gaps in
+            Unluckily sometime data is not updated regularly creating gaps in
             time series making it difficult to understand what’s happening or
             happened in a given time.
           </p>
