@@ -3,7 +3,12 @@
     <div class="container p-5 scrollytelling">
       <div class="scrollytelling__graphics">
         <div class="dots-container">
-          <svg width="100%" height="100%" viewBox="0 0 200 200">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 200 200"
+            class="overflow-visible"
+          >
             <g ref="dots1" style="opacity: 0">
               <g>
                 <circle
