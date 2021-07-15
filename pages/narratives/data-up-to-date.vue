@@ -17,7 +17,14 @@
       </p>
     </narrative-break-text>
 
-    <data-up-to-date-scrollytelling v-if="defer(2)" />
+    <mq-layout mq="xxl+">
+      <client-only>
+        <data-up-to-date-scrollytelling v-if="defer(2)" />
+      </client-only>
+    </mq-layout>
+    <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
+      <data-up-to-date-scrollytelling-mobile />
+    </mq-layout>
 
     <narrative-break-text>
       <p class="fs-4 mb-5">
@@ -26,39 +33,41 @@
       </p>
     </narrative-break-text>
 
-    <section class="bg-dark text-light data-viz">
-      <div
-        class="
-          border-top border-bottom border-secondary
-          px-5
-          py-4
-          d-flex
-          justify-content-between
-        "
-      >
-        <h2 class="m-0">Number of data points per year</h2>
-        <div class="select-container">
-          <label for="select-element">SDG</label>
-          <select
-            id="select-element"
-            v-model="selectedSdg"
-            class="form-select"
-            name="sdg"
-          >
-            <option
-              v-for="goal in $goals"
-              :key="goal.id"
-              :value="goal.id.toString()"
+    <mq-layout mq="xxl+">
+      <section class="bg-dark text-light data-viz">
+        <div
+          class="
+            border-top border-bottom border-secondary
+            px-5
+            py-4
+            d-flex
+            justify-content-between
+          "
+        >
+          <h2 class="m-0">Number of data points per year</h2>
+          <div class="select-container">
+            <label for="select-element">SDG</label>
+            <select
+              id="select-element"
+              v-model="selectedSdg"
+              class="form-select"
+              name="sdg"
             >
-              {{ goal.id }}. {{ goal.title }}
-            </option>
-          </select>
+              <option
+                v-for="goal in $goals"
+                :key="goal.id"
+                :value="goal.id.toString()"
+              >
+                {{ goal.id }}. {{ goal.title }}
+              </option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="my-4 mx-5" ref="dataUpToDateVizContainer">
-        <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
-      </div>
-    </section>
+        <div class="my-4 mx-5" ref="dataUpToDateVizContainer">
+          <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
+        </div>
+      </section>
+    </mq-layout>
   </div>
 </template>
 
@@ -68,6 +77,7 @@ import Defer from '~/mixins/defer.mixin.js'
 import NarrativeHeader from '~/components/narrative/NarrativeHeader'
 import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 import DataUpToDateScrollytelling from '~/components/narrative/data-up-to-date/DataUpToDateScrollytelling'
+import DataUpToDateScrollytellingMobile from '~/components/narrative/data-up-to-date/DataUpToDateScrollytellingMobile'
 import DataUpToDateViz from '~/components/narrative/data-up-to-date/DataUpToDateViz'
 
 export default {
@@ -77,6 +87,7 @@ export default {
     NarrativeHeader,
     NarrativeBreakText,
     DataUpToDateScrollytelling,
+    DataUpToDateScrollytellingMobile,
     DataUpToDateViz,
   },
 
