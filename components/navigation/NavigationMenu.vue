@@ -78,6 +78,7 @@ export default {
   z-index: 999;
   transform: translateY(100%);
   will-change: transform;
+  background: $gray-200;
 
   @include media-breakpoint-down(lg) {
     width: 100%;

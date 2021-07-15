@@ -1,5 +1,5 @@
 <template functional>
-  <div class="position-relative bg-white border-top border-dark">
+  <div class="position-relative border-top border-dark safe-area">
     <nuxt-link
       :to="props.link"
       class="

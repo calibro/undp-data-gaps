@@ -1,12 +1,14 @@
 <template>
   <div class="viewport">
-    <div class="viewport__navigation">
+    <div class="bg-light safe-area viewport__navigation">
       <navigation-sidebar class="position-sticky top-0" />
     </div>
 
-    <div class="position-relative bg-dark viewport__content">
+    <div class="position-relative viewport__content">
       <navigation-menu />
-      <Nuxt />
+      <div class="safe-area">
+        <Nuxt />
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +27,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .viewport {
   display: grid;
   grid-template-columns: min-content 1fr;
@@ -36,14 +38,19 @@ export default {
 }
 </style>
 
-<style>
+<style lang="scss">
 html {
+  background-color: $dark;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: $dark !important;
 }
 
 .fade-enter-active,
@@ -53,5 +60,10 @@ html {
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
+}
+
+.safe-area {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 </style>

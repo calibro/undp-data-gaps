@@ -15,11 +15,13 @@
         "
       >
         <div class="w-100 border-bottom border-secondary h-100 header__content">
-          <span class="d-block border-bottom border-secondary w-100 mb-4 pb-3">
-            UNDP AND ARAB DEVELOPMENT PORTAL
-          </span>
+          <div class="border-bottom border-secondary mb-4">
+            <span class="d-block w-75 pb-3">
+              UNDP AND ARAB DEVELOPMENT PORTAL
+            </span>
+          </div>
 
-          <h1 class="display-0 fw-normal m-0 header__title">
+          <h1 class="display-0 fw-normal mb-5 m-lg-0 header__title">
             Data Availability and Data Gaps in the Arab Region
           </h1>
 
@@ -32,19 +34,21 @@
 
     <section
       id="scroll-into-target"
-      class="bg-dark text-light d-grid p-3 p-lg-5 intro-text"
+      class="bg-dark text-light d-lg-grid p-3 p-lg-5 intro-text"
     >
-      <h2>Bridging the gaps to focus on what matters the most.</h2>
+      <h2 class="pb-5 pb-lg-0">
+        Bridging the gaps to focus on what matters the most.
+      </h2>
       <div>
-        <p class="fs-4 mb-5">
+        <p class="fs-4 mb-4 mb-lg-5">
           Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
           nibh, ut fermentum massa justo sit amet risus.
         </p>
-        <p class="fs-4 mb-5">
+        <p class="fs-4 mb-4 mb-lg-5">
           Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum.
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
-        <p class="fs-4 mb-5">
+        <p class="fs-4 mb-4 mb-lg-5">
           Etiam porta sem malesuada magna mollis euismod.<br />
           Donec sed odio dui. Vivamus sagittis lacus vel augue laoreet rutrum
           faucibus dolor auctor. Etiam porta sem malesuada magna mollis euismod.
@@ -59,6 +63,7 @@
             py-3
             px-5
             my-3
+            w-100 w-lg-auto
             text-reset text-decoration-none text-uppercase
           "
         >
@@ -67,7 +72,7 @@
       </div>
     </section>
 
-    <section class="bg-dark text-light p-3 p-lg-5">
+    <section class="bg-dark text-light p-3 pb-5 p-lg-5">
       <span class="d-block w-100 border-bottom border-secondary pb-3">
         CHAPTERS
       </span>
@@ -126,14 +131,12 @@
 <script>
 import Defer from '~/mixins/defer.mixin.js'
 import HomeHeaderAnimation from '~/components/homeHeaderAnimation'
-// import HomeHeaderAnimation2 from '~/components/homeHeaderAnimation2'
 
 export default {
   name: 'IndexPage',
 
   components: {
     HomeHeaderAnimation,
-    // HomeHeaderAnimation2,
   },
 
   mixins: [Defer()],

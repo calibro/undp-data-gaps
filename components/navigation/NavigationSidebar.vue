@@ -1,5 +1,5 @@
 <template>
-  <aside class="border-end border-dark navigation-sidebar">
+  <aside class="navigation-sidebar">
     <nuxt-link
       to="/"
       class="py-0 py-lg-2 px-3 px-lg-2 navigation-sidebar__logo"
@@ -102,7 +102,7 @@ export default {
   align-items: center;
 
   @include media-breakpoint-down(lg) {
-    width: 100vw;
+    width: 100%;
     height: $sidebar-width;
 
     flex-direction: row;

@@ -15,9 +15,9 @@
         "
       >
         <div class="w-100 header__title">
-          <span class="d-block border-bottom border-light mb-4 pb-3">
-            ABOUT THE PROJECT
-          </span>
+          <div class="w-100 border-bottom border-secondary mb-4">
+            <span class="d-block pb-3 w-75"> ABOUT THE PROJECT </span>
+          </div>
 
           <h1 class="display-2 fw-normal">About</h1>
         </div>

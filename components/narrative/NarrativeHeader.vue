@@ -13,11 +13,13 @@
       "
     >
       <div class="header__title">
-        <span class="d-block border-bottom border-light mb-4 pb-3">
-          CHAPTER {{ props.chapterNumber }}
-        </span>
+        <div class="w-100 border-bottom border-secondary mb-4">
+          <span class="d-block pb-3 w-75">
+            CHAPTER {{ props.chapterNumber }}
+          </span>
+        </div>
 
-        <h1 class="display-2 fw-normal">{{ props.title }}</h1>
+        <h1 class="display-2 m-0 fw-normal">{{ props.title }}</h1>
       </div>
 
       <mq-layout mq="xl+">
