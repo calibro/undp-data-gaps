@@ -19,11 +19,16 @@
       class="countryRow"
       :style="{ minHeight: countryRowHeight }"
     >
-      <details>
+      <details
+        :ref="`details-${country[0]}`"
+        @click.prevent="(e) => expandDetails(e, country[0])"
+      >
         <summary>
           <div class="data-up-to-date-viz__row">
-            <div class="text-end">{{ country[0] }}</div>
-            <div class="">
+            <div class="text-end data-up-to-date-viz__row__label">
+              {{ country[0] }}
+            </div>
+            <div>
               <data-up-to-date-indicators-sum
                 :country="country[0]"
                 :width="indicatorsSumWidth"
@@ -96,7 +101,6 @@ export default {
 
   watch: {
     selectedSdg(_, newValue) {
-      console.log(newValue)
       this.drawViz()
     },
   },
@@ -183,6 +187,15 @@ export default {
       this.indicatorsSumWidth = 0
       this.countryRowHeight = 0
     },
+
+    expandDetails(e, detailsID) {
+      if (
+        e.target.classList.contains('data-up-to-date-viz__row__label') ||
+        e.target.tagName === 'SUMMARY'
+      ) {
+        this.$refs[`details-${detailsID}`][0].toggleAttribute('open')
+      }
+    },
   },
 }
 </script>
@@ -203,6 +216,14 @@ export default {
   & details {
     & summary {
       list-style: none;
+
+      &:focus {
+        outline: none;
+
+        .data-up-to-date-viz__row__label {
+          outline: solid 1px;
+        }
+      }
     }
 
     & summary::marker {
