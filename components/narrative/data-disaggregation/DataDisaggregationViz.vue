@@ -24,9 +24,7 @@ export default {
   async mounted() {
     this.$options.maxIndicatorCodes = 0
 
-    const responseVizData = await fetch(
-      '/data/data_gaps-data-viz_2-ordered.csv'
-    )
+    const responseVizData = await fetch('/data/data_gaps-data-viz_2.csv')
     const responseVizDataRawText = await responseVizData.text()
 
     const responseGoalsData = await fetch(
