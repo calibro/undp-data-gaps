@@ -27,8 +27,13 @@
           <div class="data-up-to-date-viz__row">
             <div class="text-end data-up-to-date-viz__row__label">
               {{ country[0] }}
+              <img
+                src="~/assets/images/icons/plus--circle.svg"
+                alt="Plus Icon"
+                class="ms-2 data-up-to-date-viz__row__label__icon"
+              />
             </div>
-            <div>
+            <div style="cursor: initial">
               <data-up-to-date-indicators-sum
                 :country="country[0]"
                 :width="indicatorsSumWidth"
@@ -190,9 +195,13 @@ export default {
     expandDetails(e, detailsID) {
       if (
         e.target.classList.contains('data-up-to-date-viz__row__label') ||
+        e.target.classList.contains('data-up-to-date-viz__row__label__icon') ||
         e.target.tagName === 'SUMMARY'
       ) {
         this.$refs[`details-${detailsID}`][0].toggleAttribute('open')
+        this.$refs[`details-${detailsID}`][0].classList.toggle(
+          'data-up-to-date-viz__row__details--expanded'
+        )
       }
     },
   },
@@ -219,8 +228,10 @@ export default {
       &:focus {
         outline: none;
 
-        .data-up-to-date-viz__row__label {
-          outline: solid 1px;
+        & .data-up-to-date-viz__row__label {
+          border-color: #86b7fe;
+          outline: 0;
+          box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
       }
     }
@@ -239,5 +250,15 @@ export default {
   display: grid;
   grid-template-columns: 2fr 10fr;
   gap: 1.5rem;
+}
+
+.data-up-to-date-viz__row__label img {
+  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
+}
+
+.data-up-to-date-viz__row__details--expanded
+  .data-up-to-date-viz__row__label
+  img {
+  transform: rotate(45deg);
 }
 </style>
