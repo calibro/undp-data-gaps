@@ -74,11 +74,11 @@ export default {
       switch (this.$nuxt.$route.path) {
         case '/':
           return 'index'
-        case '/narratives/data-availability':
+        case '/data-availability':
           return 'chapter 1'
-        case '/narratives/data-disaggregation':
+        case '/data-disaggregation':
           return 'chapter 2'
-        case '/narratives/data-up-to-date':
+        case '/data-up-to-date':
           return 'chapter 3'
         case '/about':
           return 'about'

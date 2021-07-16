@@ -5,15 +5,15 @@
     @click="navigateMenu"
   >
     <navigation-link
-      link="/narratives/data-availability"
+      link="/data-availability"
       title="01.Why is important to make data available in the Arab Region?"
     />
     <navigation-link
-      link="/narratives/data-disaggregation"
+      link="/data-disaggregation"
       title="02.Why is it important to have disaggregated data?"
     />
     <navigation-link
-      link="/narratives/data-up-to-date"
+      link="/data-up-to-date"
       title="03.Why is it important to have up-to-date statistic?"
     />
     <navigation-link link="/about" title="About" />

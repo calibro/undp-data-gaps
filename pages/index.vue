@@ -78,7 +78,7 @@
       </span>
 
       <nuxt-link
-        to="/narratives/data-availability"
+        to="/data-availability"
         class="
           w-100
           border-bottom border-secondary
@@ -94,7 +94,7 @@
       </nuxt-link>
 
       <nuxt-link
-        to="/narratives/data-disaggregation"
+        to="/data-disaggregation"
         class="
           w-100
           border-bottom border-secondary
@@ -110,7 +110,7 @@
       </nuxt-link>
 
       <nuxt-link
-        to="/narratives/data-up-to-date"
+        to="/data-up-to-date"
         class="
           w-100
           border-bottom border-secondary
