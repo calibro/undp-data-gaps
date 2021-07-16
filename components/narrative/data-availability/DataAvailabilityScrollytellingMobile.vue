@@ -3,7 +3,7 @@
     <narrative-break-text>
       <div class="d-flex flex-column">
         <img
-          src="~/assets/images/narrative/data-availability/step1.svg"
+          src="~/assets/images/narrative/data-availability/scrollytelling-mobile/data-availability-scrollm-step1.svg"
           alt="Step 1"
           class="w-100 mb-6"
         />
@@ -22,7 +22,7 @@
           are established and they are available.
         </p>
         <img
-          src="~/assets/images/narrative/data-availability/step2.svg"
+          src="~/assets/images/narrative/data-availability/scrollytelling-mobile/data-availability-scrollm-step2.svg"
           alt="Step 2"
           class="w-100 my-6"
         />
@@ -35,7 +35,7 @@
           impact on a society as a whole.
         </p>
         <img
-          src="~/assets/images/narrative/data-availability/step3.svg"
+          src="~/assets/images/narrative/data-availability/scrollytelling-mobile/data-availability-scrollm-step3.svg"
           alt="Step 3"
           class="w-100 my-6"
         />
@@ -44,7 +44,7 @@
           sustainable development of their cities and communities.
         </p>
         <img
-          src="~/assets/images/narrative/data-availability/step4.svg"
+          src="~/assets/images/narrative/data-availability/scrollytelling-mobile/data-availability-scrollm-step4.svg"
           alt="Step 4"
           class="w-100 my-6"
         />
