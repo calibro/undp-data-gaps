@@ -13,13 +13,16 @@ import tippy from 'tippy.js'
 export default {
   name: 'DataUpToDateVizIndicatorsSum',
 
-  props: ['height', 'width', 'data', 'max', 'margins', 'country'],
+  props: ['height', 'width', 'data', 'max', 'margins', 'country', 'color'],
 
   watch: {
     height() {
       this.drawIndicatorsSum()
     },
     width() {
+      this.drawIndicatorsSum()
+    },
+    data() {
       this.drawIndicatorsSum()
     },
   },
@@ -30,6 +33,8 @@ export default {
 
   methods: {
     drawIndicatorsSum() {
+      const color = this.color
+      const sdg = this.data[0][0].split('.')[0]
       const chartWidth = this.width - this.margins.left - this.margins.right
       const chartHeight = this.height - this.margins.top - this.margins.bottom
 
@@ -42,11 +47,11 @@ export default {
       const group = this.$d3
         .rollups(
           all,
-          (v) => this.$d3.sum(v, (d) => d.value),
+          (v) => this.$d3.sum(v, (d) => (d.value !== 0 ? 1 : 0)),
           (d) => d.year
         )
         .map((d) => {
-          return { date: new Date(+d[0], 0, 1), value: d[1] }
+          return { date: new Date(+d[0], 0, 1), value: d[1], original: d[0] }
         })
 
       const xScaleDomain = this.$d3.extent(group, (d) => d.date)
@@ -61,7 +66,7 @@ export default {
       const radiusScale = this.$d3
         .scaleSqrt()
         .domain([0, 1, this.max])
-        .range([0, 2, chartHeight / 2])
+        .range([0, 2, chartHeight])
 
       const svg = this.$d3.select(this.$refs.mainSVG).select('.gContainer')
 
@@ -71,8 +76,10 @@ export default {
         .join('circle')
         .attr('class', 'dot data-up-to-date-viz-sum__dot')
         .attr('cy', chartHeight / 2)
-        .attr('cx', (d) => xScale(d.date))
-        .attr('fill', 'red')
+        .attr('cx', (d) => {
+          return xScale(d.date)
+        })
+        .attr('fill', this.color)
         .attr('stroke', '#0b1418')
         .attr('r', (d) => radiusScale(d.value))
         .attr('data-country', this.country)
@@ -85,7 +92,7 @@ export default {
 
               return `
               <div class="d-flex flex-column">
-                <span style="color: red">SDG</span>
+                <span style="color: ${color}">SDG ${sdg}</span>
                 <span>${year} - ${reference.dataset.country}</span>
                 <span><strong>Indicators available: ${d.value}/${reference.dataset.max}</strong></span>
               </div>

@@ -11,13 +11,16 @@
 export default {
   name: 'DataUpToDateVizIndicators',
 
-  props: ['height', 'width', 'data', 'margins'],
+  props: ['height', 'width', 'data', 'margins', 'color'],
 
   watch: {
     height() {
       this.drawIndicators()
     },
     width() {
+      this.drawIndicators()
+    },
+    data() {
       this.drawIndicators()
     },
   },
@@ -42,7 +45,7 @@ export default {
 
       const line = this.$d3
         .line()
-        .defined((d) => +d.value > 0)
+        .defined((d) => +d.value !== 0)
         .x((d) => xScale(new Date(+d.year, 0, 1)))
         .y(chartHeight / 2)
 
@@ -53,7 +56,7 @@ export default {
         .data([this.data])
         .join('path')
         .attr('class', 'line')
-        .attr('stroke', 'red')
+        .attr('stroke', this.color)
         .attr('d', line)
 
       svg
@@ -61,18 +64,18 @@ export default {
         .data([this.data.filter(line.defined())])
         .join('path')
         .attr('class', 'lineMissing')
-        .attr('stroke', 'red')
+        .attr('stroke', this.color)
         .attr('stroke-dasharray', '3,3')
         .attr('d', line)
 
       svg
         .selectAll('.dot')
-        .data(this.data.filter((d) => +d.value > 0))
+        .data(this.data.filter((d) => +d.value !== 0))
         .join('circle')
         .attr('class', 'dot')
         .attr('cy', chartHeight / 2)
         .attr('cx', (d) => xScale(new Date(+d.year, 0, 1)))
-        .attr('fill', 'red')
+        .attr('fill', this.color)
         .attr('stroke', '#0b1418')
         .attr('r', 3)
     },

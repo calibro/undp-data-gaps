@@ -36,6 +36,7 @@
                 :max="countriesMax"
                 :data="country[1]"
                 :margins="margins"
+                :color="color"
               />
             </div>
           </div>
@@ -53,6 +54,7 @@
                 height="12"
                 :data="indicator[1][0]"
                 :margins="margins"
+                :color="color"
               />
             </div>
           </div>
@@ -96,6 +98,7 @@ export default {
       },
       indicatorsSumWidth: null,
       countryRowHeight: null,
+      color: null,
     }
   },
 
@@ -119,6 +122,7 @@ export default {
         return v.map((d) => {
           delete d['Country name']
           delete d.indicator_code
+          delete d.sdg
           return Object.entries(d).map((e) => {
             return { year: e[0], value: +e[1] }
           })
@@ -170,12 +174,37 @@ export default {
         )
         const group = this.$d3.rollups(
           all,
-          (v) => this.$d3.sum(v, (d) => d.value),
+          (v) => this.$d3.sum(v, (d) => (d.value !== 0 ? 1 : 0)),
           (d) => d.year
         )
 
         return this.$d3.max(group, (d) => d[1])
       })
+
+      const sdgColorScale = this.$d3
+        .scaleOrdinal()
+        .domain(this.$d3.range(17).map((d) => (d + 1).toString()))
+        .range([
+          '#E5243B',
+          '#DDA63A',
+          '#4C9F38',
+          '#C5192D',
+          '#FF3A21',
+          '#26BDE2',
+          '#FCC30B',
+          '#A21942',
+          '#FD6925',
+          '#DD1367',
+          '#FD9D24',
+          '#BF8B2E',
+          '#3F7E44',
+          '#0A97D9',
+          '#56C02B',
+          '#00689D',
+          '#19486A',
+        ])
+
+      this.color = sdgColorScale(this.selectedSdg)
 
       this.timeScaleDomain = this.selectedSdgData[0][1][0][1][0].map(
         (d) => new Date(+d.year, 0, 1)
