@@ -63,7 +63,7 @@
             </select>
           </div>
         </div>
-        <div class="my-4 mx-5" ref="dataUpToDateVizContainer">
+        <div ref="dataUpToDateVizContainer" class="my-4 mx-5">
           <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
         </div>
       </section>

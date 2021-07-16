@@ -152,7 +152,6 @@ export default {
         '#data-up-to-date-viz__axis'
       )
       this.indicatorsSumWidth = firstContainer?.clientWidth
-      console.log(this.indicatorsSumWidth)
 
       const container = document.querySelector('#data-up-to-date-viz')
       this.countryRowHeight = container?.clientHeight / 23 + 'px'

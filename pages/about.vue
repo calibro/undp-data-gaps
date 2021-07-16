@@ -85,11 +85,11 @@ import NarrativeBreakText from '~/components/narrative/NarrativeBreakText'
 export default {
   name: 'AboutPage',
 
-  transition: 'fade',
-
   components: {
     NarrativeBreakText,
   },
+
+  transition: 'fade',
 }
 </script>
 
