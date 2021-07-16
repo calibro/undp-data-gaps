@@ -45,7 +45,16 @@
       </p>
     </narrative-break-text>
 
-    <section class="bg-dark text-light vh-100 data-viz">
+    <section
+      class="
+        bg-dark
+        text-light
+        vh-100
+        position-relative
+        overflow-hidden
+        data-viz
+      "
+    >
       <div class="border-top border-bottom border-secondary data-viz__header">
         <h2 class="px-5 py-4 m-0 border-end border-secondary">
           Data availability in the Arab Region
