@@ -91,7 +91,6 @@ export default {
 
   data() {
     return {
-      // developmentGoals: null,
       goalsPositions: null,
       goalsCirclePositions: [],
       isGraphicAlreadyEntered: false,
@@ -99,7 +98,6 @@ export default {
   },
 
   beforeMount() {
-    // this.developmentGoals = this.$goals
     this.goalsPositions = goalsPositions
   },
 
