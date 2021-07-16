@@ -65,11 +65,11 @@ export default {
       d.sdg_code = +d.sdg_code
     })
 
-    this.prepareForDrawing()
+    this.drawViz({ firstDraw: true })
   },
 
   methods: {
-    async prepareForDrawing() {
+    async drawViz({ firstDraw }) {
       const xValues = await this.$worker.computeXValues(
         this.$options.vizData,
         this.disaggregation,
@@ -84,10 +84,6 @@ export default {
         this.disaggregation
       )
 
-      this.drawViz(xValues, yValues, rectsValues, this.$options.goalsData)
-    },
-
-    drawViz(xValues, yValues, rectsValues, goalsData) {
       const container = this.$d3.select('#data-disaggregation-viz')
 
       const containerWidth = 100
@@ -101,9 +97,6 @@ export default {
       }
 
       /* ----------- SCALES ----------- */
-
-      const xValue = (d) => d.indicator_code
-      const yValue = (d) => d.country
 
       const xScale = this.$d3
         .scaleBand()
@@ -122,6 +115,39 @@ export default {
         .paddingOuter(0.15)
         .align(0.5)
 
+      if (firstDraw) {
+        this.drawImmutables(
+          container,
+          safeAreaMargins,
+          yScale,
+          xValues,
+          yValues,
+          rectsValues,
+          this.$options.goalsData
+        )
+      }
+
+      this.drawMutables(
+        container,
+        safeAreaMargins,
+        yScale,
+        xScale,
+        xValues,
+        yValues,
+        rectsValues,
+        this.$options.goalsData
+      )
+    },
+
+    drawImmutables(
+      container,
+      safeAreaMargins,
+      yScale,
+      xValues,
+      yValues,
+      rectsValues,
+      goalsData
+    ) {
       /* ----------- TABLE ROWS (Alternating colors) ----------- */
 
       const tableRowsGroup = container
@@ -172,10 +198,24 @@ export default {
         .text((d) => {
           return d
         })
+    },
+
+    drawMutables(
+      container,
+      safeAreaMargins,
+      yScale,
+      xScale,
+      xValues,
+      yValues,
+      rectsValues,
+      goalsData
+    ) {
+      /* ----------- AXIS ----------- */
 
       const xAxisSafeArea = container
         .append('div')
         .classed('x-axis-safearea', true)
+        .classed('viz-mutable', true)
         .style(
           'width',
           `calc(100% - ${safeAreaMargins.right}px - ${safeAreaMargins.left}px)`
@@ -184,6 +224,7 @@ export default {
       const xAxisGroup = xAxisSafeArea
         .append('div')
         .classed('x-axis-container', true)
+        .style('opacity', 0)
         .style(
           'width',
           () =>
@@ -225,9 +266,13 @@ export default {
 
       /* ----------- RECTS ----------- */
 
+      const xValue = (d) => d.indicator_code
+      const yValue = (d) => d.country
+
       const rectsGroupSafeArea = container
         .append('div')
         .style('position', 'absolute')
+        .classed('viz-mutable', true)
         .style('z-index', 10)
         .style(
           'width',
@@ -242,12 +287,14 @@ export default {
 
       const rectsGroup = rectsGroupSafeArea
         .append('div')
+        .classed('rects-container', true)
         .style('position', 'absolute')
         .style(
           'width',
           (xScale.domain().length * 100) / this.$options.maxIndicatorCodes + '%'
         )
         .style('height', '100%')
+        .style('opacity', 0)
 
       rectsGroup
         .selectAll('div')
@@ -273,7 +320,6 @@ export default {
             return this.$goals.find((goal) => goal.id === d.goal_code).color
           }
         })
-        .style('opacity', 0)
         .attr('data-disaggregation', this.disaggregation)
         .attr(
           'data-color',
@@ -319,30 +365,30 @@ export default {
           })
         })
 
+      /* ----------- ANIMATIONS ----------- */
+
       const t = this.$d3.transition().duration(800).ease(this.$d3.easeQuadOut)
 
-      this.$d3
-        .selectAll('.data-disaggregation-viz-rect')
-        .transition(t)
-        .delay(() => Math.floor(Math.random() * (500 - 0 + 1) + 0))
-        .style('opacity', 1)
+      this.$d3.select('.x-axis-container').transition(t).style('opacity', 1)
+      this.$d3.select('.rects-container').transition(t).style('opacity', 1)
     },
 
     updateViz(oldValue, newValue) {
-      const t = this.$d3.transition().duration(500).ease(this.$d3.easeQuadOut)
+      /* ----------- ANIMATIONS ----------- */
+
+      const t = this.$d3.transition().duration(400).ease(this.$d3.easeQuadOut)
 
       this.$d3
-        .selectAll('.data-disaggregation-viz-rect')
+        .selectAll('.viz-mutable')
         .transition(t)
-        .delay(() => Math.floor(Math.random() * (300 - 0 + 1) + 0))
         .style('opacity', 0)
+        .on('end', function () {
+          this.remove()
+        })
 
       setTimeout(() => {
-        const container = this.$d3.select('#data-disaggregation-viz')
-        container.selectChildren('*').remove()
-
-        this.prepareForDrawing()
-      }, 800)
+        this.drawViz({ firstDraw: false })
+      }, 500)
     },
   },
 }
@@ -404,20 +450,5 @@ export default {
   left: 0;
   top: 0;
   height: 100%;
-  // display: flex;
-
-  // & div {
-  //   display: flex;
-  //   align-items: flex-end;
-  //   justify-content: center;
-  //   transform: rotate(90deg);
-
-  //   & span {
-  //     // white-space: nowrap;
-  //     // overflow: hidden;
-  //     // text-overflow: ellipsis;
-  //     writing-mode: sideways-lr;
-  //   }
-  // }
 }
 </style>
