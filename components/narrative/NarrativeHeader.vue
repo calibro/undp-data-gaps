@@ -27,8 +27,12 @@
           class="btn btn-link p-0 text-light text-decoration-none"
           @click="$options.scrollDown(props.scrollIntoElementId)"
         >
-          <!-- TODO: Add Scroll Down icon -->
           Scroll down
+          <img
+            src="~/assets/images/icons/arrow_down.svg"
+            alt="arrow icon"
+            class="mb-1"
+          />
         </button>
       </mq-layout>
     </div>
