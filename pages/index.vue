@@ -63,8 +63,8 @@
             py-3
             px-5
             my-3
-            w-100 w-lg-auto
             text-reset text-decoration-none text-uppercase
+            btn-read-more
           "
         >
           Read more
@@ -184,5 +184,11 @@ header {
 .intro-text {
   grid-template-columns: 1fr 1fr;
   gap: 25px;
+}
+
+@include media-breakpoint-down(lg) {
+  .btn-read-more {
+    width: 100%;
+  }
 }
 </style>
