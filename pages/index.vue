@@ -90,7 +90,7 @@
         <span class="d-block fs-4 py-5 me-3">
           01.Why is important to make data available in the Arab Region?
         </span>
-        <img src="~/assets/images/arrow_right.svg" alt="arrow icon" />
+        <img src="~/assets/images/icons/arrow_right.svg" alt="arrow icon" />
       </nuxt-link>
 
       <nuxt-link
@@ -106,7 +106,7 @@
         <span class="d-block fs-4 py-5 me-3">
           02.Why is it important to have disaggregated data?
         </span>
-        <img src="~/assets/images/arrow_right.svg" alt="arrow icon" />
+        <img src="~/assets/images/icons/arrow_right.svg" alt="arrow icon" />
       </nuxt-link>
 
       <nuxt-link
@@ -122,7 +122,7 @@
         <span class="d-block fs-4 py-5 me-3">
           03.Why is it important to have up-to-date statistic?
         </span>
-        <img src="~/assets/images/arrow_right.svg" alt="arrow icon" />
+        <img src="~/assets/images/icons/arrow_right.svg" alt="arrow icon" />
       </nuxt-link>
     </section>
   </div>
