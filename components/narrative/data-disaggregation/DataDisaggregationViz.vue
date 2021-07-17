@@ -93,7 +93,7 @@ export default {
         top: 40,
         right: 0,
         bottom: 0,
-        left: 200,
+        left: 125,
       }
 
       /* ----------- SCALES ----------- */
@@ -421,7 +421,7 @@ export default {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 180px;
+  width: 110px;
   height: 100%;
 
   & div {
