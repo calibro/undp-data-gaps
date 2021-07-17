@@ -277,7 +277,8 @@ export default {
 
 .data-up-to-date-viz__row {
   display: grid;
-  grid-template-columns: 2fr 10fr;
+  /* grid-template-columns: 2fr 10fr; */
+  grid-template-columns: 120px 1fr;
   gap: 1.5rem;
 }
 

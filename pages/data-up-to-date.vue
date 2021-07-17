@@ -68,6 +68,48 @@
         </div>
       </section>
     </mq-layout>
+    <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
+      <section class="bg-dark text-light w-100 data-viz">
+        <div
+          class="
+            border-top border-secondary
+            px-3 px-lg-5
+            py-4
+            d-flex
+            flex-column
+          "
+        >
+          <h2 class="mb-4">Number of data points per year</h2>
+          <div class="select-container-mobile">
+            <label for="select-element">SDG</label>
+            <select
+              id="select-element"
+              v-model="selectedSdg"
+              class="form-select"
+              name="sdg"
+            >
+              <option
+                v-for="goal in $goals"
+                :key="goal.id"
+                :value="goal.id.toString()"
+              >
+                {{ goal.id }}. {{ goal.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="overflow-scroll">
+          <div
+            ref="dataUpToDateVizContainer"
+            class="px-3 px-lg-5 py-4 py-lg-5"
+            style="width: 2000px; height: 1200px"
+          >
+            <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
+          </div>
+        </div>
+      </section>
+    </mq-layout>
   </div>
 </template>
 
@@ -152,6 +194,13 @@ export default {
 .select-container {
   display: grid;
   grid-template-columns: max-content max-content;
+  align-items: center;
+  gap: 15px;
+}
+
+.select-container-mobile {
+  display: grid;
+  grid-template-columns: max-content 1fr;
   align-items: center;
   gap: 15px;
 }
