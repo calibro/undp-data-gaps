@@ -45,90 +45,148 @@
       </p>
     </narrative-break-text>
 
-    <section
-      class="
-        bg-dark
-        text-light
-        vh-100
-        position-relative
-        overflow-hidden
-        data-viz
-      "
-    >
-      <div class="border-top border-bottom border-secondary data-viz__header">
-        <h2 class="px-5 py-4 m-0 border-end border-secondary">
-          Data availability in the Arab Region
-        </h2>
-        <span class="p-3 text-uppercase text-secondary d-flex align-items-end">
-          Sustainable Development Goals
-        </span>
-      </div>
-
-      <div class="overflow-hidden data-viz__content">
-        <div
-          class="
-            p-3
-            border-end border-secondary
-            overflow-hidden
-            position-relative
-          "
-        >
-          <div
-            id="data-availability-viz-container"
-            ref="dataAvailabilityVizContainer"
+    <mq-layout mq="xxl+">
+      <section
+        class="
+          bg-dark
+          text-light
+          vh-100
+          position-relative
+          overflow-hidden
+          data-viz
+        "
+      >
+        <div class="border-top border-bottom border-secondary data-viz__header">
+          <h2 class="px-5 py-4 m-0 border-end border-secondary">
+            Data availability in the Arab Region
+          </h2>
+          <span
+            class="p-3 text-uppercase text-secondary d-flex align-items-end"
           >
-            <data-availability-viz
-              v-if="defer(3)"
-              :selected-sdg="selectedSdg"
-              :container-width="minimumContainerDimension"
-            />
-          </div>
+            Sustainable Development Goals
+          </span>
         </div>
-        <aside class="data-viz__controls">
+
+        <div class="overflow-hidden data-viz__content">
           <div
-            v-for="goal in $goals"
-            :key="goal.id"
             class="
               p-3
-              border-bottom border-secondary
-              d-flex
-              align-items-center
-              justify-content-between
-              data-viz__controls__filter
+              border-end border-secondary
+              overflow-hidden
+              position-relative
             "
-            :class="{
-              'data-viz__controls__filter--active':
-                selectedSdg === String(goal.id),
-              'data-viz__controls__filter--active-all': selectedSdg === 'all',
-            }"
-            @click="changeSelectedSdg(goal.id)"
           >
             <div
+              id="data-availability-viz-container"
+              ref="dataAvailabilityVizContainer"
+            >
+              <data-availability-viz
+                v-if="defer(3)"
+                :selected-sdg="selectedSdg"
+                :container-width="minimumContainerDimension"
+              />
+            </div>
+          </div>
+          <aside class="data-viz__controls">
+            <div
+              v-for="goal in $goals"
+              :key="goal.id"
               class="
+                p-3
+                border-bottom border-secondary
                 d-flex
                 align-items-center
-                data-viz__controls__filter__label
+                justify-content-between
+                data-viz__controls__filter
               "
+              :class="{
+                'data-viz__controls__filter--active':
+                  selectedSdg === String(goal.id),
+                'data-viz__controls__filter--active-all': selectedSdg === 'all',
+              }"
+              @click="changeSelectedSdg(goal.id)"
             >
               <div
-                class="me-3 data-viz__controls__filter__circle"
-                :style="{ background: goal.color }"
-              ></div>
-              <span>{{ goal.id }}. {{ goal.title }}</span>
+                class="
+                  d-flex
+                  align-items-center
+                  data-viz__controls__filter__label
+                "
+              >
+                <div
+                  class="me-3 data-viz__controls__filter__circle"
+                  :style="{ background: goal.color }"
+                ></div>
+                <span>{{ goal.id }}. {{ goal.title }}</span>
+              </div>
+              <img
+                class="h-100 w-auto"
+                :src="
+                  require(`~/assets/images/sdg-icons/sdg_icon-${goal.id}.svg`)
+                "
+                :alt="goal.title + '| UDNP'"
+              />
             </div>
-            <img
-              class="h-100 w-auto"
-              :src="
-                require(`~/assets/images/sdg-icons/sdg_icon-${goal.id}.svg`)
-              "
-              :alt="goal.title + '| UDNP'"
-            />
-          </div>
-        </aside>
-      </div>
+          </aside>
+        </div>
 
-      <data-availability-viz-details />
-    </section>
+        <data-availability-viz-details />
+      </section>
+    </mq-layout>
+    <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
+      <section
+        class="
+          bg-dark
+          text-light
+          w-100
+          position-relative
+          overflow-hidden
+          data-viz
+        "
+      >
+        <div
+          class="
+            border-top border-secondary
+            px-3 px-lg-5
+            py-4
+            d-flex
+            flex-column
+          "
+        >
+          <h2 class="mb-4">Data availability in the Arab Region</h2>
+          <div class="select-container-mobile">
+            <label for="select-element">SDG</label>
+            <select
+              id="select-element"
+              v-model="selectedSdg"
+              class="form-select"
+              name="sdg"
+            >
+              <option value="all">All</option>
+              <option
+                v-for="goal in $goals"
+                :key="goal.id"
+                :value="goal.id.toString()"
+              >
+                {{ goal.id }}. {{ goal.title }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="w-100 overflow-scroll">
+          <div class="px-3 px-lg-5 py-4 py-lg-5">
+            <div ref="dataAvailabilityVizContainer">
+              <data-availability-viz-mobile
+                v-if="defer(3)"
+                :selected-sdg="selectedSdg"
+                :container-width="minimumContainerDimension"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </mq-layout>
   </div>
 </template>
 
@@ -141,6 +199,7 @@ import DataAvailabilityScrollytelling from '~/components/narrative/data-availabi
 import DataAvailabilityScrollytellingMobile from '~/components/narrative/data-availability/DataAvailabilityScrollytellingMobile'
 import DataAvailabilityViz from '~/components/narrative/data-availability/DataAvailabilityViz'
 import DataAvailabilityVizDetails from '~/components/narrative/data-availability/DataAvailabilityVizDetails'
+import DataAvailabilityVizMobile from '~/components/narrative/data-availability/DataAvailabilityVizMobile'
 
 export default {
   name: 'DataAvailabilityPage',
@@ -152,6 +211,7 @@ export default {
     DataAvailabilityScrollytellingMobile,
     DataAvailabilityViz,
     DataAvailabilityVizDetails,
+    DataAvailabilityVizMobile,
   },
 
   mixins: [Defer()],
@@ -179,6 +239,12 @@ export default {
   methods: {
     getMinimumContainerDimension() {
       const container = this.$refs.dataAvailabilityVizContainer
+
+      // Return if it's mobile version
+      if (!container) {
+        return
+      }
+
       const width = container.offsetWidth
       const height = container.offsetHeight
       this.minimumContainerDimension = Math.min(width, height)
@@ -186,6 +252,11 @@ export default {
     },
 
     saveVizFromResize() {
+      // Return if it's mobile version
+      if (!this.$refs.dataAvailabilityVizContainer) {
+        return
+      }
+
       this.$refs.dataAvailabilityVizContainer.classList.add(
         'data-availability-viz-container--wait-for-resize'
       )
@@ -231,6 +302,13 @@ export default {
 .data-viz__header {
   display: grid;
   grid-template-columns: 2.5fr 1fr;
+}
+
+.select-container-mobile {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  gap: 15px;
 }
 
 .data-viz__content {
