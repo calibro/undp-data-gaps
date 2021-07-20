@@ -41,6 +41,7 @@
             </div>
             <div style="cursor: initial">
               <data-up-to-date-indicators-sum
+                :key="`${selectedSdg}-${country[0]}`"
                 :country="country[0]"
                 :width="indicatorsSumWidth"
                 height="12"
