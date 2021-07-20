@@ -24,6 +24,12 @@
         @click.prevent="(e) => expandDetails(e, country[0])"
       >
         <summary>
+          <div
+            class="data-up-to-date-viz__table-row"
+            :style="{
+              minHeight: countryRowHeight,
+            }"
+          ></div>
           <div class="data-up-to-date-viz__row">
             <div class="text-end data-up-to-date-viz__row__label">
               {{ country[0] }}
@@ -253,6 +259,7 @@ export default {
   & details {
     & summary {
       list-style: none;
+      position: relative;
 
       &:focus {
         outline: none;
@@ -273,13 +280,26 @@ export default {
       display: none;
     }
   }
+
+  & .data-up-to-date-viz__table-row {
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &:nth-child(odd) .data-up-to-date-viz__table-row {
+    background: #0f1d23;
+  }
 }
 
 .data-up-to-date-viz__row {
   display: grid;
-  /* grid-template-columns: 2fr 10fr; */
   grid-template-columns: 120px 1fr;
   gap: 1.5rem;
+  position: relative;
+  z-index: 10;
 }
 
 .data-up-to-date-viz__row__label img {
