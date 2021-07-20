@@ -4,7 +4,7 @@
       <div class="scrollytelling__graphics">
         <div ref="developmentGoals" class="goals-container">
           <div
-            v-for="goal in developmentGoals"
+            v-for="goal in $goals"
             :key="goal.id"
             ref="goal"
             :style="{ backgroundColor: goal.color }"
@@ -84,7 +84,6 @@
 </template>
 
 <script>
-import developmentGoals from '~/data/development-goals.json'
 import goalsPositions from '~/data/data-availability-scrollytelling-positions.json'
 
 export default {
@@ -92,7 +91,6 @@ export default {
 
   data() {
     return {
-      developmentGoals: null,
       goalsPositions: null,
       goalsCirclePositions: [],
       isGraphicAlreadyEntered: false,
@@ -100,14 +98,13 @@ export default {
   },
 
   beforeMount() {
-    this.developmentGoals = developmentGoals
     this.goalsPositions = goalsPositions
   },
 
   mounted() {
     const deg = 0
     const radius = 200
-    const fields = document.querySelectorAll('.goal-circle')
+    const fields = this.$refs.goal
     const width = 500
     const height = 500
     let angle = deg || Math.PI * 3.5
@@ -122,7 +119,7 @@ export default {
       )
 
       const position = {
-        id: this.developmentGoals[index].id,
+        id: this.$goals[index].id,
         x: (x * 100) / width + '%',
         y: (y * 100) / height + '%',
       }

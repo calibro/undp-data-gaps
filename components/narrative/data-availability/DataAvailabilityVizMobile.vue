@@ -71,18 +71,6 @@ export default {
     this.vizReady = true
 
     this.drawViz(this.$options.vizData, this.$options.goalsData)
-
-    this.$bus.$on(
-      'close-data-availability-viz-details',
-      this.removeDetailsActiveStatus
-    )
-  },
-
-  beforeDestroy() {
-    this.$bus.$off(
-      'close-data-availability-viz-details',
-      this.removeDetailsActiveStatus
-    )
   },
 
   methods: {
@@ -229,35 +217,6 @@ export default {
             placement: 'auto',
             delay: [300, null],
           })
-        })
-        .on('click', (e, d) => {
-          if (
-            e.target.classList.contains(
-              'data-availability-viz-details__selected-element'
-            )
-          ) {
-            this.$bus.$emit('close-data-availability-viz-details')
-            return
-          }
-
-          this.showCircleDetails(
-            Math.round(d[1].percentage),
-            goalsData.find((el) => el.sdg_code === d[0]).sdg_label,
-            d[1].data
-          )
-
-          document
-            .querySelector('.data-availability-viz-details__selected-element')
-            ?.classList.remove(
-              'data-availability-viz-details__selected-element'
-            )
-
-          this.$refs.mainDiv.classList.add(
-            'data-availability-viz-details--active'
-          )
-          e.target.classList.add(
-            'data-availability-viz-details__selected-element'
-          )
         })
 
       circles = circles.merge(circlesEnter)
@@ -499,52 +458,8 @@ export default {
     updateViz() {
       this.drawViz(this.$options.vizData, this.$options.goalsData)
     },
-
-    showCircleDetails(percentage, label, data) {
-      this.$bus.$emit('present-data-availability-viz-details', {
-        percentage,
-        label,
-        data,
-        goalsData: this.$options.goalsData,
-      })
-    },
-
-    removeDetailsActiveStatus() {
-      document
-        .querySelector('.data-availability-viz-details__selected-element')
-        ?.classList.remove('data-availability-viz-details__selected-element')
-
-      this.$refs.mainDiv.classList.remove(
-        'data-availability-viz-details--active'
-      )
-    },
   },
 }
 </script>
 
-<style lang="scss">
-.data-availability-circle {
-  transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
-  cursor: pointer;
-}
-
-#chartContainer:hover .data-availability-circle {
-  opacity: 0.15;
-}
-
-#chartContainer:hover .data-availability-circle:hover {
-  opacity: 1;
-  stroke: white;
-  stroke-width: 2px;
-}
-
-.data-availability-viz-details--active .data-availability-circle {
-  opacity: 0.15;
-}
-.data-availability-viz-details--active
-  .data-availability-viz-details__selected-element {
-  opacity: 1;
-  stroke: white;
-  stroke-width: 2px;
-}
-</style>
+<style lang="scss"></style>

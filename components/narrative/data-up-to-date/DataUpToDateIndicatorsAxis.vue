@@ -1,5 +1,5 @@
 <template>
-  <svg :height="height" :width="width" ref="mainSVG">
+  <svg ref="mainSVG" :height="height" :width="width" class="overflow-visible">
     <g
       class="gContainer"
       :transform="`translate(${margins.left},${height})`"
@@ -9,31 +9,48 @@
 
 <script>
 export default {
-  props: ['height', 'width', 'data', 'margins'],
   name: 'DataUpToDateVizIndicatorsAxis',
+
+  props: ['height', 'width', 'data', 'margins'],
+
+  watch: {
+    height() {
+      this.drawViz()
+    },
+    width() {
+      this.drawAxis()
+    },
+  },
+
   mounted() {
-    const chartWidth = this.width - this.margins.left - this.margins.right
-    // const chartHeight = this.height - this.margins.top - this.margins.bottom
+    this.drawAxis()
+  },
 
-    const xScale = this.$d3
-      .scaleTime()
-      .nice()
-      .domain(this.$d3.extent(this.data))
-      .range([0, chartWidth])
+  methods: {
+    drawAxis() {
+      const chartWidth = this.width - this.margins.left - this.margins.right
+      // const chartHeight = this.height - this.margins.top - this.margins.bottom
 
-    // const svg = this.$d3.select(this.$refs.mainSVG).select('.gContainer')
+      const xScale = this.$d3
+        .scaleTime()
+        .nice()
+        .domain(this.$d3.extent(this.data))
+        .range([0, chartWidth])
 
-    const gAxis = this.$d3.select(this.$refs.mainSVG).select('.gContainer')
+      // const svg = this.$d3.select(this.$refs.mainSVG).select('.gContainer')
 
-    // if (gAxis.empty()) {
-    //   gAxis = svg
-    //     .append('g')
-    //     .attr('id', 'axis')
-    //     .attr('transform', `translate(0,${this.height})`)
-    // }
-    const axisTop = this.$d3.axisTop(xScale).tickSizeOuter(0)
+      const gAxis = this.$d3.select(this.$refs.mainSVG).select('.gContainer')
 
-    gAxis.call(axisTop)
+      // if (gAxis.empty()) {
+      //   gAxis = svg
+      //     .append('g')
+      //     .attr('id', 'axis')
+      //     .attr('transform', `translate(0,${this.height})`)
+      // }
+      const axisTop = this.$d3.axisTop(xScale).tickSizeOuter(0)
+
+      gAxis.call(axisTop)
+    },
   },
 }
 </script>

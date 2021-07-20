@@ -20,6 +20,7 @@
     "nuxt": "^2.15.7",
     "nuxt-mq": "^2.0.2",
     "smoothscroll-polyfill": "^0.4.4",
+    "tippy.js": "^6.3.1",
     "vue-scrollama": "^2.0.6"
   },
   "devDependencies": {

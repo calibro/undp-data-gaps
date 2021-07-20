@@ -1,2 +1,4 @@
-@import 'ui-text';
-@import 'custom-elements';
+select {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

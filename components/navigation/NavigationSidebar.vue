@@ -1,5 +1,5 @@
 <template>
-  <aside class="border-end border-dark navigation-sidebar">
+  <aside class="navigation-sidebar">
     <nuxt-link
       to="/"
       class="py-0 py-lg-2 px-3 px-lg-2 navigation-sidebar__logo"
@@ -74,11 +74,11 @@ export default {
       switch (this.$nuxt.$route.path) {
         case '/':
           return 'index'
-        case '/narratives/data-availability':
+        case '/data-availability':
           return 'chapter 1'
-        case '/narratives/data-disaggregation':
+        case '/data-disaggregation':
           return 'chapter 2'
-        case '/narratives/data-up-to-date':
+        case '/data-up-to-date':
           return 'chapter 3'
         case '/about':
           return 'about'
@@ -102,7 +102,7 @@ export default {
   align-items: center;
 
   @include media-breakpoint-down(lg) {
-    width: 100vw;
+    width: 100%;
     height: $sidebar-width;
 
     flex-direction: row;

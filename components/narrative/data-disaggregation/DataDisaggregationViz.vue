@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import tippy from 'tippy.js'
+
 export default {
   name: 'DataDisaggregationVizComponent',
 
@@ -22,9 +24,7 @@ export default {
   async mounted() {
     this.$options.maxIndicatorCodes = 0
 
-    const responseVizData = await fetch(
-      '/data/data_gaps-data-viz_2-ordered.csv'
-    )
+    const responseVizData = await fetch('/data/data_gaps-data-viz_2.csv')
     const responseVizDataRawText = await responseVizData.text()
 
     const responseGoalsData = await fetch(
@@ -65,11 +65,11 @@ export default {
       d.sdg_code = +d.sdg_code
     })
 
-    this.prepareForDrawing()
+    this.drawViz({ firstDraw: true })
   },
 
   methods: {
-    async prepareForDrawing() {
+    async drawViz({ firstDraw }) {
       const xValues = await this.$worker.computeXValues(
         this.$options.vizData,
         this.disaggregation,
@@ -84,10 +84,6 @@ export default {
         this.disaggregation
       )
 
-      this.drawViz(xValues, yValues, rectsValues, this.$options.goalsData)
-    },
-
-    drawViz(xValues, yValues, rectsValues, goalsData) {
       const container = this.$d3.select('#data-disaggregation-viz')
 
       const containerWidth = 100
@@ -97,13 +93,10 @@ export default {
         top: 40,
         right: 0,
         bottom: 0,
-        left: 200,
+        left: 125,
       }
 
       /* ----------- SCALES ----------- */
-
-      const xValue = (d) => d.indicator_code
-      const yValue = (d) => d.country
 
       const xScale = this.$d3
         .scaleBand()
@@ -122,6 +115,39 @@ export default {
         .paddingOuter(0.15)
         .align(0.5)
 
+      if (firstDraw) {
+        this.drawImmutables(
+          container,
+          safeAreaMargins,
+          yScale,
+          xValues,
+          yValues,
+          rectsValues,
+          this.$options.goalsData
+        )
+      }
+
+      this.drawMutables(
+        container,
+        safeAreaMargins,
+        yScale,
+        xScale,
+        xValues,
+        yValues,
+        rectsValues,
+        this.$options.goalsData
+      )
+    },
+
+    drawImmutables(
+      container,
+      safeAreaMargins,
+      yScale,
+      xValues,
+      yValues,
+      rectsValues,
+      goalsData
+    ) {
       /* ----------- TABLE ROWS (Alternating colors) ----------- */
 
       const tableRowsGroup = container
@@ -172,10 +198,24 @@ export default {
         .text((d) => {
           return d
         })
+    },
+
+    drawMutables(
+      container,
+      safeAreaMargins,
+      yScale,
+      xScale,
+      xValues,
+      yValues,
+      rectsValues,
+      goalsData
+    ) {
+      /* ----------- AXIS ----------- */
 
       const xAxisSafeArea = container
         .append('div')
         .classed('x-axis-safearea', true)
+        .classed('viz-mutable', true)
         .style(
           'width',
           `calc(100% - ${safeAreaMargins.right}px - ${safeAreaMargins.left}px)`
@@ -184,6 +224,7 @@ export default {
       const xAxisGroup = xAxisSafeArea
         .append('div')
         .classed('x-axis-container', true)
+        .style('opacity', 0)
         .style(
           'width',
           () =>
@@ -225,9 +266,13 @@ export default {
 
       /* ----------- RECTS ----------- */
 
+      const xValue = (d) => d.indicator_code
+      const yValue = (d) => d.country
+
       const rectsGroupSafeArea = container
         .append('div')
         .style('position', 'absolute')
+        .classed('viz-mutable', true)
         .style('z-index', 10)
         .style(
           'width',
@@ -242,12 +287,14 @@ export default {
 
       const rectsGroup = rectsGroupSafeArea
         .append('div')
+        .classed('rects-container', true)
         .style('position', 'absolute')
         .style(
           'width',
           (xScale.domain().length * 100) / this.$options.maxIndicatorCodes + '%'
         )
         .style('height', '100%')
+        .style('opacity', 0)
 
       rectsGroup
         .selectAll('div')
@@ -259,11 +306,6 @@ export default {
         .style('top', (d) => yScale(yValue(d)) + '%')
         .style('width', xScale.bandwidth() + '%')
         .style('height', yScale.bandwidth() + '%')
-        .attr(
-          'title',
-          (d) =>
-            `Goal: ${d.goal_code}, Code: ${d.indicator_code}, Country: ${d.country}`
-        )
         .attr('class', (d) => {
           if (d.availability === '0.5') {
             return 'data-disaggregation-viz-rect data-disaggregation-viz-rect--masked'
@@ -278,32 +320,75 @@ export default {
             return this.$goals.find((goal) => goal.id === d.goal_code).color
           }
         })
-        .style('opacity', 0)
+        .attr('data-disaggregation', this.disaggregation)
+        .attr(
+          'data-color',
+          (d) => this.$goals.find((goal) => goal.id === d.goal_code).color
+        )
+        .each(function (d) {
+          /* ----------- TOOLTIPS ----------- */
+          tippy(this, {
+            content(reference) {
+              let availabilityStatus
+              let disaggregationStatus
+
+              switch (d.availability) {
+                case '0':
+                  availabilityStatus = 'No'
+                  disaggregationStatus = 'No'
+                  break
+                case '0.5':
+                  availabilityStatus = 'Yes'
+                  disaggregationStatus = 'No'
+                  break
+                case '1':
+                  availabilityStatus = 'Yes'
+                  disaggregationStatus = 'Yes'
+                  break
+              }
+
+              const indicatorLabel = goalsData.find(
+                (el) => el.indicator_code === d.indicator_code
+              )?.indicator_label
+
+              return `
+                <div class="d-flex flex-column">
+                  <span style="color: ${reference.dataset.color}">${d.indicator_code} - ${indicatorLabel}</span>
+                  <span><strong>Availability: ${availabilityStatus}</strong></span>
+                  <span><strong>${reference.dataset.disaggregation} disaggregation: ${disaggregationStatus}</strong></span>
+                </div>
+              `
+            },
+            allowHTML: true,
+            placement: 'auto',
+            delay: [300, null],
+          })
+        })
+
+      /* ----------- ANIMATIONS ----------- */
 
       const t = this.$d3.transition().duration(800).ease(this.$d3.easeQuadOut)
 
-      this.$d3
-        .selectAll('.data-disaggregation-viz-rect')
-        .transition(t)
-        .delay(() => Math.floor(Math.random() * (500 - 0 + 1) + 0))
-        .style('opacity', 1)
+      this.$d3.select('.x-axis-container').transition(t).style('opacity', 1)
+      this.$d3.select('.rects-container').transition(t).style('opacity', 1)
     },
 
     updateViz(oldValue, newValue) {
-      const t = this.$d3.transition().duration(500).ease(this.$d3.easeQuadOut)
+      /* ----------- ANIMATIONS ----------- */
+
+      const t = this.$d3.transition().duration(400).ease(this.$d3.easeQuadOut)
 
       this.$d3
-        .selectAll('.data-disaggregation-viz-rect')
+        .selectAll('.viz-mutable')
         .transition(t)
-        .delay(() => Math.floor(Math.random() * (300 - 0 + 1) + 0))
         .style('opacity', 0)
+        .on('end', function () {
+          this.remove()
+        })
 
       setTimeout(() => {
-        const container = this.$d3.select('#data-disaggregation-viz')
-        container.selectChildren('*').remove()
-
-        this.prepareForDrawing()
-      }, 800)
+        this.drawViz({ firstDraw: false })
+      }, 500)
     },
   },
 }
@@ -336,7 +421,7 @@ export default {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 180px;
+  width: 110px;
   height: 100%;
 
   & div {
@@ -365,20 +450,5 @@ export default {
   left: 0;
   top: 0;
   height: 100%;
-  // display: flex;
-
-  // & div {
-  //   display: flex;
-  //   align-items: flex-end;
-  //   justify-content: center;
-  //   transform: rotate(90deg);
-
-  //   & span {
-  //     // white-space: nowrap;
-  //     // overflow: hidden;
-  //     // text-overflow: ellipsis;
-  //     writing-mode: sideways-lr;
-  //   }
-  // }
 }
 </style>
