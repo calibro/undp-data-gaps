@@ -61,7 +61,13 @@
               data-up-to-date-viz__row data-up-to-date-viz__row-accordion
             "
           >
-            <div class="text-end">{{ indicator[0] }}</div>
+            <span class="data-up-to-date-viz__row-accordion__label">
+              {{
+                $options.goalsData.find(
+                  (el) => el.indicator_code === indicator[0]
+                ).indicator_label
+              }}
+            </span>
             <div>
               <data-up-to-date-indicators
                 :width="indicatorsSumWidth"
@@ -146,6 +152,17 @@ export default {
       (d) => d['Country name'],
       (d) => d.indicator_code
     )
+
+    const responseGoalsData = await fetch(
+      '/data/data_gaps-data-SDG_indicators.csv'
+    )
+    const responseGoalsDataRawText = await responseGoalsData.text()
+
+    this.$options.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
+    // this.$options.goalsData.forEach((d) => {
+    //   d.sdg_code = +d.sdg_code
+    // })
+    console.log(this.$options.goalsData)
 
     this.drawViz()
 
@@ -307,7 +324,7 @@ export default {
 
 .data-up-to-date-viz__row {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 300px 1fr;
   gap: 1.5rem;
   position: relative;
   z-index: 10;
@@ -321,5 +338,15 @@ export default {
   .data-up-to-date-viz__row__label
   img {
   transform: rotate(45deg);
+}
+
+.data-up-to-date-viz__row-accordion__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-height: 24px; /* fallback */
+  max-height: 24px * 2; /* fallback */
 }
 </style>
