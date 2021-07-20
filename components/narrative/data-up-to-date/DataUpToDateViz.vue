@@ -62,12 +62,14 @@
               data-up-to-date-viz__row data-up-to-date-viz__row-accordion
             "
           >
-            <span class="data-up-to-date-viz__row-accordion__label">
               {{
                 $options.goalsData.find(
                   (el) => el.indicator_code === indicator[0]
                 ).indicator_label
               }}
+            <span
+              class="fs-7 lh-base data-up-to-date-viz__row-accordion__label"
+            >
             </span>
             <div>
               <data-up-to-date-indicators
@@ -343,7 +345,7 @@ export default {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* number of lines to show */
-  line-height: 24px; /* fallback */
-  max-height: 24px * 2; /* fallback */
+  line-height: 18px; /* fallback */
+  max-height: 18px * 2; /* fallback */
 }
 </style>
