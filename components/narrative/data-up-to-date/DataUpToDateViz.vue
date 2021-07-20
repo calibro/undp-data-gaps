@@ -62,22 +62,22 @@
               data-up-to-date-viz__row data-up-to-date-viz__row-accordion
             "
           >
-              {{
-                $options.goalsData.find(
-                  (el) => el.indicator_code === indicator[0]
-                ).indicator_label
-              }}
             <span
               class="fs-7 lh-base data-up-to-date-viz__row-accordion__label"
             >
+              {{ getIndicatorLabel(indicator[0]) }}
             </span>
             <div>
               <data-up-to-date-indicators
+                :key="`${selectedSdg}-${indicator[0]}`"
                 :width="indicatorsSumWidth"
                 height="12"
                 :data="indicator[1][0]"
                 :margins="margins"
+                :country="country[0]"
                 :color="color"
+                :indicator="indicator[0]"
+                :indicator-label="getIndicatorLabel(indicator[0])"
               />
             </div>
           </div>
@@ -189,6 +189,12 @@ export default {
 
       const container = document.querySelector('#data-up-to-date-viz')
       this.countryRowHeight = container?.clientHeight / 23 + 'px'
+    },
+
+    getIndicatorLabel(indicator) {
+      return this.$options.goalsData.find(
+        (el) => el.indicator_code === indicator
+      )?.indicator_label
     },
 
     drawViz() {

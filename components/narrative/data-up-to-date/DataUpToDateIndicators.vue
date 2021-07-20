@@ -8,10 +8,21 @@
 </template>
 
 <script>
+import tippy from 'tippy.js'
+
 export default {
   name: 'DataUpToDateVizIndicators',
 
-  props: ['height', 'width', 'data', 'margins', 'color'],
+  props: [
+    'height',
+    'width',
+    'data',
+    'margins',
+    'color',
+    'country',
+    'indicator',
+    'indicatorLabel',
+  ],
 
   watch: {
     height() {
@@ -68,6 +79,11 @@ export default {
         .attr('stroke-dasharray', '3,3')
         .attr('d', line)
 
+      const color = this.color
+      const country = this.country
+      const indicator = this.indicator
+      const indicatorLabel = this.indicatorLabel
+
       svg
         .selectAll('.dot')
         .data(this.data.filter((d) => +d.value !== 0))
@@ -78,6 +94,22 @@ export default {
         .attr('fill', this.color)
         .attr('stroke', '#0b1418')
         .attr('r', 3)
+        .each(function (d) {
+          /* ----------- TOOLTIPS ----------- */
+          tippy(this, {
+            content(reference) {
+              return `
+                    <div class="d-flex flex-column">
+                      <span style="color: ${color}">${indicator} - ${indicatorLabel}</span>
+                      <span>${d.year} - ${country}</span>
+                    </div>
+                  `
+            },
+            allowHTML: true,
+            placement: 'auto',
+            delay: [300, null],
+          })
+        })
     },
   },
 }
