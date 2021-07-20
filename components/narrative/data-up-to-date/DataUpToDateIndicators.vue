@@ -1,5 +1,5 @@
 <template>
-  <svg ref="mainSVG" :height="height" :width="width">
+  <svg ref="mainSVG" :height="height" :width="width" class="overflow-visible">
     <g
       class="gContainer"
       :transform="`translate(${margins.left},${margins.top})`"
