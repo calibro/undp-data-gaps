@@ -52,11 +52,14 @@
             </div>
           </div>
         </summary>
-        <div class="py-3">
+        <div class="py-5">
           <div
             v-for="indicator in country[1]"
             :key="indicator[0]"
-            class="data-up-to-date-viz__row"
+            class="
+              py-2
+              data-up-to-date-viz__row data-up-to-date-viz__row-accordion
+            "
           >
             <div class="text-end">{{ indicator[0] }}</div>
             <div>
@@ -278,6 +281,14 @@ export default {
 
     & summary::-webkit-details-marker {
       display: none;
+    }
+
+    & .data-up-to-date-viz__row-accordion {
+      border-top: 1px solid #30373b;
+    }
+
+    & .data-up-to-date-viz__row-accordion:last-of-type {
+      border-bottom: 1px solid #30373b;
     }
   }
 
