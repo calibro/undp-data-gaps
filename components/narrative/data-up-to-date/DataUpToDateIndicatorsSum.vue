@@ -66,7 +66,7 @@ export default {
       const radiusScale = this.$d3
         .scaleSqrt()
         .domain([0, 1, this.max])
-        .range([0, 2, chartHeight])
+        .range([0, 3, chartHeight])
 
       const svg = this.$d3.select(this.$refs.mainSVG).select('.gContainer')
 
