@@ -160,10 +160,6 @@ export default {
     const responseGoalsDataRawText = await responseGoalsData.text()
 
     this.$options.goalsData = this.$d3.csvParse(responseGoalsDataRawText)
-    // this.$options.goalsData.forEach((d) => {
-    //   d.sdg_code = +d.sdg_code
-    // })
-    console.log(this.$options.goalsData)
 
     this.drawViz()
 
