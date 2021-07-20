@@ -34,7 +34,7 @@
     </narrative-break-text>
 
     <mq-layout mq="xxl+">
-      <section class="bg-dark text-light data-viz">
+      <section class="bg-dark text-light position-relative data-viz">
         <div
           class="
             border-top border-bottom border-secondary
@@ -63,13 +63,20 @@
             </select>
           </div>
         </div>
+        <h3
+          v-show="resizing"
+          class="text-secondary position-absolute top-50 start-50"
+          style="transform: translate(-50%, -50%); max-width: 80vw"
+        >
+          I'll be here when you stop resizing me ;)
+        </h3>
         <div ref="dataUpToDateVizContainer" class="my-4 mx-5">
           <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
         </div>
       </section>
     </mq-layout>
     <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
-      <section class="bg-dark text-light w-100 data-viz">
+      <section class="bg-dark text-light w-100 position-relative data-viz">
         <div
           class="
             border-top border-secondary
@@ -99,6 +106,13 @@
           </div>
         </div>
 
+        <h3
+          v-show="resizing"
+          class="text-secondary position-absolute top-50 start-50"
+          style="transform: translate(-50%, -50%); max-width: 95vw"
+        >
+          I'll be here when you stop resizing me ;)
+        </h3>
         <div class="overflow-scroll">
           <div
             ref="dataUpToDateVizContainer"
@@ -140,6 +154,7 @@ export default {
   data() {
     return {
       selectedSdg: '1',
+      resizing: false,
     }
   },
 
@@ -157,6 +172,7 @@ export default {
         'data-up-to-date-viz-container--wait-for-resize'
       )
       this.$bus.$emit('prepare-data-up-to-date-for-resize')
+      this.resizing = true
 
       clearTimeout(this.resizeTimeout)
       this.resizeTimeout = setTimeout(this.resumeFromResize, 1000)
@@ -164,6 +180,7 @@ export default {
 
     resumeFromResize() {
       this.$bus.$emit('redraw-data-up-to-date-after-resize')
+      this.resizing = false
 
       this.$refs.dataUpToDateVizContainer.classList.remove(
         'data-up-to-date-viz-container--wait-for-resize'
