@@ -212,6 +212,14 @@ export default {
     ) {
       /* ----------- AXIS ----------- */
 
+      container
+        .append('div')
+        .attr('class', 'x-axis-label')
+        .style('width', `${safeAreaMargins.left}px`)
+        .append('div')
+        .attr('class', 'x-axis-label-text')
+        .text('SGD')
+
       const xAxisSafeArea = container
         .append('div')
         .classed('x-axis-safearea', true)
@@ -248,7 +256,7 @@ export default {
         .style('left', (d) => {
           return xScale(d[1][0][0]) + '%'
         })
-        .style('border-bottom', '1px solid #ccc')
+        .style('border-bottom', '1px solid rgba(255,255,255,0.3)')
         .style(
           'width',
           (d) =>
@@ -261,7 +269,8 @@ export default {
         .style('justify-content', 'center')
         .style('align-items', 'flex-end')
         .append('h6')
-        .attr('class', 'text-white-50 mb-1')
+        .attr('class', 'mb-1')
+        .style('opacity', 0.3)
         .text((d) => d[0])
 
       /* ----------- RECTS ----------- */
@@ -443,6 +452,24 @@ export default {
   top: 0;
   right: 0;
   height: 40px;
+}
+
+.x-axis-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 40px;
+  display: flex;
+  // align-items: center;
+
+  div {
+    width: 100%;
+    text-align: right;
+    opacity: 0.3;
+    font-size: 0.75rem;
+    margin-top: auto;
+    margin-bottom: 5px;
+  }
 }
 
 .x-axis-container {

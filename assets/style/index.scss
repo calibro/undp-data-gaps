@@ -1,11 +1,3 @@
 @import 'foundation';
 @import 'bootstrap-overrides';
 @import 'components';
-
-.labelOutline {
-  stroke-width: 6px;
-  paint-order: stroke;
-  stroke: #0b1418;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}

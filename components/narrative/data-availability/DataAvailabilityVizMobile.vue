@@ -98,7 +98,7 @@ export default {
       const chartWidth = svgWidth - margin.right - margin.left
       const chartHeight = countryDomain.length * countryHeight
 
-      const cirlceMaxRadius = 15
+      const cirlceMaxRadius = 10
 
       const yScale = this.$d3
         .scaleLinear()
@@ -346,7 +346,13 @@ export default {
             .tickFormat((d) => d + '%')
         )
         .call((g) => {
-          g.append('text')
+          let text = g.select('text')
+
+          if (text.empty()) {
+            text = g.append('text')
+          }
+
+          text
             .attr('x', chartWidth / 2)
             .attr('y', -20)
             .attr('text-anchor', 'middle')
@@ -375,4 +381,12 @@ export default {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.labelOutline {
+  stroke-width: 6px;
+  paint-order: stroke;
+  stroke: #0b1418;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+</style>

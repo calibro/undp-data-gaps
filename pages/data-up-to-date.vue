@@ -77,32 +77,44 @@
     </mq-layout>
     <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
       <section class="bg-dark text-light w-100 position-relative data-viz">
-        <div
-          class="
-            border-top border-secondary
-            px-3 px-lg-5
-            py-4
-            d-flex
-            flex-column
-          "
-        >
-          <h2 class="mb-4">Number of data points per year</h2>
-          <div class="select-container-mobile">
-            <label for="select-element">SDG</label>
-            <select
-              id="select-element"
-              v-model="selectedSdg"
-              class="form-select"
-              name="sdg"
-            >
-              <option
-                v-for="goal in $goals"
-                :key="goal.id"
-                :value="goal.id.toString()"
+        <div class="selectSticky bg-dark">
+          <div
+            class="
+              border-top border-secondary
+              px-3 px-lg-5
+              py-4
+              d-flex
+              flex-column
+            "
+          >
+            <h2 class="mb-4">Number of data points per year</h2>
+
+            <div class="select-container-mobile">
+              <label for="select-element">SDG</label>
+              <select
+                id="select-element"
+                v-model="selectedSdg"
+                class="form-select"
+                name="sdg"
               >
-                {{ goal.id }}. {{ goal.title }}
-              </option>
-            </select>
+                <option
+                  v-for="goal in $goals"
+                  :key="goal.id"
+                  :value="goal.id.toString()"
+                >
+                  {{ goal.id }}. {{ goal.title }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="px-4 d-flex align-items-center justify-content-end">
+            <div class="me-1">scroll</div>
+            <img
+              src="~/assets/images/icons/arrow_down.svg"
+              alt="arrow icon"
+              style="transform: rotate(-90deg)"
+            />
           </div>
         </div>
 
@@ -117,7 +129,7 @@
           <div
             ref="dataUpToDateVizContainer"
             class="px-3 px-lg-5 py-4 py-lg-5"
-            style="width: 2000px; height: 1200px"
+            style="width: 1500px; height: 1200px"
           >
             <data-up-to-date-viz v-if="defer(3)" :selected-sdg="selectedSdg" />
           </div>
@@ -224,5 +236,11 @@ export default {
 
 .data-up-to-date-viz-container--wait-for-resize {
   opacity: 0;
+}
+
+.selectSticky {
+  position: sticky;
+  top: 60px;
+  z-index: 11;
 }
 </style>

@@ -6,7 +6,7 @@
         safe-area
         position-sticky
         top-0
-        zIndex11
+        zIndex
         viewport__navigation
       "
     >
@@ -76,7 +76,7 @@ body {
   padding-right: env(safe-area-inset-right);
 }
 
-.zIndex11 {
-  z-index: 11;
+.zIndex {
+  z-index: 13;
 }
 </style>

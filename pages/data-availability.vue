@@ -134,43 +134,36 @@
       </section>
     </mq-layout>
     <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
-      <section
-        class="
-          bg-dark
-          text-light
-          w-100
-          position-relative
-          overflow-hidden
-          data-viz
-        "
-      >
-        <div
-          class="
-            border-top border-secondary
-            px-3 px-lg-5
-            py-4
-            d-flex
-            flex-column
-          "
-        >
-          <h2 class="mb-4">Data availability in the Arab Region</h2>
-          <div class="select-container-mobile">
-            <label for="select-element">SDG</label>
-            <select
-              id="select-element"
-              v-model="selectedSdg"
-              class="form-select"
-              name="sdg"
-            >
-              <option value="all">All</option>
-              <option
-                v-for="goal in $goals"
-                :key="goal.id"
-                :value="goal.id.toString()"
+      <section class="bg-dark text-light w-100 data-viz">
+        <div class="selectSticky bg-dark">
+          <div
+            class="
+              border-top border-secondary
+              px-3 px-lg-5
+              py-4
+              d-flex
+              flex-column
+            "
+          >
+            <h2 class="mb-4">Data availability in the Arab Region</h2>
+            <div class="select-container-mobile">
+              <label for="select-element">SDG</label>
+              <select
+                id="select-element"
+                v-model="selectedSdg"
+                class="form-select"
+                name="sdg"
               >
-                {{ goal.id }}. {{ goal.title }}
-              </option>
-            </select>
+                <option value="all">All</option>
+                <option
+                  v-for="goal in $goals"
+                  :key="goal.id"
+                  :value="goal.id.toString()"
+                >
+                  {{ goal.id }}. {{ goal.title }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -386,5 +379,10 @@ export default {
       }
     }
   }
+}
+.selectSticky {
+  position: sticky;
+  top: 60px;
+  z-index: 11;
 }
 </style>
