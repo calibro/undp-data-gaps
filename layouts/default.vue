@@ -1,6 +1,15 @@
 <template>
   <div class="viewport">
-    <div class="bg-light safe-area viewport__navigation">
+    <div
+      class="
+        bg-light
+        safe-area
+        position-sticky
+        top-0
+        zIndex11
+        viewport__navigation
+      "
+    >
       <navigation-sidebar class="position-sticky top-0" />
     </div>
 
@@ -65,5 +74,9 @@ body {
 .safe-area {
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+}
+
+.zIndex11 {
+  z-index: 11;
 }
 </style>
