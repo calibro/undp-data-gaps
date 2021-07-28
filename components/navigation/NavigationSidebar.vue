@@ -93,9 +93,8 @@ export default {
 <style lang="scss" scoped>
 .navigation-sidebar {
   width: $sidebar-width;
-  height: 100vh;
   z-index: 999;
-
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -104,15 +103,12 @@ export default {
   @include media-breakpoint-down(lg) {
     width: 100%;
     height: $sidebar-width;
-
     flex-direction: row;
+    position: relative;
   }
 }
 
 .navigation-sidebar__logo {
-  display: flex;
-  width: 100%;
-
   img {
     width: 100%;
   }

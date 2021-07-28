@@ -1,16 +1,7 @@
 <template>
   <div class="viewport">
-    <div
-      class="
-        bg-light
-        safe-area
-        position-sticky
-        top-0
-        zIndex
-        viewport__navigation
-      "
-    >
-      <navigation-sidebar class="position-sticky top-0" />
+    <div class="left-nav bg-light safe-area zIndex viewport__navigation">
+      <navigation-sidebar />
     </div>
 
     <div class="position-relative viewport__content">
@@ -78,5 +69,17 @@ body {
 
 .zIndex {
   z-index: 13;
+}
+
+.left-nav {
+  position: sticky;
+  top: 0;
+  height: unset;
+}
+
+@include media-breakpoint-up(lg) {
+  .left-nav {
+    height: 100vh;
+  }
 }
 </style>
