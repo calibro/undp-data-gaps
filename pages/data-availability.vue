@@ -134,46 +134,52 @@
       </section>
     </mq-layout>
     <mq-layout :mq="['sm', 'md', 'lg', 'xl']">
-      <section class="bg-dark text-light w-100 data-viz">
-        <div class="selectSticky bg-dark">
-          <div
-            class="
-              border-top border-secondary
-              px-3 px-lg-5
-              py-4
-              d-flex
-              flex-column
-            "
-          >
-            <h2 class="mb-4">Data availability in the Arab Region</h2>
-            <div class="select-container-mobile">
-              <label for="select-element">SDG</label>
-              <select
-                id="select-element"
-                v-model="selectedSdg"
-                class="form-select"
-                name="sdg"
+      <section
+        class="
+          bg-dark
+          text-light
+          w-100
+          position-relative
+          overflow-hidden
+          data-viz
+        "
+      >
+        <div
+          class="
+            border-top border-secondary
+            px-3 px-lg-5
+            py-4
+            d-flex
+            flex-column
+          "
+        >
+          <h2 class="mb-4">Data availability in the Arab Region</h2>
+          <div class="select-container-mobile">
+            <label for="select-element">SDG</label>
+            <select
+              id="select-element"
+              v-model="selectedSdg"
+              class="form-select"
+              name="sdg"
+            >
+              <option value="all">All</option>
+              <option
+                v-for="goal in $goals"
+                :key="goal.id"
+                :value="goal.id.toString()"
               >
-                <option value="all">All</option>
-                <option
-                  v-for="goal in $goals"
-                  :key="goal.id"
-                  :value="goal.id.toString()"
-                >
-                  {{ goal.id }}. {{ goal.title }}
-                </option>
-              </select>
-            </div>
+                {{ goal.id }}. {{ goal.title }}
+              </option>
+            </select>
           </div>
         </div>
 
         <div class="w-100 overflow-scroll">
-          <div class="px-3 px-lg-5 py-1 py-lg-5">
-            <div ref="dataAvailabilityVizContainer">
+          <div class="px-3 px-lg-5 py-4 py-lg-5">
+            <div>
               <data-availability-viz-mobile
                 v-if="defer(3)"
                 :selected-sdg="selectedSdg"
-                :container-width="minimumContainerDimension"
               />
             </div>
           </div>
@@ -220,7 +226,9 @@ export default {
   },
 
   mounted() {
-    this.getMinimumContainerDimension()
+    this.$nextTick(() => {
+      this.getMinimumContainerDimension()
+    })
 
     window.addEventListener('resize', this.saveVizFromResize)
   },
@@ -379,10 +387,5 @@ export default {
       }
     }
   }
-}
-.selectSticky {
-  position: sticky;
-  top: 60px;
-  z-index: 11;
 }
 </style>

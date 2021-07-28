@@ -15,10 +15,6 @@ export default {
       type: String,
       required: true,
     },
-    containerWidth: {
-      type: Number,
-      required: true,
-    },
   },
 
   data() {
@@ -30,12 +26,6 @@ export default {
   watch: {
     selectedSdg(oldValue, newValue) {
       this.updateViz()
-    },
-
-    containerWidth() {
-      if (this.vizReady) {
-        this.updateViz()
-      }
     },
   },
 
@@ -71,6 +61,12 @@ export default {
     this.vizReady = true
 
     this.drawViz(this.$options.vizData, this.$options.goalsData)
+
+    window.addEventListener('resize', this.updateViz)
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.updateViz)
   },
 
   methods: {
@@ -84,7 +80,7 @@ export default {
 
       const countryHeight = 60
       const countryDomain = vizData.map((d) => d[0])
-      const svgWidth = this.containerWidth
+      const svgWidth = this.$refs.mainDiv.clientWidth
 
       const svgHeight =
         countryDomain.length * countryHeight + margin.top + margin.bottom
