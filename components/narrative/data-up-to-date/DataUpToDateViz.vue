@@ -132,9 +132,13 @@ export default {
   },
 
   async mounted() {
+    const prefix = this.$router.options.base
+
     this.getMinimumContainerDimension()
 
-    const responseVizData = await fetch('/data/data_gaps-data-viz_3.csv')
+    const responseVizData = await fetch(
+      prefix + 'data/data_gaps-data-viz_3.csv'
+    )
     const responseVizDataRawText = await responseVizData.text()
 
     this.$options.vizData = this.$d3.csvParse(responseVizDataRawText)
@@ -157,7 +161,7 @@ export default {
     )
 
     const responseGoalsData = await fetch(
-      '/data/data_gaps-data-SDG_indicators.csv'
+      prefix + 'data/data_gaps-data-SDG_indicators.csv'
     )
     const responseGoalsDataRawText = await responseGoalsData.text()
 

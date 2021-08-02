@@ -40,8 +40,7 @@ export default {
   },
 
   async mounted() {
-    const prefix =
-      process.env.NODE_ENV === 'development' ? '/' : this.$router.options.base
+    const prefix = this.$router.options.base
 
     const responseVizData = await fetch(
       prefix + 'data/data_gaps-data-viz_1.csv'

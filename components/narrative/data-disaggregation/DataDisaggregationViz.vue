@@ -22,13 +22,16 @@ export default {
   },
 
   async mounted() {
+    const prefix = this.$router.options.base
     this.$options.maxIndicatorCodes = 0
 
-    const responseVizData = await fetch('/data/data_gaps-data-viz_2.csv')
+    const responseVizData = await fetch(
+      prefix + 'data/data_gaps-data-viz_2.csv'
+    )
     const responseVizDataRawText = await responseVizData.text()
 
     const responseGoalsData = await fetch(
-      '/data/data_gaps-data-SDG_indicators.csv'
+      prefix + 'data/data_gaps-data-SDG_indicators.csv'
     )
     const responseGoalsDataRawText = await responseGoalsData.text()
 
