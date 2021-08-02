@@ -1,7 +1,7 @@
 <template>
   <div class="viewport">
-    <div class="bg-light safe-area viewport__navigation">
-      <navigation-sidebar class="position-sticky top-0" />
+    <div class="left-nav bg-light safe-area zIndex viewport__navigation">
+      <navigation-sidebar />
     </div>
 
     <div class="position-relative viewport__content">
@@ -65,5 +65,21 @@ body {
 .safe-area {
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+}
+
+.zIndex {
+  z-index: 13;
+}
+
+.left-nav {
+  position: sticky;
+  top: 0;
+  height: unset;
+}
+
+@include media-breakpoint-up(lg) {
+  .left-nav {
+    height: 100vh;
+  }
 }
 </style>

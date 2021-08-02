@@ -176,11 +176,10 @@
 
         <div class="w-100 overflow-scroll">
           <div class="px-3 px-lg-5 py-4 py-lg-5">
-            <div ref="dataAvailabilityVizContainer">
+            <div>
               <data-availability-viz-mobile
                 v-if="defer(3)"
                 :selected-sdg="selectedSdg"
-                :container-width="minimumContainerDimension"
               />
             </div>
           </div>
@@ -227,7 +226,9 @@ export default {
   },
 
   mounted() {
-    this.getMinimumContainerDimension()
+    this.$nextTick(() => {
+      this.getMinimumContainerDimension()
+    })
 
     window.addEventListener('resize', this.saveVizFromResize)
   },

@@ -221,7 +221,7 @@ export default {
               return `
                 <div class="d-flex flex-column">
                   <span style="color: ${color}">SDG ${goalCode} - ${sdgLabel}</span>
-                  <span><strong>${percentage}%</strong></span>
+                  <span><small>DATA AVAILABILITY: </small><strong>${percentage}%</strong></span>
                 </div>
               `
             },
@@ -280,40 +280,41 @@ export default {
           return yScale(d[1].percentage)
         })
 
-      countries
-        .selectAll('line.mean')
-        .data((d) => [d[1]])
-        .join(
-          (enter) =>
-            enter
-              .append('line')
-              .attr('class', 'mean')
-              .attr('opacity', (d) => {
-                return this.selectedSdg === 'all' ? 1 : 0
-              })
-              .attr('x1', -18)
-              .attr('y1', (d) => {
-                return yScale(this.$d3.median(d, (m) => m[1].percentage))
-              })
-              .attr('x2', 18)
-              .attr('y2', (d) => {
-                return yScale(this.$d3.median(d, (m) => m[1].percentage))
-              }),
-          (update) =>
-            update
-              .transition()
-              .attr('y1', (d) => {
-                return yScale(this.$d3.median(d, (m) => m[1].percentage))
-              })
-              .attr('y2', (d) => {
-                return yScale(this.$d3.median(d, (m) => m[1].percentage))
-              })
-              .attr('opacity', (d) => {
-                return this.selectedSdg === 'all' ? 1 : 0
-              })
-              .selection()
-        )
-        .attr('stroke', 'white')
+      // countries
+      //   .selectAll('line.mean')
+      //   .data((d) => [d[1]])
+      //   .join(
+      //     (enter) =>
+      //       enter
+      //         .append('line')
+      //         .attr('class', 'mean')
+      //         .attr('opacity', (d) => {
+      //           return this.selectedSdg === 'all' ? 1 : 0
+      //         })
+      //         .attr('x1', -18)
+      //         .attr('y1', (d) => {
+      //           return yScale(this.$d3.median(d, (m) => m[1].percentage))
+      //         })
+      //         .attr('x2', 18)
+      //         .attr('y2', (d) => {
+      //           return yScale(this.$d3.median(d, (m) => m[1].percentage))
+      //         }),
+      //     (update) =>
+      //       update
+      //         .transition()
+      //         .attr('y1', (d) => {
+      //           return yScale(this.$d3.median(d, (m) => m[1].percentage))
+      //         })
+      //         .attr('y2', (d) => {
+      //           return yScale(this.$d3.median(d, (m) => m[1].percentage))
+      //         })
+      //         .attr('opacity', (d) => {
+      //           return this.selectedSdg === 'all' ? 1 : 0
+      //         })
+      //         .selection()
+      //   )
+      //   .attr('stroke', 'white')
+      //   .attr('stroke-dasharray', '3,3')
 
       const sgdMean =
         this.selectedSdg !== 'all'
@@ -343,6 +344,31 @@ export default {
         .attr('fill', 'none')
         .attr('stroke-dasharray', '6,6')
         .attr('stroke-width', 1)
+
+      chartContainer
+        .selectAll('text.sdgMean')
+        .data(sgdMean)
+        .join(
+          (enter) =>
+            enter
+              .append('text')
+              .attr('class', 'sdgMean')
+              .attr('y', (d) => chartWidth / 2 - yScale(d))
+              .attr('fill', sdgColorScale(this.selectedSdg.toString()))
+              .text((d) => 'SDG MEDIAN ' + Math.round(d) + '%'),
+          (update) =>
+            update
+              .transition()
+              .attr('y', (d) => chartWidth / 2 - yScale(d))
+              .attr('fill', sdgColorScale(this.selectedSdg.toString()))
+              .text((d) => 'SDG MEDIAN ' + Math.round(d) + '%')
+              .selection(),
+          (exit) => exit.remove()
+        )
+        .attr('x', chartWidth / 2)
+        .attr('dy', -5)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', '9px')
 
       const arc = this.$d3
         .arc()
@@ -456,6 +482,9 @@ export default {
                         .attr('font-size', '10px')
                         .attr('font-family', 'Arial')
                         .attr('fill', 'white')
+                        .attr('opacity', (d) =>
+                          d === 'data availability' ? 0.3 : 1
+                        )
                         .text((d) => d.toUpperCase())
                     )
                 ),
