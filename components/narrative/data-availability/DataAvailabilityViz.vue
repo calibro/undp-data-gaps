@@ -40,11 +40,16 @@ export default {
   },
 
   async mounted() {
-    const responseVizData = await fetch('/data/data_gaps-data-viz_1.csv')
+    const prefix =
+      process.env.NODE_ENV === 'development' ? '/' : this.$router.options.base
+
+    const responseVizData = await fetch(
+      prefix + 'data/data_gaps-data-viz_1.csv'
+    )
     const responseVizDataRawText = await responseVizData.text()
 
     const responseGoalsData = await fetch(
-      '/data/data_gaps-data-SDG_indicators.csv'
+      prefix + 'data/data_gaps-data-SDG_indicators.csv'
     )
     const responseGoalsDataRawText = await responseGoalsData.text()
 
