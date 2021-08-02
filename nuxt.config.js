@@ -49,6 +49,13 @@ export default {
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: false,
 
+  router: {
+    base:
+      process.env.NODE_ENV === 'development'
+        ? process.env.BASE_URL
+        : '/undp-data-gaps/',
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
