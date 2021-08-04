@@ -37,7 +37,7 @@
       class="bg-dark text-light d-lg-grid p-3 p-lg-5 intro-text"
     >
       <h2 class="pb-5 pb-lg-0">
-        Bridging the gaps to focus on what matters the most.
+        Bridging gaps to focus on what matters the most.
       </h2>
       <div>
         <p class="fs-4 mb-4 mb-lg-5">
