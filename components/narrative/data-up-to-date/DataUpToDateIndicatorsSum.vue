@@ -38,17 +38,33 @@ export default {
       const chartWidth = this.width - this.margins.left - this.margins.right
       const chartHeight = this.height - this.margins.top - this.margins.bottom
 
+      // const all = this.$d3.merge(
+      //   this.data.map((d) => {
+      //     return d[1][0]
+      //   })
+      // )
+
+      // const group = this.$d3
+      //   .rollups(
+      //     all,
+      //     (v) => this.$d3.sum(v, (d) => (d.value !== 0 ? 1 : 0)),
+      //     (d) => d.year
+      //   )
+      //   .map((d) => {
+      //     return { date: new Date(+d[0], 0, 1), value: d[1], original: d[0] }
+      //   })
+
       const all = this.$d3.merge(
         this.data.map((d) => {
-          return d[1][0]
+          return d[1]
         })
       )
 
       const group = this.$d3
         .rollups(
           all,
-          (v) => this.$d3.sum(v, (d) => (d.value !== 0 ? 1 : 0)),
-          (d) => d.year
+          (v) => this.$d3.sum(v, (d) => d[1]),
+          (d) => d[0]
         )
         .map((d) => {
           return { date: new Date(+d[0], 0, 1), value: d[1], original: d[0] }
@@ -94,7 +110,7 @@ export default {
               <div class="d-flex flex-column">
                 <span style="color: ${color}">SDG ${sdg}</span>
                 <span>${year} - ${reference.dataset.country}</span>
-                <span><strong>Indicators available: ${d.value}/${reference.dataset.max}</strong></span>
+                <span>Data points available: <strong>${d.value}</strong></span>
               </div>
             `
             },

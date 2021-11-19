@@ -2,7 +2,7 @@
   <div>
     <narrative-header
       chapter-number="3"
-      title="Why is it important to have up-to-date statistic?"
+      title="Why is it important to have timely data?"
       scroll-into-element-id="scroll-into-target"
     >
       <div class="narrative-header__image"></div>
@@ -10,10 +10,12 @@
 
     <narrative-break-text id="scroll-into-target">
       <p class="fs-4 mb-5">
-        Solving comple social, economical and enviromental issues require a deep
-        understanding of multiple factors. Data without context is not
-        information and doesn’t provide a clear picture of what’s happening
-        around us.
+        The importance of data-driven decision-making cannot be stressed enough.
+        The COVID-19 pandemic underscored the importance of having access to
+        timely data to contain the pandemic and take the necessary preventive
+        measures at the right time. Unfortunately, a panoramic look at all 232
+        global indicators, indicates that the majority of the indicators date to
+        the PERIOD
       </p>
     </narrative-break-text>
 

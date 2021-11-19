@@ -8,9 +8,9 @@
           class="w-100 mb-6"
         />
         <p class="fs-4 mb-5">
-          If for example we look at an indicator such as “unemployement rate”,
-          some countries report the data for the overall population. This
-          representation is sometimes partial or biased.
+          For example, we cannot talk about unemployment by simply looking at
+          the national “unemployment rate”. Indicator 8.5.2 stipulates reporting
+          on unemployment rate by sex, age and persons with disabilities.
         </p>
         <img
           src="~/assets/images/narrative/data-disaggregation/scrollytelling-mobile/data-disaggregation-scrollm-step2.svg"
@@ -18,10 +18,9 @@
           class="w-100 my-6"
         />
         <p class="fs-4 mb-5">
-          Other countries provide a much more defined picture of the phenomenon
-          by providing the data disaggregated by age group, giving us a better
-          understanding of the situation and providing better ways to reach
-          everyone.
+          To design relevant policies, countries might need to look into
+          unemployment rate by age, and the data might underscore the need to
+          target the youth labor force and those actively seeking employment.
         </p>
         <img
           src="~/assets/images/narrative/data-disaggregation/scrollytelling-mobile/data-disaggregation-scrollm-step3.svg"
@@ -29,8 +28,9 @@
           class="w-100 my-6"
         />
         <p class="fs-4 mb-5">
-          Or by sex, highlighting differences and discrimantions based on
-          gender.
+          In the Arab region, female youth unemployment rate is the highest in
+          the world, and reporting on this indicator is key to expose
+          discriminatory practices and structural biases in the economy.
         </p>
       </div>
     </narrative-break-text>

@@ -41,41 +41,45 @@
           <p class="fs-4 mb-5">
             The 2030 Agenda for Sustainable Development, adopted by all United
             Nations Member States in 2015, provides a shared blueprint for peace
-            and prosperity for people and the planet, now and into the future.
+            and prosperity for people and the planet.
           </p>
           <p class="fs-4 mb-5">
             At its heart are the 17 Sustainable Development Goals (SDGs), which
-            are an urgent call for action by all countries.
+            are integrated, indivisible and balance the three dimensions of
+            sustainable development: the economic, social and environmental.
           </p>
           <p class="fs-4 mb-0">
-            Each SDG is tracked and monitored with different indicators that are
-            common across countries. Methodology and standards to collect the
-            data are established and they are available.
+            Each SDG is tracked and monitored with a set of indicators that are
+            common across countries according to the global indicator framework.
+            Methodology and standards to collect the data for all indicators are
+            now available.
           </p>
         </div>
 
         <div class="step">
           <p class="fs-4 mb-5">
-            Unluckly some countries in the Arab World don’t provide data for all
-            the indicators for many reasons.
-          </p>
-          <p class="fs-4 mb-0">
-            In the Arab region, data gaps make it difficult to monitor
-            development impact on a society as a whole.
-          </p>
-        </div>
-
-        <div class="step">
-          <p class="fs-4 mb-0">
-            Some countries don’t collect enough data about the enviroment and
-            the sustainable development of their cities and communities.
+            Tracking progress towards implementing the 17 SDGs should go hand in
+            hand with measuring the statistical capacity of countries. Data
+            availability at the indicator level helps us understand which
+            dimensions of the three economic, social and environmental are least
+            reported on, and which communities are left out when reporting on
+            the efforts to implement the SDGs at the national, regional and
+            global levels.
           </p>
         </div>
 
         <div class="step">
           <p class="fs-4 mb-0">
-            Other countries fail in representing social inequalities or
-            indicators about their fight against poverty and discrimination.
+            Some countries don’t collect enough data about the environment and
+            the sustainable development of their cities and/r specific
+            communities.
+          </p>
+        </div>
+
+        <div class="step">
+          <p class="fs-4 mb-0">
+            Other countries fail in reporting on social inequalities in rural
+            areas and the gender disparity across many levels.
           </p>
         </div>
       </Scrollama>

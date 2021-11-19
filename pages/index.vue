@@ -22,7 +22,7 @@
           </div>
 
           <h1 class="display-0 fw-normal mb-5 m-lg-0 header__title">
-            Data Availability and Data Gaps in the Arab Region
+            SDGs Data Availability and Data Gaps in the Arab Region
           </h1>
 
           <div class="header__background">
@@ -37,22 +37,40 @@
       class="bg-dark text-light d-lg-grid p-3 p-lg-5 intro-text"
     >
       <h2 class="pb-5 pb-lg-0">
-        Bridging the gaps to focus on what matters the most.
+        Putting a spotlight on data gaps to mobilize collective action and
+        support.
       </h2>
       <div>
         <p class="fs-4 mb-4 mb-lg-5">
-          Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
-          nibh, ut fermentum massa justo sit amet risus.
+          In September 2015, the Heads of State and Government and High
+          Representatives decided on new global Sustainable Development Goals
+          (SDGs). The 17 SDGs and 169 targets which have been adopted
+          demonstrate the scale and ambition of the 2030 Agenda for Sustainable
+          Development. They are integrated and indivisible and balance the three
+          dimensions of sustainable development: the economic, social and
+          environmental. But to measure progress and ensure that no one is left
+          behind, the availability of high-quality, accessible, timely and
+          reliable data that is disaggregated by income, gender, age, race,
+          ethnicity, disability, geographic location and other characteristics
+          relevant to countries is key.
         </p>
         <p class="fs-4 mb-4 mb-lg-5">
-          Curabitur blandit tempus porttitor. Maecenas faucibus mollis interdum.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          In July 2017, the UN General Assembly adopted a global indicator
+          framework to monitor this Agenda. The 232 global indicators are
+          complemented by indicators at the regional and national levels as
+          developed by Member States. Data from national statistical and data
+          systems are the basis for the compilation of these global indicators.
         </p>
         <p class="fs-4 mb-4 mb-lg-5">
-          Etiam porta sem malesuada magna mollis euismod.<br />
-          Donec sed odio dui. Vivamus sagittis lacus vel augue laoreet rutrum
-          faucibus dolor auctor. Etiam porta sem malesuada magna mollis euismod.
-          Donec sed odio dui.
+          The SDGs Data Availability and Data Gaps in the Arab Region dashboard
+          aims to stimulate an informed dialogue on the state of SDGs data. By
+          offering a proxy assessment of a country’s statistical capacity, it
+          aims to bring together different data communities of producers and
+          users to explore how best to harness the power of technology and
+          innovative tools to fulfill the data demands of this Agenda and ensure
+          that no one is left behind. Refer to the methodology note for more
+          information on how data availability has been measured in this
+          endeavour.
         </p>
         <nuxt-link
           to="/about"

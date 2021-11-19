@@ -8,9 +8,10 @@
           class="w-100 mb-6"
         />
         <p class="fs-4 mb-5">
-          In order to understand patterns across time monitor different issues,
-          governments and organizations collect data every year to understand
-          the trajectory of the region.
+          While data for some indicators can be collected on a monthly,
+          quarterly and annual basis, it is very expensive to collect annual
+          data for some indicators, especially when trends tend not to change
+          frequently.
         </p>
         <img
           src="~/assets/images/narrative/data-up-to-date/scrollytelling-mobile/data-up-to-date-scrollm-step2.svg"
@@ -18,9 +19,8 @@
           class="w-100 my-6"
         />
         <p class="fs-4 mb-5">
-          Unluckily sometime data is not updated regularly creating gaps in time
-          series making it difficult to understand what’s happening or happened
-          in a given time.
+          However, it is crucial to collect timely data for some indicators,
+          such as … And failing to do so affects the quality of policies.
         </p>
         <img
           src="~/assets/images/narrative/data-up-to-date/scrollytelling-mobile/data-up-to-date-scrollm-step3.svg"
@@ -29,7 +29,7 @@
         />
         <p class="fs-4 mb-5">
           Some indicators are rarely updated and the last data available are
-          from years ago making it difficult for decision makers and citizen to
+          from years ago making it difficult for decision makers and citizens to
           understand how close or far the country is from the goal.
         </p>
       </div>

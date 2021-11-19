@@ -10,18 +10,23 @@
 
     <narrative-break-text id="scroll-into-target">
       <p class="fs-4 mb-5">
-        Data is everywhere. It helps us understand the complex phenomena that
-        happen around us and it helps us framing problems and taking the right
-        decisions. Citizens, organizations, companies, governments are both data
-        producers and data consumers.
+        Data is everywhere. And this is even more true in this digital world.
+        The pledge that no one should be left behind is a core principle behind
+        the SDGs. Implementing the 2030 Agenda will not be achieved unless those
+        who are excluded and marginalized can be reached. Data aggregates with
+        full coverage and data disaggregation ensures that scarce resources are
+        well-utilized to ensure fairness and equity.
       </p>
       <p class="fs-4 mb-5">
-        Their decisions are shaped by the information they receive. The data
-        collected about them shape the perception of their struggles and their
-        needs. By having access to data and effectively using knowledge
-        resources, individuals, firms, and communities can improve their
-        individual and collective well-being, thereby contributing to
-        sustainable development.
+        The data ecosystem and monitoring system governing the SDGs includes
+        governments, the private sector, civil society organizations and
+        citizens. Each plays an important role to ensure that policies are
+        designed to cater to the needs of those who are vulnerable or should be
+        targeted and that the social, economic and environmental costs are well
+        accounted for. By having access to data and effectively using knowledge
+        resources, governments can make informed decisions; and individuals,
+        firms, and communities can better advocate for their individual and
+        collective well-being.
       </p>
     </narrative-break-text>
 
@@ -36,12 +41,13 @@
 
     <narrative-break-text>
       <p class="fs-4 mb-5">
-        By monitoring data availabitlyand bridging the gaps we can focus on what
-        matters the most to the society living in the arab reagion.
+        By monitoring data availability and identifying data gaps, we put a
+        spotlight on issues that are usually underreported or receive little
+        coverage.
       </p>
       <p class="fs-4 mb-5">
-        Explore the interactive visualization to discover gaps and see how
-        countries are performing.
+        Explore the interactive visualization to learn about the ability of Arab
+        countries to report on the SDGs and data availability at the goal level.
       </p>
     </narrative-break-text>
 

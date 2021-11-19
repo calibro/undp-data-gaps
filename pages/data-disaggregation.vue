@@ -10,11 +10,13 @@
 
     <narrative-break-text id="scroll-into-target">
       <p class="fs-4 mb-5">
-        A central promise of the sustainable development goals (SDGs) is to
-        leave no one behind, but the current indicators to measure progress
-        sometimes don’t keep that promise. To leave no one behind means reaching
-        the poorest of the poor, women, children, the elderly, indigenous
-        people, migrants, people with disabilities, and other vulnerable groups.
+        The overarching principle of the 2030 Agenda for Sustainable Development
+        – “leave no one behind” – calls for more granular and disaggregated
+        data, stating that “SDG Indicators should be disaggregated, where
+        relevant, by income, sex, age, race, ethnicity, migratory status,
+        disability and geographic location, or other characteristics. For
+        example, to ensure that the poorest of the poor are being reached, data
+        should be distributed by income distribution.
       </p>
     </narrative-break-text>
 
@@ -77,7 +79,7 @@
         <div class="px-5 py-4 d-flex" style="margin-left: 204px">
           <div class="d-flex align-items-center me-5">
             <div class="me-3 viz-caption viz-caption--full"></div>
-            <h5 class="m-0">Not available</h5>
+            <h5 class="m-0">Available with disaggregation</h5>
           </div>
           <div class="d-flex align-items-center me-5">
             <div class="me-3 viz-caption viz-caption--masked"></div>
@@ -85,7 +87,7 @@
           </div>
           <div class="d-flex align-items-center">
             <div class="me-3 viz-caption"></div>
-            <h5 class="m-0">Available with disaggregation</h5>
+            <h5 class="m-0">Not available</h5>
           </div>
         </div>
       </section>
@@ -124,7 +126,7 @@
           <div class="px-3 px-lg-5 py-2 d-flex flex-column">
             <div class="d-flex align-items-center mb-1">
               <div class="me-3 viz-caption viz-caption--full"></div>
-              <h6 class="m-0">Not available</h6>
+              <h6 class="m-0">Available with disaggregation</h6>
             </div>
             <div class="d-flex align-items-center mb-1">
               <div class="me-3 viz-caption viz-caption--masked"></div>
@@ -132,7 +134,7 @@
             </div>
             <div class="d-flex align-items-center">
               <div class="me-3 viz-caption"></div>
-              <h6 class="m-0">Available with disaggregation</h6>
+              <h6 class="m-0">Not available</h6>
             </div>
           </div>
 

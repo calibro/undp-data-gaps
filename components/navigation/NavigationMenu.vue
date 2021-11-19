@@ -14,7 +14,7 @@
     />
     <navigation-link
       link="/data-up-to-date"
-      title="03.Why is it important to have up-to-date statistic?"
+      title="03.Why is it important to have timely data?"
     />
     <navigation-link link="/about" title="About" />
   </nav>

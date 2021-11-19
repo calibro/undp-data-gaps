@@ -72,7 +72,8 @@
                 :key="`${selectedSdg}-${indicator[0]}`"
                 :width="indicatorsSumWidth"
                 height="12"
-                :data="indicator[1][0]"
+                :data="indicator[1]"
+                :max="countriesMax"
                 :margins="margins"
                 :country="country[0]"
                 :color="color"
@@ -146,7 +147,7 @@ export default {
     this.$options.vizData = this.$d3.rollups(
       this.$options.vizData,
       (v) => {
-        return v.map((d) => {
+        const years = v.map((d) => {
           delete d['Country name']
           delete d.indicator_code
           delete d.sdg
@@ -154,11 +155,37 @@ export default {
             return { year: e[0], value: +e[1] }
           })
         })
+
+        const groupYears = this.$d3.rollups(
+          this.$d3.merge(years),
+          (v) => this.$d3.sum(v, (d) => (d.value !== 0 ? 1 : 0)),
+          (d) => d.year
+        )
+        return groupYears
       },
       (d) => d.sdg,
       (d) => d['Country name'],
       (d) => d.indicator_code
     )
+
+    // this.$options.vizData = this.$d3.rollups(
+    //       this.$options.vizData,
+    //       (v) => {
+    //         return v.map((d) => {
+    //           delete d['Country name']
+    //           delete d.indicator_code
+    //           delete d.sdg
+    //           return Object.entries(d).map((e) => {
+    //             return { year: e[0], value: +e[1] }
+    //           })
+    //         })
+    //       },
+    //       (d) => d.sdg,
+    //       (d) => d['Country name'],
+    //       (d) => d.indicator_code
+    //     )
+
+    // console.log(this.$options.vizData)
 
     const responseGoalsData = await fetch(
       prefix + 'data/data_gaps-data-SDG_indicators.csv'
@@ -209,17 +236,33 @@ export default {
       this.countriesMax = this.$d3.max(this.selectedSdgData, (d) => {
         const all = this.$d3.merge(
           d[1].map((d) => {
-            return d[1][0]
+            return d[1]
           })
         )
+
+        // console.log(all)
+        // const ciao = d[1].map((d) => {
+        //   return d[1][0]
+        // })
+
         const group = this.$d3.rollups(
           all,
-          (v) => this.$d3.sum(v, (d) => (d.value !== 0 ? 1 : 0)),
-          (d) => d.year
+          (v) => this.$d3.sum(v, (d) => d[1]),
+          (d) => d[0]
         )
+
+        // const grouptest = this.$d3.rollups(
+        //   all,
+        //   (v) => v,
+        //   (d) => d.year
+        // )
+
+        // console.log(group)
 
         return this.$d3.max(group, (d) => d[1])
       })
+
+      // console.log(this.countriesMax)
 
       const sdgColorScale = this.$d3
         .scaleOrdinal()
@@ -246,8 +289,10 @@ export default {
 
       this.color = sdgColorScale(this.selectedSdg)
 
-      this.timeScaleDomain = this.selectedSdgData[0][1][0][1][0].map(
-        (d) => new Date(+d.year, 0, 1)
+      //  console.log(this.selectedSdgData[0][1][0][1])
+
+      this.timeScaleDomain = this.selectedSdgData[0][1][0][1].map(
+        (d) => new Date(d[0], 0, 1)
       )
     },
 
