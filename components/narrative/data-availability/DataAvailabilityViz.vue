@@ -284,41 +284,42 @@ export default {
           return yScale(d[1].percentage)
         })
 
-      // countries
-      //   .selectAll('line.mean')
-      //   .data((d) => [d[1]])
-      //   .join(
-      //     (enter) =>
-      //       enter
-      //         .append('line')
-      //         .attr('class', 'mean')
-      //         .attr('opacity', (d) => {
-      //           return this.selectedSdg === 'all' ? 1 : 0
-      //         })
-      //         .attr('x1', -18)
-      //         .attr('y1', (d) => {
-      //           return yScale(this.$d3.median(d, (m) => m[1].percentage))
-      //         })
-      //         .attr('x2', 18)
-      //         .attr('y2', (d) => {
-      //           return yScale(this.$d3.median(d, (m) => m[1].percentage))
-      //         }),
-      //     (update) =>
-      //       update
-      //         .transition()
-      //         .attr('y1', (d) => {
-      //           return yScale(this.$d3.median(d, (m) => m[1].percentage))
-      //         })
-      //         .attr('y2', (d) => {
-      //           return yScale(this.$d3.median(d, (m) => m[1].percentage))
-      //         })
-      //         .attr('opacity', (d) => {
-      //           return this.selectedSdg === 'all' ? 1 : 0
-      //         })
-      //         .selection()
-      //   )
-      //   .attr('stroke', 'white')
-      //   .attr('stroke-dasharray', '3,3')
+      countries
+        .selectAll('line.mean')
+        .data((d) => [d[1]])
+        .join(
+          (enter) =>
+            enter
+              .append('line')
+              .attr('class', 'mean')
+              .attr('opacity', (d) => {
+                return this.selectedSdg === 'all' ? 1 : 0
+              })
+              .attr('x1', -12)
+              .attr('y1', (d) => {
+                return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              })
+              .attr('x2', 12)
+              .attr('y2', (d) => {
+                return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              }),
+          (update) =>
+            update
+              .transition()
+              .attr('y1', (d) => {
+                return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              })
+              .attr('y2', (d) => {
+                return yScale(this.$d3.median(d, (m) => m[1].percentage))
+              })
+              .attr('opacity', (d) => {
+                return this.selectedSdg === 'all' ? 1 : 0
+              })
+              .selection()
+        )
+        .attr('stroke', 'white')
+
+      // .attr('stroke-dasharray', '3,3')
 
       const sgdMean =
         this.selectedSdg !== 'all'
